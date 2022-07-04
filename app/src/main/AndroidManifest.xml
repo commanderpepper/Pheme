@@ -3,7 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.commanderpepper.pheme">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
+        android:name=".application.PhemeApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -14,9 +17,8 @@
         android:theme="@style/Theme.Pheme"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.activities.home.HomeActivity"
             android:exported="true"
-            android:label="@string/app_name"
             android:theme="@style/Theme.Pheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
