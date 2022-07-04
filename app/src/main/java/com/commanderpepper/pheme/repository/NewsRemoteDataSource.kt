@@ -4,7 +4,6 @@ import com.commanderpepper.pheme.CoroutinesScopesModule
 import com.commanderpepper.pheme.data.Article
 import com.commanderpepper.pheme.retrofit.NewsAPIService
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
