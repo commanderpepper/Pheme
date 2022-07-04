@@ -1,5 +1,6 @@
 package com.commanderpepper.pheme.retrofit
 
+import com.commanderpepper.pheme.BuildConfig
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -16,25 +17,7 @@ import javax.inject.Singleton
 object NewsAPIServiceModule {
 
     private const val baseURL = "https://newsapi.org/v2/"
-
-//    fun createNewsAPIService(): NewsAPIService {
-//        val builder = OkHttpClient.Builder()
-//
-//        builder.addInterceptor { chain ->
-//            val request: Request =
-//                chain.request().newBuilder()
-//                    .addHeader("X-Api-Key", apiKey).build()
-//            chain.proceed(request)
-//        }
-//
-//        val retrofit = Retrofit.Builder()
-//            .baseUrl(baseURL)
-//            .client(builder.build())
-//            .addConverterFactory(MoshiConverterFactory.create())
-//            .build()
-//
-//        return retrofit.create(NewsAPIService::class.java)
-//    }
+    private const val apiKey = BuildConfig.NEWS_KEY
 
     @Singleton
     @Provides
