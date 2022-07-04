@@ -1,13 +1,12 @@
 package com.commanderpepper.pheme.uistate
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 
 data class NewsPreviewItemUIState(
@@ -20,24 +19,31 @@ data class NewsPreviewItemUIState(
 
 @Composable
 fun NewsPreviewItem(newsPreviewItemUIState: NewsPreviewItemUIState) {
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.Start
+    Card(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(horizontal = 8.dp, vertical = 4.dp)
     ) {
-        if (newsPreviewItemUIState.thumbnail.isNotBlank()) {
-            AsyncImage(
-                modifier = Modifier.weight(3 / 10f),
-                model = newsPreviewItemUIState.thumbnail,
-                contentDescription = null
-            )
-        }
-        Column(modifier = Modifier.weight(7 / 10f)) {
-            Text(modifier = Modifier.fillMaxWidth(), text = newsPreviewItemUIState.title)
-            if (newsPreviewItemUIState.author.isNotBlank()) {
-                Text(modifier = Modifier.fillMaxWidth(), text = newsPreviewItemUIState.author)
+        Row(
+            modifier = Modifier.padding(2.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Start
+        ) {
+            if (newsPreviewItemUIState.thumbnail.isNotBlank()) {
+                AsyncImage(
+                    modifier = Modifier.weight(3 / 10f).padding(4.dp),
+                    model = newsPreviewItemUIState.thumbnail,
+                    contentDescription = null
+                )
             }
-            Text(modifier = Modifier.fillMaxWidth(), text = newsPreviewItemUIState.publisher)
+            Column(modifier = Modifier.weight(7 / 10f)) {
+                Text(modifier = Modifier.fillMaxWidth(), text = newsPreviewItemUIState.title)
+                if (newsPreviewItemUIState.author.isNotBlank()) {
+                    Text(modifier = Modifier.fillMaxWidth(), maxLines = 2, text = newsPreviewItemUIState.author)
+                }
+                Text(modifier = Modifier.fillMaxWidth(), text = newsPreviewItemUIState.publisher)
 //            Text(modifier = Modifier.fillMaxWidth(), text = newsPreviewItemUIState.preview)
+            }
         }
     }
 }

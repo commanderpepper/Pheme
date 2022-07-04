@@ -49,7 +49,6 @@ fun ShowList(modifier: Modifier, viewModel: HomeViewModel){
     LazyColumn(modifier = modifier) {
         items(data, itemContent = {
             item -> NewsPreviewItem(item)
-            Divider(color = Color.Black, thickness = 1.dp)
         })
     }
 }
