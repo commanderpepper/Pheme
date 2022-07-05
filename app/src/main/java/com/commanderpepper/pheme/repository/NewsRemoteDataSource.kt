@@ -12,10 +12,6 @@ class NewsRemoteDataSource @Inject constructor(
     private val newsAPIService: NewsAPIService,
     @CoroutinesScopesModule.IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) {
-    suspend fun fetchNewsWithCategory(category: String): List<Article> =
-        withContext(ioDispatcher) {
-            newsAPIService.query(category).articles
-        }
 
     fun getArticles(category: String) = flow {
         emit(ResultOf.Loading)
