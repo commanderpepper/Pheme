@@ -7,16 +7,15 @@ import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.Divider
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.commanderpepper.pheme.ui.theme.PhemeTheme
 import com.commanderpepper.pheme.uistate.NewsPreviewItem
 import com.commanderpepper.pheme.uistate.NewsPreviewItemUIState
@@ -36,7 +35,7 @@ class HomeActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    ShowList(modifier = Modifier.fillMaxSize(), viewModel = vm)
+                    DisplayHomeActivity(viewModel = vm)
                 }
             }
         }
@@ -44,15 +43,22 @@ class HomeActivity : ComponentActivity() {
 }
 
 @Composable
-fun ShowList(modifier: Modifier, viewModel: HomeViewModel){
-    val data : List<NewsPreviewItemUIState> by viewModel.flow.collectAsState(initial = emptyList())
-    LazyColumn(modifier = modifier) {
-        items(data, itemContent = {
-            item -> NewsPreviewItem(item)
-        })
+fun DisplayHomeActivity(viewModel: HomeViewModel){
+    val homeUIState : HomeUIState by viewModel.homeUIState.collectAsState()
+    if(homeUIState.isError){
+        Text(text = "Something went wrong")
+    }
+    if(homeUIState.isLoading || homeUIState.newsPreviewList.isEmpty()){
+        CircularProgressIndicator()
+    }
+    if(homeUIState.newsPreviewList.isNotEmpty()){
+        LazyColumn(modifier = Modifier.fillMaxSize()) {
+            items(homeUIState.newsPreviewList, itemContent = {
+                    item -> NewsPreviewItem(item)
+            })
+        }
     }
 }
-
 
 @Preview(showBackground = true)
 @Composable
