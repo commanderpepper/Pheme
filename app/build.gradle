@@ -95,5 +95,5 @@ dependencies {
     testImplementation "io.mockk:mockk:1.12.4"
 
     // Hamcrest
-    testImplementation "org.hamcrest:hamcrest-all:2.2.0"
+    testImplementation "org.hamcrest:hamcrest-all:1.3"
 }
