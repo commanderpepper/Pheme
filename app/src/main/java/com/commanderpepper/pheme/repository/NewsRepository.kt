@@ -1,16 +1,8 @@
 package com.commanderpepper.pheme.repository
 
-import kotlinx.coroutines.flow.map
-import javax.inject.Inject
+import com.commanderpepper.pheme.data.Article
+import kotlinx.coroutines.flow.Flow
 
-class NewsRepository @Inject constructor(private val newsRemoteDataSource: NewsRemoteDataSource) {
-
-    fun fetchNewsWithCategory(category: String) = newsRemoteDataSource.getArticles(category).map { resultOf ->
-        when(resultOf){
-            is ResultOf.Loading -> Status.InProgress
-            is ResultOf.Success -> Status.Success(resultOf.data)
-            is ResultOf.Error -> Status.Failure("Something went wrong")
-        }
-    }
-
+interface NewsRepository {
+    fun fetchNewsWithCategory(category: String): Flow<Status<out List<Article>>>
 }
