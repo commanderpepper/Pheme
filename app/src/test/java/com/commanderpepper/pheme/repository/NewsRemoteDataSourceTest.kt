@@ -6,6 +6,7 @@ import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
+import org.mockito.Mockito.mock
 import org.mockito.junit.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner::class)
@@ -15,7 +16,7 @@ class NewsRemoteDataSourceTest {
 
     @Test
     fun test_Get_Articles(){
-        val newsRemoteDataSource = NewsRemoteDataSource(newsAPIService, Dispatchers.IO)
+        val newsRemoteDataSource = NewsRemoteDataSourceImpl(newsAPIService, Dispatchers.IO)
         val five = 5
 
         Assert.assertTrue(five == 5)

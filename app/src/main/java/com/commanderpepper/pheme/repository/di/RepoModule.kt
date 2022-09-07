@@ -1,5 +1,7 @@
 package com.commanderpepper.pheme.repository.di
 
+import com.commanderpepper.pheme.repository.NewsRemoteDataSource
+import com.commanderpepper.pheme.repository.NewsRemoteDataSourceImpl
 import com.commanderpepper.pheme.repository.NewsRepository
 import com.commanderpepper.pheme.repository.NewsRepositoryImpl
 import dagger.Binds
@@ -16,4 +18,9 @@ interface RepoModule {
     fun bindsNewsRepository(
         newsRepositoryImpl: NewsRepositoryImpl
     ): NewsRepository
+
+    @Binds
+    fun bindsNewsRemoteDataSource(
+        newsRemoteDataSourceImpl: NewsRemoteDataSourceImpl
+    ): NewsRemoteDataSource
 }
