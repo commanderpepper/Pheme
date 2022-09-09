@@ -23,12 +23,15 @@ class HomeViewModel @Inject constructor(
     private var viewModelJob : Job? = null
 
     fun fetchNews(category: String = "America"){
+        // Cancel the current job if one exists
         viewModelJob?.cancel()
+
+        // Create a Job and assign it to the ViewModel Job. This Job will make a call to the Repository to gather the articles.
         viewModelJob = viewModelScope.launch {
             newsRepository.fetchNewsWithCategory(category).collect { status ->
                 when(status){
                     is Status.InProgress -> _homeUIStateFlow.value = _homeUIStateFlow.value.copy(isLoading = true, isError = false)
-                    is Status.Success -> _homeUIStateFlow.value = _homeUIStateFlow.value.copy(isLoading = false, isError = false, newsPreviewList = status.data.map { createNewsPreviewItemUseCase.invoke(it) })
+                    is Status.Success -> _homeUIStateFlow.value = _homeUIStateFlow.value.copy(isLoading = false, isError = false, newsPreviewList = status.data.map { createNewsPreviewItemUseCase(it) })
                     is Status.Failure -> _homeUIStateFlow.value = _homeUIStateFlow.value.copy(isLoading = false, isError = true)
                 }
             }
