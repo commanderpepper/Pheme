@@ -19,6 +19,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.lifecycleScope
 import com.commanderpepper.pheme.ui.theme.PhemeTheme
 import com.commanderpepper.pheme.uistate.NewsPreviewItem
 import com.commanderpepper.pheme.uistate.NewsPreviewItemUIState
@@ -31,6 +32,10 @@ class HomeActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        lifecycleScope.launchWhenResumed {
+            vm.fetchNews()
+        }
 
         setContent {
             PhemeTheme() {

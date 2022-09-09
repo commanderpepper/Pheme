@@ -6,6 +6,7 @@ import com.commanderpepper.pheme.repository.NewsRepository
 import com.commanderpepper.pheme.repository.Status
 import com.commanderpepper.pheme.usecase.CreateNewsPreviewItemUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -19,9 +20,12 @@ class HomeViewModel @Inject constructor(
     private val _homeUIStateFlow = MutableStateFlow(HomeUIState())
     val homeUIState : StateFlow<HomeUIState> = _homeUIStateFlow
 
-    init {
-        viewModelScope.launch {
-            newsRepository.fetchNewsWithCategory("America").collect { status ->
+    private var viewModelJob : Job? = null
+
+    fun fetchNews(category: String = "America"){
+        viewModelJob?.cancel()
+        viewModelJob = viewModelScope.launch {
+            newsRepository.fetchNewsWithCategory(category).collect { status ->
                 when(status){
                     is Status.InProgress -> _homeUIStateFlow.value = _homeUIStateFlow.value.copy(isLoading = true, isError = false)
                     is Status.Success -> _homeUIStateFlow.value = _homeUIStateFlow.value.copy(isLoading = false, isError = false, newsPreviewList = status.data.map { createNewsPreviewItemUseCase.invoke(it) })
