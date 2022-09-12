@@ -12,8 +12,8 @@ interface ArticleDAO {
     fun getArticles(category: String): Flow<List<ArticleEntity>>
 
     @Insert
-    fun insertArticles(articles: List<ArticleEntity>)
+    suspend fun insertArticles(articles: List<ArticleEntity>)
 
     @Query("DELETE FROM articleentity")
-    fun deleteArticles()
+    suspend fun deleteArticles()
 }
