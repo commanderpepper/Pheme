@@ -15,5 +15,5 @@ interface ArticleDAO {
     fun insertArticles(articles: List<ArticleEntity>)
 
     @Query("DELETE FROM articleentity")
-    fun deleteArticles(amount: Int)
+    fun deleteArticles()
 }
