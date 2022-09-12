@@ -13,4 +13,9 @@ interface NewsAPIService {
 
     @GET("everything")
     suspend fun query(@Query("q") query: String) : Response
+
+    @GET("top-headlines")
+    suspend fun getAmericanArticles(
+        @Query("country") country: String = "us",
+        @Query("pageSize") pageSize: Int = 100): Response
 }
