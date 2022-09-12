@@ -5,6 +5,5 @@ data class NewsItemUIState(
     val author: String,
     val title: String,
     val thumbnail: String,
-    val content: String,
-    val isFavorite: Boolean
+    val content: String
 )

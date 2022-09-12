@@ -12,5 +12,5 @@ data class ArticleEntity (
     val thumbnail: String,
     val preview: String,
     val content: String,
-    val isFavorite: Boolean
+    val category: String
 )
