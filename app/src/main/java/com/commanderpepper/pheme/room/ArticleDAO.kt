@@ -1,6 +1,7 @@
 package com.commanderpepper.pheme.room.model
 
 import androidx.room.Dao
+import androidx.room.Insert
 import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
 
@@ -8,5 +9,11 @@ import kotlinx.coroutines.flow.Flow
 interface ArticleDAO {
 
     @Query("SELECT * FROM articleentity WHERE category = :category")
-    fun getUSArticles(category: String = "us"): Flow<List<ArticleEntity>>
+    fun getArticles(category: String): Flow<List<ArticleEntity>>
+
+    @Insert
+    fun insertArticles(articles: List<ArticleEntity>)
+
+    @Query("DELETE FROM articleentity")
+    fun deleteArticles(amount: Int)
 }
