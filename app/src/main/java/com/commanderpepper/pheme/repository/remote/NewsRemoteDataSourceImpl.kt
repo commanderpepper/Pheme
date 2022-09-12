@@ -1,12 +1,12 @@
-package com.commanderpepper.pheme.repository
+package com.commanderpepper.pheme.repository.remote
 
 import com.commanderpepper.pheme.CoroutinesScopesModule
+import com.commanderpepper.pheme.repository.ResultOf
 import com.commanderpepper.pheme.retrofit.NewsAPIService
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withContext
-import java.lang.Exception
 import javax.inject.Inject
 
 class NewsRemoteDataSourceImpl @Inject constructor(

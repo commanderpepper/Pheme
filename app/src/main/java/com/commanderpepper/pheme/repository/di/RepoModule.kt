@@ -1,14 +1,13 @@
 package com.commanderpepper.pheme.repository.di
 
-import com.commanderpepper.pheme.repository.NewsRemoteDataSource
-import com.commanderpepper.pheme.repository.NewsRemoteDataSourceImpl
+import com.commanderpepper.pheme.repository.remote.NewsRemoteDataSource
+import com.commanderpepper.pheme.repository.remote.NewsRemoteDataSourceImpl
 import com.commanderpepper.pheme.repository.NewsRepository
 import com.commanderpepper.pheme.repository.NewsRepositoryImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
