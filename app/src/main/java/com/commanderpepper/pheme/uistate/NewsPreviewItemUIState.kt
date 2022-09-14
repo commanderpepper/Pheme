@@ -14,7 +14,8 @@ data class NewsPreviewItemUIState(
     val author: String,
     val title: String,
     val preview: String,
-    val thumbnail: String
+    val thumbnail: String,
+    val id: Long
 )
 
 @Composable

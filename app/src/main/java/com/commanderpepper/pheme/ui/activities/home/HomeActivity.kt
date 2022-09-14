@@ -78,6 +78,7 @@ fun DefaultPreview() {
             "John Doe",
             "The Weather",
             "Its sunny",
-            "https://example.com/image.jpg"))
+            "https://example.com/image.jpg",
+            0L))
     }
 }

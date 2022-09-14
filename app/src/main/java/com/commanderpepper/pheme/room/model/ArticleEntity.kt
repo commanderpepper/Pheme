@@ -9,8 +9,10 @@ data class ArticleEntity (
     val id: Long = 0,
     val publisher: String,
     val title: String,
+    val author: String,
     val thumbnail: String,
     val preview: String,
     val content: String,
+    val publication: String,
     val category: String
 )

@@ -2,16 +2,18 @@ package com.commanderpepper.pheme.usecase
 
 import com.commanderpepper.pheme.data.Article
 import com.commanderpepper.pheme.uistate.NewsPreviewItemUIState
+import com.commanderpepper.pheme.usecase.model.ArticleInBetween
 import javax.inject.Inject
 
 class CreateNewsPreviewItemUseCase @Inject constructor() {
-    operator fun invoke(article: Article): NewsPreviewItemUIState{
+    operator fun invoke(articleInBetween: ArticleInBetween): NewsPreviewItemUIState{
         return NewsPreviewItemUIState(
-            publisher = article.source.name,
-            author = article.author ?: "",
-            title = article.title,
-            preview = article.description,
-            thumbnail = article.urlToImage ?: ""
+            publisher = articleInBetween.publisher,
+            author = articleInBetween.author,
+            title = articleInBetween.title,
+            preview = articleInBetween.preview,
+            thumbnail = articleInBetween.thumbnail,
+            id = articleInBetween.id
         )
     }
 }

@@ -1,12 +1,9 @@
 package com.commanderpepper.pheme.repository.remote
 
-import android.util.Log
 import com.commanderpepper.pheme.CoroutinesScopesModule
-import com.commanderpepper.pheme.repository.ResultOf
+import com.commanderpepper.pheme.data.Article
 import com.commanderpepper.pheme.retrofit.NewsAPIService
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -15,18 +12,21 @@ class NewsRemoteDataSourceImpl @Inject constructor(
     @CoroutinesScopesModule.IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) : NewsRemoteDataSource {
 
-    override fun getArticles(category: String) = flow {
-        emit(ResultOf.Loading)
-//        val articles = withContext(ioDispatcher) { newsAPIService.query(category).articles }
-        val articles = withContext(ioDispatcher) { newsAPIService.getAmericanArticles().articles }
-
-        if (articles.isNotEmpty()) {
-            emit(ResultOf.Success(articles))
-        } else {
-            emit(ResultOf.Error("No articles found"))
+    override suspend fun retrieveCategoryArticles(category: String): List<Article> {
+        val articleList = mutableListOf<Article>()
+        withContext(ioDispatcher){
+            val remoteArticles = newsAPIService.getCategoryArticles(category = category).articles
+            articleList.addAll(remoteArticles)
         }
-    }.catch { exception ->
-        Log.e("News Remote Data Source", exception.message ?: "Unknown message")
-        emit(ResultOf.Error("Something went wrong"))
+        return articleList
+    }
+
+    override suspend fun retrieveCountryArticles(category: String): List<Article> {
+        val articleList = mutableListOf<Article>()
+        withContext(ioDispatcher){
+            val remoteArticles = newsAPIService.getCountryArticles().articles
+            articleList.addAll(remoteArticles)
+        }
+        return articleList
     }
 }

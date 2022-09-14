@@ -21,7 +21,7 @@ object RoomModule {
         context,
         ArticleDatabase::class.java,
         DATABASE_NAME
-    )
+    ).build()
 
     @Singleton
     @Provides
