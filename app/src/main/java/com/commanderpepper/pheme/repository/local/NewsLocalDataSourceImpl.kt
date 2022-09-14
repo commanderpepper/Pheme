@@ -28,4 +28,14 @@ class NewsLocalDataSourceImpl @Inject constructor(
             })
         }
     }
+
+    override suspend fun getArticle(id: Long) = withContext(ioDispatcher){
+        articleDAO.getArticle(id)
+    }
+
+    override suspend fun deleteAllArticles() {
+        withContext(ioDispatcher){
+            articleDAO.deleteArticles()
+        }
+    }
 }

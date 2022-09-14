@@ -9,6 +9,10 @@ interface NewsLocalDataSource  {
     suspend fun getArticles(category: Category): List<ArticleEntity>
 
     suspend fun insertArticles(category: Category, articles: List<Article>)
+
+    suspend fun getArticle(id: Long): ArticleEntity
+
+    suspend fun deleteAllArticles()
 }
 
 enum class Category(val category: String){
