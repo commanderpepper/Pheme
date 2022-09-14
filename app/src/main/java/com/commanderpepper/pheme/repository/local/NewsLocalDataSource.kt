@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface NewsLocalDataSource  {
 
-    fun getArticles(category: Category): Flow<List<ArticleEntity>>
+    suspend fun getArticles(category: Category): List<ArticleEntity>
 
     suspend fun insertArticles(category: Category, articles: List<Article>)
 }

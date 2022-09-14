@@ -17,8 +17,8 @@ class NewsLocalDataSourceImpl @Inject constructor(
     @CoroutinesScopesModule.IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ): NewsLocalDataSource {
 
-    override fun getArticles(category: Category): Flow<List<ArticleEntity>> {
-        return articleDAO.getArticles(category.category)
+    override suspend fun getArticles(category: Category): List<ArticleEntity> = withContext(ioDispatcher){
+        articleDAO.getArticles(category.category)
     }
 
     override suspend fun insertArticles(category: Category, articles: List<Article>) {
