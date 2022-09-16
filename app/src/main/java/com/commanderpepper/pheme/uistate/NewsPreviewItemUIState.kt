@@ -1,5 +1,6 @@
 package com.commanderpepper.pheme.uistate
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Card
 import androidx.compose.material.Text
@@ -19,9 +20,10 @@ data class NewsPreviewItemUIState(
 )
 
 @Composable
-fun NewsPreviewItem(newsPreviewItemUIState: NewsPreviewItemUIState) {
+fun NewsPreviewItem(newsPreviewItemUIState: NewsPreviewItemUIState, onClick: (Long) -> Unit) {
     Card(
         modifier = Modifier
+            .clickable { onClick(newsPreviewItemUIState.id) }
             .fillMaxSize()
             .padding(horizontal = 8.dp, vertical = 4.dp)
     ) {

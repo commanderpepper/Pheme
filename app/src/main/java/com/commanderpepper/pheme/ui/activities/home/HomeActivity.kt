@@ -53,6 +53,9 @@ class HomeActivity : ComponentActivity() {
 @Composable
 fun DisplayHomeActivity(viewModel: HomeViewModel){
     val homeUIState : HomeUIState by viewModel.homeUIState.collectAsState()
+    if(homeUIState.articleClicked != null && homeUIState.articleClicked!!.articleClicked){
+        // go to a new activity
+    }
     if(homeUIState.isError){
         Text(text = "Something went wrong")
     }
@@ -64,7 +67,7 @@ fun DisplayHomeActivity(viewModel: HomeViewModel){
     if(homeUIState.newsPreviewList.isNotEmpty()){
         LazyColumn(modifier = Modifier.fillMaxSize()) {
             items(homeUIState.newsPreviewList, itemContent = {
-                    item -> NewsPreviewItem(item)
+                    item -> NewsPreviewItem(item, onClick = viewModel::articleClicked)
             })
         }
     }
@@ -79,6 +82,8 @@ fun DefaultPreview() {
             "The Weather",
             "Its sunny",
             "https://example.com/image.jpg",
-            0L))
+            0L)){
+
+        }
     }
 }
