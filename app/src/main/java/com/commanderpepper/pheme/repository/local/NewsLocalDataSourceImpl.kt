@@ -13,7 +13,6 @@ import javax.inject.Inject
 
 class NewsLocalDataSourceImpl @Inject constructor(
     private val articleDAO: ArticleDAO,
-    private val createArticleEntityUseCase: CreateArticleEntityUseCase,
     @CoroutinesScopesModule.IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ): NewsLocalDataSource {
 
@@ -21,11 +20,9 @@ class NewsLocalDataSourceImpl @Inject constructor(
         articleDAO.getArticles(category.category)
     }
 
-    override suspend fun insertArticles(category: Category, articles: List<Article>) {
+    override suspend fun insertArticles(articles: List<ArticleEntity>) {
         withContext(ioDispatcher){
-            articleDAO.insertArticles(articles.map {
-                createArticleEntityUseCase(category, it)
-            })
+            articleDAO.insertArticles(articles)
         }
     }
 

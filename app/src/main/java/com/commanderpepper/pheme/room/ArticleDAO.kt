@@ -14,8 +14,8 @@ interface ArticleDAO {
     @Insert
     suspend fun insertArticles(articles: List<ArticleEntity>)
 
-    @Query("SELECT * FROM articleentity WHERE id = :id")
-    suspend fun getArticle(id: Long): ArticleEntity
+    @Query("SELECT * FROM articleentity WHERE id = :articleId")
+    suspend fun getArticle(articleId: Long): ArticleEntity
 
     @Query("DELETE FROM articleentity")
     suspend fun deleteArticles()

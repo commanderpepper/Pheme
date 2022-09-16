@@ -10,6 +10,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
@@ -45,18 +46,23 @@ class NewsRemoteDataSourceTest {
         newsAPIService = mock(NewsAPIService::class.java)
     }
 
-    @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun test_Get_Articles() = runTest {
-        Mockito.`when`(newsAPIService.query("Test")).thenReturn(mockResponse)
+        Mockito.`when`(newsAPIService.getCountryArticles("Test")).thenReturn(mockResponse)
 
         val newsRemoteDataSource = NewsRemoteDataSourceImpl(newsAPIService, Dispatchers.IO)
-        val response = newsRemoteDataSource.getArticles("Test")
+        val response = newsRemoteDataSource.retrieveCountryArticles("Test")
 
-        response.collect {
-            if(it is ResultOf.Success){
-                Assert.assertTrue(it.data.first() == mockResponse.articles.first())
-            }
-        }
+        Assert.assertTrue(response == mockResponse.articles)
+    }
+
+    @Test
+    fun getCategoryArticles() = runTest {
+        Mockito.`when`(newsAPIService.getCategoryArticles("Test")).thenReturn(mockResponse)
+
+        val newsRemoteDataSource = NewsRemoteDataSourceImpl(newsAPIService, Dispatchers.IO)
+        val response = newsRemoteDataSource.retrieveCategoryArticles("Test")
+
+        Assert.assertTrue(response == mockResponse.articles)
     }
 }

@@ -8,7 +8,7 @@ interface NewsLocalDataSource  {
 
     suspend fun getArticles(category: Category): List<ArticleEntity>
 
-    suspend fun insertArticles(category: Category, articles: List<Article>)
+    suspend fun insertArticles(articles: List<ArticleEntity>)
 
     suspend fun getArticle(id: Long): ArticleEntity
 

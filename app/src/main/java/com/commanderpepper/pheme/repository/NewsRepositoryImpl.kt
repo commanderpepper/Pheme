@@ -15,6 +15,7 @@ import javax.inject.Inject
 class NewsRepositoryImpl @Inject constructor(
     private val newsLocalDataSource: NewsLocalDataSource,
     private val newsRemoteDataSource: NewsRemoteDataSource,
+    private val createArticleEntityUseCase: CreateArticleEntityUseCase,
     private val convertArticleEntityToArticleInBetweenUseCase: ConvertArticleEntityToArticleInBetweenUseCase): NewsRepository {
 
     override fun fetchNewsWithCategory(category: Category): Flow<Status<out List<ArticleInBetween>>> {
@@ -22,7 +23,7 @@ class NewsRepositoryImpl @Inject constructor(
             emit(Status.InProgress)
 
             val remoteArticles = newsRemoteDataSource.retrieveCategoryArticles(category.category)
-            newsLocalDataSource.insertArticles(category, remoteArticles)
+            newsLocalDataSource.insertArticles(remoteArticles.map{ createArticleEntityUseCase(category, it) })
 
             val  localArticles = newsLocalDataSource.getArticles(category)
             emit(Status.Success(localArticles.map { convertArticleEntityToArticleInBetweenUseCase(it) }))
@@ -37,7 +38,7 @@ class NewsRepositoryImpl @Inject constructor(
             emit(Status.InProgress)
 
             val remoteArticles =  newsRemoteDataSource.retrieveCountryArticles(category.category)
-            newsLocalDataSource.insertArticles(category, remoteArticles)
+            newsLocalDataSource.insertArticles(remoteArticles.map { createArticleEntityUseCase(category, it) })
 
             val  localArticles = newsLocalDataSource.getArticles(category)
             emit(Status.Success(localArticles.map { convertArticleEntityToArticleInBetweenUseCase(it) }))
