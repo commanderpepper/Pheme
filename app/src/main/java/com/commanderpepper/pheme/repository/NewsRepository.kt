@@ -9,4 +9,6 @@ interface NewsRepository {
     fun fetchNewsWithCategory(category: Category): Flow<Status<out List<ArticleInBetween>>>
 
     fun fetchNewsWithCountry(category: Category): Flow<Status<out List<ArticleInBetween>>>
+
+    fun fetchSingleArticle(articleId: Long): Flow<Status<out ArticleInBetween>>
 }

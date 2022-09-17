@@ -47,4 +47,21 @@ class NewsRepositoryImpl @Inject constructor(
             emit(Status.Failure("Something is bad"))
         }
     }
+
+    override fun fetchSingleArticle(articleId: Long): Flow<Status<out ArticleInBetween>> {
+        return flow {
+            emit(Status.InProgress)
+
+            val articleEntity = newsLocalDataSource.getArticle(articleId)
+            if(articleEntity != null){
+                emit(Status.Success(convertArticleEntityToArticleInBetweenUseCase(articleEntity)))
+            }
+            else {
+                emit(Status.Failure("Article not found"))
+            }
+        }.catch {
+            Log.e("Repository", "Unable to get single article")
+            emit(Status.Failure("Something went wrong"))
+        }
+    }
 }
