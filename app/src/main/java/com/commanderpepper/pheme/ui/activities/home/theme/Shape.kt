@@ -1,4 +1,4 @@
-package com.commanderpepper.pheme.ui.theme
+package com.commanderpepper.pheme.ui.activities.home.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Shapes

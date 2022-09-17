@@ -1,5 +1,6 @@
 package com.commanderpepper.pheme.ui.activities.home
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -19,8 +20,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.lifecycleScope
-import com.commanderpepper.pheme.ui.theme.PhemeTheme
+import com.commanderpepper.pheme.ui.activities.article.ArticleActivity
+import com.commanderpepper.pheme.ui.activities.home.theme.PhemeTheme
 import com.commanderpepper.pheme.uistate.NewsPreviewItem
 import com.commanderpepper.pheme.uistate.NewsPreviewItemUIState
 import dagger.hilt.android.AndroidEntryPoint
@@ -43,19 +46,26 @@ class HomeActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    DisplayHomeActivity(viewModel = vm)
+                    DisplayHomeActivity(viewModel = vm, ::onArticleClicked)
                 }
             }
         }
     }
+
+    private fun onArticleClicked(id: Long){
+        val intent = Intent(this, ArticleActivity::class.java)
+        intent.putExtra(ARTICLE_INTENT_ID, id)
+        startActivity(this, intent, null)
+    }
+
+    companion object {
+        const val ARTICLE_INTENT_ID = "ArticleId"
+    }
 }
 
 @Composable
-fun DisplayHomeActivity(viewModel: HomeViewModel){
+fun DisplayHomeActivity(viewModel: HomeViewModel, onArticleClicked: (Long) -> Unit){
     val homeUIState : HomeUIState by viewModel.homeUIState.collectAsState()
-    if(homeUIState.articleClicked != null && homeUIState.articleClicked!!.articleClicked){
-        // go to a new activity
-    }
     if(homeUIState.isError){
         Text(text = "Something went wrong")
     }
@@ -67,7 +77,7 @@ fun DisplayHomeActivity(viewModel: HomeViewModel){
     if(homeUIState.newsPreviewList.isNotEmpty()){
         LazyColumn(modifier = Modifier.fillMaxSize()) {
             items(homeUIState.newsPreviewList, itemContent = {
-                    item -> NewsPreviewItem(item, onClick = viewModel::articleClicked)
+                    item -> NewsPreviewItem(item, onClick = onArticleClicked)
             })
         }
     }

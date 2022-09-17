@@ -32,18 +32,11 @@ class HomeViewModel @Inject constructor(
         viewModelJob = viewModelScope.launch {
             newsRepository.fetchNewsWithCountry(Category.NEWS).collect { status ->
                 when(status){
-                    is Status.InProgress -> _homeUIStateFlow.value = _homeUIStateFlow.value.copy(isLoading = true, isError = false, articleClicked = null)
-                    is Status.Success -> _homeUIStateFlow.value = _homeUIStateFlow.value.copy(isLoading = false, isError = false, newsPreviewList = status.data.map { createNewsPreviewItemUseCase(it) }, articleClicked = null)
-                    is Status.Failure -> _homeUIStateFlow.value = _homeUIStateFlow.value.copy(isLoading = false, isError = true, articleClicked = null)
+                    is Status.InProgress -> _homeUIStateFlow.value = _homeUIStateFlow.value.copy(isLoading = true, isError = false)
+                    is Status.Success -> _homeUIStateFlow.value = _homeUIStateFlow.value.copy(isLoading = false, isError = false, newsPreviewList = status.data.map { createNewsPreviewItemUseCase(it) })
+                    is Status.Failure -> _homeUIStateFlow.value = _homeUIStateFlow.value.copy(isLoading = false, isError = true)
                 }
             }
-        }
-    }
-
-    fun articleClicked(articleId: Long){
-        viewModelScope.launch {
-            _homeUIStateFlow.emit(_homeUIStateFlow.value.copy(isLoading = false, isError = false, articleClicked = ArticleClicked(true, articleId)))
-            Log.d("Homeviewodel","Article clicked $articleId")
         }
     }
 }
