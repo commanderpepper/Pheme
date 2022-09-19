@@ -1,7 +1,6 @@
 package com.commanderpepper.pheme.ui.activities.article
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -32,7 +31,6 @@ class ArticleActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         val intent = this.intent
         val id = intent.getLongExtra(ARTICLE_INTENT_ID, 0L)
-        Log.d("Article", id.toString())
         setContent {
             PhemeTheme {
                 // A surface container using the 'background' color from the theme
@@ -40,8 +38,8 @@ class ArticleActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    DisplayArticle(vm)
                     vm.retrieveArticle(id)
+                    DisplayArticle(vm)
                 }
             }
         }
@@ -54,12 +52,12 @@ fun DisplayArticle(articleViewModel: ArticleViewModel){
     if(articleUIState.isError){
         Text(text = "Something went wrong")
     }
-    if(articleUIState.isLoading){
+    else if(articleUIState.isLoading){
         Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
             CircularProgressIndicator()
         }
     }
-    if(articleUIState.newsItemUIState != null){
+    else if(articleUIState.newsItemUIState != null){
         NewsItem(articleUIState.newsItemUIState!!)
     }
 }
