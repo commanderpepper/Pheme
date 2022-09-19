@@ -10,18 +10,19 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.lifecycleScope
+import com.commanderpepper.pheme.R
 import com.commanderpepper.pheme.ui.activities.article.ArticleActivity
 import com.commanderpepper.pheme.ui.activities.home.theme.PhemeTheme
 import com.commanderpepper.pheme.uistate.NewsPreviewItem
@@ -65,21 +66,80 @@ class HomeActivity : ComponentActivity() {
 
 @Composable
 fun DisplayHomeActivity(viewModel: HomeViewModel, onArticleClicked: (Long) -> Unit){
-    val homeUIState : HomeUIState by viewModel.homeUIState.collectAsState()
-    if(homeUIState.isError){
-        Text(text = "Something went wrong")
-    }
-    if(homeUIState.isLoading || homeUIState.newsPreviewList.isEmpty()){
-        Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
-            CircularProgressIndicator()
+    Scaffold(
+        bottomBar = { val color = colorResource(id = R.color.bottom_app_color)
+            HomeBottomBar(backgroundColor = color) }
+    ) {
+        val homeUIState : HomeUIState by viewModel.homeUIState.collectAsState()
+        if(homeUIState.isError){
+            Text(text = "Something went wrong")
+        }
+        if(homeUIState.isLoading || homeUIState.newsPreviewList.isEmpty()){
+            Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
+                CircularProgressIndicator()
+            }
+        }
+        if(homeUIState.newsPreviewList.isNotEmpty()){
+            LazyColumn(modifier = Modifier.fillMaxSize()) {
+                items(homeUIState.newsPreviewList, itemContent = {
+                        item -> NewsPreviewItem(item, onClick = onArticleClicked)
+                })
+            }
         }
     }
-    if(homeUIState.newsPreviewList.isNotEmpty()){
-        LazyColumn(modifier = Modifier.fillMaxSize()) {
-            items(homeUIState.newsPreviewList, itemContent = {
-                    item -> NewsPreviewItem(item, onClick = onArticleClicked)
-            })
-        }
+}
+
+@Composable
+fun HomeBottomBar(backgroundColor : Color){
+    BottomAppBar(backgroundColor = backgroundColor) {
+        BottomNavigationItem(
+            icon= {
+                val image = painterResource(id = R.drawable.ic_news)
+                Icon(image,"News")
+            },
+            selectedContentColor= Color.White,
+            unselectedContentColor= Color.White.copy(alpha = 0.2f),
+            onClick = {
+
+            },
+            selected = true
+        )
+        BottomNavigationItem(
+            icon= {
+                val image = painterResource(id = R.drawable.ic_sports)
+                Icon(image,"Sports")
+            },
+            selectedContentColor= Color.White,
+            unselectedContentColor= Color.White.copy(alpha = 0.2f),
+            onClick = {
+
+            },
+            selected = false
+        )
+        BottomNavigationItem(
+            icon= {
+                val image = painterResource(id = R.drawable.ic_technology)
+                Icon(image,"Technology")
+            },
+            selectedContentColor= Color.White,
+            unselectedContentColor= Color.White.copy(alpha = 0.2f),
+            onClick = {
+
+            },
+            selected = false
+        )
+        BottomNavigationItem(
+            icon= {
+                val image = painterResource(id = R.drawable.ic_entertainment)
+                Icon(image,"Entertainment")
+            },
+            selectedContentColor= Color.White,
+            unselectedContentColor= Color.White.copy(alpha = 0.2f),
+            onClick = {
+
+            },
+            selected = false
+        )
     }
 }
 
