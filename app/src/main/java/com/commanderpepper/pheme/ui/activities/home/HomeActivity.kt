@@ -91,9 +91,8 @@ fun DefaultPreview() {
             "John Doe",
             "The Weather",
             "Its sunny",
-            "https://example.com/image.jpg",
+            "https://i.imgur.com/olisBgy.png",
             0L)){
-
         }
     }
 }

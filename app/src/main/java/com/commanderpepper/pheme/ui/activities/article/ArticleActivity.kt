@@ -20,6 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.commanderpepper.pheme.ui.activities.article.ui.theme.PhemeTheme
 import com.commanderpepper.pheme.ui.activities.home.HomeActivity.Companion.ARTICLE_INTENT_ID
 import com.commanderpepper.pheme.uistate.NewsItem
+import com.commanderpepper.pheme.uistate.NewsItemUIState
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -47,30 +48,34 @@ class ArticleActivity : ComponentActivity() {
 }
 
 @Composable
-fun DisplayArticle(articleViewModel: ArticleViewModel){
-    val articleUIState : ArticleUIState by articleViewModel.articleUIState.collectAsState()
-    if(articleUIState.isError){
+fun DisplayArticle(articleViewModel: ArticleViewModel) {
+    val articleUIState: ArticleUIState by articleViewModel.articleUIState.collectAsState()
+    if (articleUIState.isError) {
         Text(text = "Something went wrong")
-    }
-    else if(articleUIState.isLoading){
-        Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
+    } else if (articleUIState.isLoading) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
             CircularProgressIndicator()
         }
-    }
-    else if(articleUIState.newsItemUIState != null){
+    } else if (articleUIState.newsItemUIState != null) {
         NewsItem(articleUIState.newsItemUIState!!)
     }
 }
 
-@Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
-}
-
 @Preview(showBackground = true)
 @Composable
-fun DefaultPreview2() {
+fun NewsItemPreview() {
     PhemeTheme {
-        Greeting("Android")
+        NewsItem(
+            NewsItemUIState(
+                publisher = "New York Times",
+                author = "Author",
+                title = "This is an incredible article",
+                thumbnail = "https://i.imgur.com/olisBgy.png",
+                content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+            )
+        )
     }
 }

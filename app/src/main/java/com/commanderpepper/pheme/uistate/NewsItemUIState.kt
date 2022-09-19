@@ -17,11 +17,11 @@ data class NewsItemUIState(
 
 @Composable
 fun NewsItem(newsItemUIState: NewsItemUIState){
-    Box(modifier = Modifier.fillMaxSize()) {
+    Box(modifier = Modifier.fillMaxSize().padding(4.dp)) {
         Column {
             if (newsItemUIState.thumbnail.isNotBlank()) {
                 AsyncImage(
-                    modifier = Modifier.weight(3 / 10f).padding(4.dp),
+                    modifier = Modifier.weight(3 / 10f).fillMaxWidth(),
                     model = newsItemUIState.thumbnail,
                     contentDescription = null
                 )
@@ -29,7 +29,7 @@ fun NewsItem(newsItemUIState: NewsItemUIState){
             Text(modifier = Modifier.fillMaxWidth(), text = newsItemUIState.title)
             Text(modifier = Modifier.fillMaxWidth(), text = newsItemUIState.author)
             Text(modifier = Modifier.fillMaxWidth(), text = newsItemUIState.publisher)
-            Text(modifier = Modifier.fillMaxWidth(), text = newsItemUIState.content)
+            Text(modifier = Modifier.weight(7 / 10f).fillMaxWidth(), text = newsItemUIState.content)
         }
     }
 }
