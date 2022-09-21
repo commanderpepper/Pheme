@@ -23,13 +23,17 @@ class NewsRepositoryImpl @Inject constructor(
         return flow {
             emit(Status.InProgress)
 
-            val remoteArticles = newsRemoteDataSource.retrieveCategoryArticles(category.category)
-            newsLocalDataSource.insertArticles(remoteArticles.map {
-                createArticleEntityUseCase(
-                    category,
-                    it
-                )
-            })
+            try {
+                val remoteArticles = newsRemoteDataSource.retrieveCategoryArticles(category.category)
+                newsLocalDataSource.insertArticles(remoteArticles.map {
+                    createArticleEntityUseCase(
+                        category,
+                        it
+                    )
+                })
+            }catch (exception: Exception){
+                Log.e(NewsRepository::class.toString(), exception.toString())
+            }
 
             val localArticles = newsLocalDataSource.getArticles(category)
             if (localArticles.isNotEmpty()) {
@@ -37,7 +41,7 @@ class NewsRepositoryImpl @Inject constructor(
                     convertArticleEntityToArticleInBetweenUseCase(
                         it
                     )
-                }))
+                }.take(50)))
             } else {
                 emit(Status.Failure("Something is bad"))
             }
@@ -51,13 +55,17 @@ class NewsRepositoryImpl @Inject constructor(
         return flow {
             emit(Status.InProgress)
 
-            val remoteArticles = newsRemoteDataSource.retrieveCountryArticles(category.category)
-            newsLocalDataSource.insertArticles(remoteArticles.map {
-                createArticleEntityUseCase(
-                    category,
-                    it
-                )
-            })
+            try {
+                val remoteArticles = newsRemoteDataSource.retrieveCountryArticles(category.category)
+                newsLocalDataSource.insertArticles(remoteArticles.map {
+                    createArticleEntityUseCase(
+                        category,
+                        it
+                    )
+                })
+            }catch (exception: Exception){
+                Log.e(NewsRepository::class.toString(), exception.toString())
+            }
 
             val localArticles = newsLocalDataSource.getArticles(category)
             if (localArticles.isNotEmpty()) {
@@ -65,7 +73,7 @@ class NewsRepositoryImpl @Inject constructor(
                     convertArticleEntityToArticleInBetweenUseCase(
                         it
                     )
-                }))
+                }.take(50)))
             } else {
                 emit(Status.Failure("Something is bad"))
             }

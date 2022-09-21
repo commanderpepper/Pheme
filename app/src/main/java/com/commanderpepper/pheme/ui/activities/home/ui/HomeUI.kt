@@ -1,10 +1,7 @@
 package com.commanderpepper.pheme.ui.activities.home.ui
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.RowScope
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
@@ -92,7 +89,7 @@ fun DisplayHomeActivity(viewModel: HomeViewModel, onArticleClicked: (Long) -> Un
     Scaffold(
         bottomBar = { val color = colorResource(id = R.color.bottom_app_color)
             HomeBottomBar(backgroundColor = color, onCategoryClicked) }
-    ) {
+    ) { paddingValues ->
         val homeUIState : HomeUIState by viewModel.homeUIState.collectAsState()
         if(homeUIState.isError){
             DisplayError()
@@ -101,7 +98,7 @@ fun DisplayHomeActivity(viewModel: HomeViewModel, onArticleClicked: (Long) -> Un
             LoadingArticles()
         }
         else if(homeUIState.newsPreviewList.isNotEmpty()){
-            LazyColumn(modifier = Modifier.fillMaxSize()) {
+            LazyColumn(modifier = Modifier.padding(paddingValues = paddingValues )) {
                 items(homeUIState.newsPreviewList, itemContent = {
                         item -> NewsPreviewItem(item, onClick = onArticleClicked)
                 })
