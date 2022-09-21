@@ -24,7 +24,7 @@ class NewsRemoteDataSourceImpl @Inject constructor(
     override suspend fun retrieveCountryArticles(category: String): List<Article> {
         val articleList = mutableListOf<Article>()
         withContext(ioDispatcher){
-            val remoteArticles = newsAPIService.getCountryArticles(category).articles
+            val remoteArticles = newsAPIService.getCountryArticles().articles
             articleList.addAll(remoteArticles)
         }
         return articleList
