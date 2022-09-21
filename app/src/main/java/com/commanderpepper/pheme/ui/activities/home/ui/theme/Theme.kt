@@ -1,4 +1,4 @@
-package com.commanderpepper.pheme.ui.activities.home.theme
+package com.commanderpepper.pheme.ui.activities.home.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme
