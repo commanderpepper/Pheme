@@ -45,7 +45,6 @@ fun NewsPreviewItem(newsPreviewItemUIState: NewsPreviewItemUIState, onClick: (Lo
                     Text(modifier = Modifier.fillMaxWidth(), maxLines = 2, text = newsPreviewItemUIState.author)
                 }
                 Text(modifier = Modifier.fillMaxWidth(), text = newsPreviewItemUIState.publisher)
-//            Text(modifier = Modifier.fillMaxWidth(), text = newsPreviewItemUIState.preview)
             }
         }
     }

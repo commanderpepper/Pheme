@@ -8,6 +8,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.res.stringResource
+import com.commanderpepper.pheme.R
 import com.commanderpepper.pheme.ui.activities.article.ArticleUIState
 import com.commanderpepper.pheme.ui.activities.article.ArticleViewModel
 import com.commanderpepper.pheme.uistate.NewsItem
@@ -16,7 +18,7 @@ import com.commanderpepper.pheme.uistate.NewsItem
 fun DisplayArticle(articleViewModel: ArticleViewModel) {
     val articleUIState: ArticleUIState by articleViewModel.articleUIState.collectAsState()
     if (articleUIState.isError) {
-        Text(text = "Something went wrong")
+        Text(text = stringResource(id = R.string.error_message))
     } else if (articleUIState.isLoading) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,

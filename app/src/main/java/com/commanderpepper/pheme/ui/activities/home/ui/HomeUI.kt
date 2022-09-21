@@ -17,6 +17,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import com.commanderpepper.pheme.R
 import com.commanderpepper.pheme.repository.local.Category
 import com.commanderpepper.pheme.ui.activities.home.HomeUIState
@@ -121,6 +122,6 @@ fun DisplayError(){
     Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
         val image = painterResource(id = R.drawable.pheme_portrait_)
         Image(modifier = Modifier.clip(CircleShape), painter = image, contentDescription = "Error Image")
-        Text(text = "Something went wrong")
+        Text(text = stringResource(id = R.string.error_message))
     }
 }
