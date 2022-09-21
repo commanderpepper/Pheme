@@ -29,13 +29,17 @@ class HomeViewModel @Inject constructor(
 
     fun categoryClicked(category: Category){
         viewModelScope.launch {
-            _homeUIStateFlow.emit(
-                _homeUIStateFlow.value.copy(
-                    currentCategory = category
+            val currentCategoryValue = _homeUIStateFlow.value.currentCategory
+            // If the category clicked is not the same as the current category then retrieve articles
+            if(currentCategoryValue != category){
+                _homeUIStateFlow.emit(
+                    _homeUIStateFlow.value.copy(
+                        currentCategory = category
+                    )
                 )
-            )
-            val categoryValue = _homeUIStateFlow.value.currentCategory
-            fetchArticles(categoryValue)
+                val categoryValue = _homeUIStateFlow.value.currentCategory
+                fetchArticles(categoryValue)
+            }
         }
     }
 
@@ -66,15 +70,13 @@ class HomeViewModel @Inject constructor(
                         _homeUIStateFlow.emit(
                             _homeUIStateFlow.value.copy(
                                 isLoading = true,
-                                isError = false,
-                                currentCategory = category
+                                isError = false
                             )
                         )
                     is Status.Success -> _homeUIStateFlow.emit(
                         _homeUIStateFlow.value.copy(
                             isLoading = false,
                             isError = false,
-                            currentCategory = category,
                             newsPreviewList = status.data.map { createNewsPreviewItemUseCase(it) }),
                     )
                     is Status.Failure -> _homeUIStateFlow.emit(
