@@ -11,8 +11,8 @@ class CreateArticleEntityUseCase @Inject constructor() {
             publisher = article.source.name,
             title = article.title,
             thumbnail = article.urlToImage ?: "",
-            preview = article.description,
-            content = article.content ?: article.description,
+            preview = article.description ?: "",
+            content = article.content ?: article.description ?: "",
             category = category.category,
             author = article.author ?: "",
             publication = article.publishedAt

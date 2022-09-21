@@ -28,7 +28,7 @@ class NewsRepositoryImpl @Inject constructor(
             val  localArticles = newsLocalDataSource.getArticles(category)
             emit(Status.Success(localArticles.map { convertArticleEntityToArticleInBetweenUseCase(it) }))
         }.catch {
-            Log.e("Repository", "Something went wrong")
+            Log.e(NewsRepository::class.toString(), it.toString())
             emit(Status.Failure("Something is bad"))
         }
     }
@@ -43,7 +43,7 @@ class NewsRepositoryImpl @Inject constructor(
             val  localArticles = newsLocalDataSource.getArticles(category)
             emit(Status.Success(localArticles.map { convertArticleEntityToArticleInBetweenUseCase(it) }))
         }.catch {
-            Log.e("Repository", "Something went wrong")
+            Log.e(NewsRepository::class.toString(), it.toString())
             emit(Status.Failure("Something is bad"))
         }
     }
@@ -60,7 +60,8 @@ class NewsRepositoryImpl @Inject constructor(
                 emit(Status.Failure("Article not found"))
             }
         }.catch {
-            Log.e("Repository", "Unable to get single article")
+            Log.e(NewsRepository::class.toString(), "Unable to get single article")
+            Log.e(NewsRepository::class.toString(), it.toString())
             emit(Status.Failure("Something went wrong"))
         }
     }

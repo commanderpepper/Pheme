@@ -6,8 +6,10 @@ import com.commanderpepper.pheme.repository.NewsRepository
 import com.commanderpepper.pheme.repository.Status
 import com.commanderpepper.pheme.repository.local.Category
 import com.commanderpepper.pheme.usecase.CreateNewsPreviewItemUseCase
+import com.commanderpepper.pheme.usecase.model.ArticleInBetween
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
@@ -56,5 +58,47 @@ class HomeViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    fun fetchArticles(category: Category = Category.NEWS) {
+        // Cancel the current job if one exists
+        viewModelJob?.cancel()
+
+        // Select the appropriate method to create the flow with
+        val returnFlow: (Category) -> Flow<Status<out List<ArticleInBetween>>> =
+            if (category == Category.NEWS) {
+                newsRepository::fetchNewsWithCountry
+            } else newsRepository::fetchNewsWithCategory
+
+        // Create a Job and assign it to the ViewModel Job. This Job will make a call to the Repository to gather the articles.
+        viewModelJob = viewModelScope.launch {
+            returnFlow(category).catch {
+                _homeUIStateFlow.emit(
+                    _homeUIStateFlow.value.copy(isLoading = false, isError = true)
+                )
+            }.collect { status ->
+                when (status) {
+                    is Status.InProgress ->
+                        _homeUIStateFlow.emit(
+                            _homeUIStateFlow.value.copy(
+                                isLoading = true,
+                                isError = false,
+                                currentCategory = category
+                            )
+                        )
+                    is Status.Success -> _homeUIStateFlow.emit(
+                        _homeUIStateFlow.value.copy(
+                            isLoading = false,
+                            isError = false,
+                            currentCategory = category,
+                            newsPreviewList = status.data.map { createNewsPreviewItemUseCase(it) }),
+                    )
+                    is Status.Failure -> _homeUIStateFlow.emit(
+                        _homeUIStateFlow.value.copy(isLoading = false, isError = true)
+                    )
+                }
+            }
+        }
+
     }
 }
