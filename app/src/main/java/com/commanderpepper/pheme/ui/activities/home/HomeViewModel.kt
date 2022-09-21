@@ -27,40 +27,24 @@ class HomeViewModel @Inject constructor(
 
     private var viewModelJob: Job? = null
 
-    fun fetchNews(category: String = "America") {
-        // Cancel the current job if one exists
-        viewModelJob?.cancel()
-
-        // Create a Job and assign it to the ViewModel Job. This Job will make a call to the Repository to gather the articles.
-        viewModelJob = viewModelScope.launch {
-            newsRepository.fetchNewsWithCountry(Category.NEWS).catch {
-                _homeUIStateFlow.emit(
-                    _homeUIStateFlow.value.copy(isLoading = false, isError = true)
+    fun categoryClicked(category: Category){
+        viewModelScope.launch {
+            _homeUIStateFlow.emit(
+                _homeUIStateFlow.value.copy(
+                    currentCategory = category
                 )
-            }.collect { status ->
-                when (status) {
-                    is Status.InProgress ->
-                        _homeUIStateFlow.emit(
-                            _homeUIStateFlow.value.copy(
-                                isLoading = true,
-                                isError = false
-                            )
-                        )
-                    is Status.Success -> _homeUIStateFlow.emit(
-                        _homeUIStateFlow.value.copy(
-                            isLoading = false,
-                            isError = false,
-                            newsPreviewList = status.data.map { createNewsPreviewItemUseCase(it) })
-                    )
-                    is Status.Failure -> _homeUIStateFlow.emit(
-                        _homeUIStateFlow.value.copy(isLoading = false, isError = true)
-                    )
-                }
-            }
+            )
+            val categoryValue = _homeUIStateFlow.value.currentCategory
+            fetchArticles(categoryValue)
         }
     }
 
-    fun fetchArticles(category: Category = Category.NEWS) {
+    fun loadArticles(){
+        val category = _homeUIStateFlow.value.currentCategory
+        fetchArticles(category)
+    }
+
+    private fun fetchArticles(category: Category = Category.NEWS) {
         // Cancel the current job if one exists
         viewModelJob?.cancel()
 
@@ -99,6 +83,5 @@ class HomeViewModel @Inject constructor(
                 }
             }
         }
-
     }
 }

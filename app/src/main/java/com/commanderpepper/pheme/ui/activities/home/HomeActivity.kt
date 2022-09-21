@@ -39,7 +39,7 @@ class HomeActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         lifecycleScope.launchWhenResumed {
-            vm.fetchNews()
+            vm.loadArticles()
         }
 
         setContent {
@@ -48,7 +48,7 @@ class HomeActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    DisplayHomeActivity(viewModel = vm, ::onArticleClicked, vm::fetchArticles)
+                    DisplayHomeActivity(viewModel = vm, ::onArticleClicked, vm::categoryClicked)
                 }
             }
         }
