@@ -91,12 +91,10 @@ fun DisplayHomeActivity(viewModel: HomeViewModel, onArticleClicked: (Long) -> Un
     ) {
         val homeUIState : HomeUIState by viewModel.homeUIState.collectAsState()
         if(homeUIState.isError){
-            Text(text = "Something went wrong")
+            DisplayError()
         }
-        else if(homeUIState.isLoading || homeUIState.newsPreviewList.isEmpty()){
-            Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
-                CircularProgressIndicator()
-            }
+        else if(homeUIState.isLoading){
+            LoadingArticles()
         }
         else if(homeUIState.newsPreviewList.isNotEmpty()){
             LazyColumn(modifier = Modifier.fillMaxSize()) {
@@ -105,5 +103,19 @@ fun DisplayHomeActivity(viewModel: HomeViewModel, onArticleClicked: (Long) -> Un
                 })
             }
         }
+    }
+}
+
+@Composable
+fun LoadingArticles(){
+    Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
+        CircularProgressIndicator()
+    }
+}
+
+@Composable
+fun DisplayError(){
+    Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
+        Text(text = "Something went wrong")
     }
 }

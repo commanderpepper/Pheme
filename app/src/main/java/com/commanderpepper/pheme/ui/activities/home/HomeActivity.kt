@@ -14,8 +14,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.lifecycleScope
 import com.commanderpepper.pheme.ui.activities.article.ArticleActivity
-import com.commanderpepper.pheme.ui.activities.home.ui.theme.PhemeTheme
 import com.commanderpepper.pheme.ui.activities.home.ui.DisplayHomeActivity
+import com.commanderpepper.pheme.ui.activities.home.ui.theme.PhemeTheme
 import com.commanderpepper.pheme.uistate.NewsPreviewItem
 import com.commanderpepper.pheme.uistate.NewsPreviewItemUIState
 import dagger.hilt.android.AndroidEntryPoint
