@@ -87,7 +87,7 @@ fun HomeBottomBar(backgroundColor : Color, onCategoryClicked: (Category) -> Unit
 @Composable
 fun DisplayHomeActivity(viewModel: HomeViewModel, onArticleClicked: (Long) -> Unit, onCategoryClicked: (Category) -> Unit){
     Scaffold(
-        bottomBar = { val color = colorResource(id = R.color.bottom_app_color)
+        bottomBar = { val color = MaterialTheme.colors.primaryVariant
             HomeBottomBar(backgroundColor = color, onCategoryClicked) }
     ) { paddingValues ->
         val homeUIState : HomeUIState by viewModel.homeUIState.collectAsState()

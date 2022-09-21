@@ -1,10 +1,11 @@
-package com.commanderpepper.pheme.ui.activities.article.ui.theme
+package com.commanderpepper.pheme.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 private val DarkColorPalette = darkColors(
     primary = Purple200,
@@ -34,6 +35,9 @@ fun PhemeTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable 
     } else {
         LightColorPalette
     }
+
+    val systemUiController = rememberSystemUiController()
+    systemUiController.setStatusBarColor(color = colors.primaryVariant)
 
     MaterialTheme(
         colors = colors,

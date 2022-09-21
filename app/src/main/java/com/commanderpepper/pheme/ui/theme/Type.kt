@@ -1,4 +1,4 @@
-package com.commanderpepper.pheme.ui.activities.home.ui.theme
+package com.commanderpepper.pheme.ui.theme
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle

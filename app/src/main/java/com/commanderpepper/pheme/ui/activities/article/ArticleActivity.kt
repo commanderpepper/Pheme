@@ -11,8 +11,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.commanderpepper.pheme.ui.activities.article.ui.DisplayArticle
-import com.commanderpepper.pheme.ui.activities.article.ui.theme.PhemeTheme
 import com.commanderpepper.pheme.ui.activities.home.HomeActivity.Companion.ARTICLE_INTENT_ID
+import com.commanderpepper.pheme.ui.theme.PhemeTheme
 import com.commanderpepper.pheme.uistate.NewsItem
 import com.commanderpepper.pheme.uistate.NewsItemUIState
 import dagger.hilt.android.AndroidEntryPoint
