@@ -2,6 +2,7 @@ package com.commanderpepper.pheme.ui.activities.article
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
@@ -26,6 +27,7 @@ class ArticleActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         val intent = this.intent
         val id = intent.getLongExtra(ARTICLE_INTENT_ID, 0L)
+        vm.retrieveArticle(id)
         setContent {
             PhemeTheme {
                 // A surface container using the 'background' color from the theme
@@ -33,8 +35,10 @@ class ArticleActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    vm.retrieveArticle(id)
-                    DisplayArticle(vm)
+                    val onBackPressedDispatcher = LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher
+                    DisplayArticle(vm){
+                        onBackPressedDispatcher?.onBackPressed()
+                    }
                 }
             }
         }
