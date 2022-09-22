@@ -12,6 +12,7 @@ import androidx.compose.ui.res.stringResource
 import com.commanderpepper.pheme.R
 import com.commanderpepper.pheme.ui.activities.article.ArticleUIState
 import com.commanderpepper.pheme.ui.activities.article.ArticleViewModel
+import com.commanderpepper.pheme.ui.util.Loading
 import com.commanderpepper.pheme.uistate.NewsItem
 
 @Composable
@@ -20,13 +21,13 @@ fun DisplayArticle(articleViewModel: ArticleViewModel) {
     if (articleUIState.isError) {
         Text(text = stringResource(id = R.string.error_message))
     } else if (articleUIState.isLoading) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ) {
-            CircularProgressIndicator()
-        }
+        LoadingArticle()
     } else if (articleUIState.newsItemUIState != null) {
         NewsItem(articleUIState.newsItemUIState!!)
     }
+}
+
+@Composable
+fun LoadingArticle(){
+    Loading()
 }
