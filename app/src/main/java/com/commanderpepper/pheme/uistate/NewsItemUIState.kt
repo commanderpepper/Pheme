@@ -1,6 +1,7 @@
 package com.commanderpepper.pheme.uistate
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -26,9 +27,9 @@ fun NewsItem(newsItemUIState: NewsItemUIState){
                     contentDescription = null
                 )
             }
-            Text(modifier = Modifier.fillMaxWidth(), text = newsItemUIState.title)
-            Text(modifier = Modifier.fillMaxWidth(), text = newsItemUIState.author)
-            Text(modifier = Modifier.fillMaxWidth(), text = newsItemUIState.publisher)
+            Text(modifier = Modifier.fillMaxWidth(), style = MaterialTheme.typography.h5, text = newsItemUIState.title)
+            Text(modifier = Modifier.fillMaxWidth(), style = MaterialTheme.typography.subtitle2, text = newsItemUIState.author)
+            Text(modifier = Modifier.fillMaxWidth(), style = MaterialTheme.typography.subtitle2, text = newsItemUIState.publisher)
             Text(modifier = Modifier.weight(7 / 10f).fillMaxWidth(), text = newsItemUIState.content)
         }
     }
