@@ -8,7 +8,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImage
+import coil.compose.SubcomposeAsyncImage
+import com.commanderpepper.pheme.ui.util.Loading
 
 data class NewsPreviewItemUIState(
     val publisher: String,
@@ -33,9 +34,10 @@ fun NewsPreviewItem(newsPreviewItemUIState: NewsPreviewItemUIState, onClick: (Lo
             horizontalArrangement = Arrangement.Start
         ) {
             if (newsPreviewItemUIState.thumbnail.isNotBlank()) {
-                AsyncImage(
+                SubcomposeAsyncImage(
                     modifier = Modifier.weight(3 / 10f).padding(4.dp),
                     model = newsPreviewItemUIState.thumbnail,
+                    loading = { Loading() },
                     contentDescription = null
                 )
             }

@@ -3,12 +3,11 @@ package com.commanderpepper.pheme.uistate
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImage
-import com.commanderpepper.pheme.R
+import coil.compose.SubcomposeAsyncImage
+import com.commanderpepper.pheme.ui.util.Loading
 
 data class NewsItemUIState(
     val publisher: String,
@@ -23,10 +22,10 @@ fun NewsItem(newsItemUIState: NewsItemUIState){
     Box(modifier = Modifier.fillMaxSize().padding(4.dp)) {
         Column {
             if (newsItemUIState.thumbnail.isNotBlank()) {
-                AsyncImage(
+                SubcomposeAsyncImage(
                     modifier = Modifier.weight(3 / 10f).fillMaxWidth(),
                     model = newsItemUIState.thumbnail,
-                    placeholder = painterResource(id = R.drawable.pheme_portrait_),
+                    loading = { Loading() },
                     contentDescription = null
                 )
             }
