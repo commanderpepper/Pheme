@@ -15,7 +15,7 @@ class CreateArticleEntityUseCase @Inject constructor() {
             content = article.content ?: article.description ?: "",
             category = category.category,
             author = article.author ?: "",
-            publication = article.publishedAt
+            publication = article.publishedAt ?: ""
         )
     }
 }

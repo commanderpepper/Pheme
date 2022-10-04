@@ -12,7 +12,7 @@ data class Article(val source: Source,
                    val description: String?,
                    val url: String,
                    val urlToImage: String?,
-                   val publishedAt: String,
+                   val publishedAt: String?,
                    val content: String? )
 
 @JsonClass(generateAdapter = true)
