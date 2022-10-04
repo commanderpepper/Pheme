@@ -15,6 +15,7 @@ class ConvertArticleEntityToArticleInBetweenUseCase @Inject constructor() {
             title = articleEntity.title,
             preview = articleEntity.preview,
             thumbnail = articleEntity.thumbnail,
+            date = articleEntity.publication,
             content = articleEntity.content
         )
     }

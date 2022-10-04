@@ -7,5 +7,6 @@ data class ArticleInBetween(
     val title: String,
     val preview: String,
     val thumbnail: String,
+    val date: String,
     val content: String
 )

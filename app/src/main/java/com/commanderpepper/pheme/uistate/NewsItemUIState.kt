@@ -14,6 +14,7 @@ data class NewsItemUIState(
     val author: String,
     val title: String,
     val thumbnail: String,
+    val date: String,
     val content: String
 )
 
@@ -32,6 +33,7 @@ fun NewsItem(newsItemUIState: NewsItemUIState){
             Text(modifier = Modifier.fillMaxWidth(), style = MaterialTheme.typography.h5, text = newsItemUIState.title)
             Text(modifier = Modifier.fillMaxWidth(), style = MaterialTheme.typography.subtitle2, text = newsItemUIState.author)
             Text(modifier = Modifier.fillMaxWidth(), style = MaterialTheme.typography.subtitle2, text = newsItemUIState.publisher)
+            Text(modifier = Modifier.fillMaxWidth(), style = MaterialTheme.typography.subtitle2, text = newsItemUIState.date)
             Text(modifier = Modifier.weight(7 / 10f).fillMaxWidth(), text = newsItemUIState.content)
         }
     }

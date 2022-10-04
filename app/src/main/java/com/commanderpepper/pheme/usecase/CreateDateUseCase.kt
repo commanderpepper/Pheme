@@ -4,8 +4,9 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import java.time.ZonedDateTime
 import java.util.*
+import javax.inject.Inject
 
-class CreateDateUseCase {
+class CreateDateUseCase @Inject constructor() {
     @RequiresApi(Build.VERSION_CODES.O)
     operator fun invoke(dateAsString: String?): String {
         if(dateAsString.isNullOrBlank()){
