@@ -33,7 +33,7 @@ class HomeActivity : ComponentActivity() {
         }
 
         setContent {
-            PhemeTheme() {
+            PhemeTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
@@ -42,6 +42,11 @@ class HomeActivity : ComponentActivity() {
                 }
             }
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        vm.deleteArticles()
     }
 
     private fun onArticleClicked(id: Long){

@@ -100,4 +100,8 @@ class NewsRepositoryImpl @Inject constructor(
             emit(Status.Failure("Something went wrong"))
         }
     }
+
+    override suspend fun deleteArticles() {
+        newsLocalDataSource.deleteAllArticles()
+    }
 }

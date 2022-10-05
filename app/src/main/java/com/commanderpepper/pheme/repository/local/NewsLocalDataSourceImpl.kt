@@ -1,13 +1,9 @@
 package com.commanderpepper.pheme.repository.local
 
 import com.commanderpepper.pheme.CoroutinesScopesModule
-import com.commanderpepper.pheme.data.Article
-import com.commanderpepper.pheme.room.model.ArticleDAO
+import com.commanderpepper.pheme.room.ArticleDAO
 import com.commanderpepper.pheme.room.model.ArticleEntity
-import com.commanderpepper.pheme.uistate.NewsItemUIState
-import com.commanderpepper.pheme.usecase.CreateArticleEntityUseCase
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 

@@ -48,6 +48,12 @@ class HomeViewModel @Inject constructor(
         fetchArticles(category)
     }
 
+    fun deleteArticles() {
+        viewModelScope.launch {
+            newsRepository.deleteArticles()
+        }
+    }
+
     private fun fetchArticles(category: Category = Category.NEWS) {
         // Cancel the current job if one exists
         viewModelJob?.cancel()

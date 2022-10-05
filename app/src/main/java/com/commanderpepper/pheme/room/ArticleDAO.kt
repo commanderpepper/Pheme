@@ -1,9 +1,9 @@
-package com.commanderpepper.pheme.room.model
+package com.commanderpepper.pheme.room
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
-import kotlinx.coroutines.flow.Flow
+import com.commanderpepper.pheme.room.model.ArticleEntity
 
 @Dao
 interface ArticleDAO {
