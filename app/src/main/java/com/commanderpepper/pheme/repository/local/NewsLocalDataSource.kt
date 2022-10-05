@@ -12,7 +12,7 @@ interface NewsLocalDataSource  {
 
     suspend fun getArticle(id: Long): ArticleEntity
 
-    suspend fun deleteAllArticles()
+    suspend fun deleteArticles()
 }
 
 enum class Category(val category: String){

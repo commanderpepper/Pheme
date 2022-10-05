@@ -26,9 +26,14 @@ class NewsLocalDataSourceImpl @Inject constructor(
         articleDAO.getArticle(id)
     }
 
-    override suspend fun deleteAllArticles() {
+    override suspend fun deleteArticles() {
         withContext(ioDispatcher){
-            articleDAO.deleteArticles()
+            Category.values().forEach { category ->
+                val count = articleDAO.countArticles(category.category)
+                if(count > 60){
+                    articleDAO.deleteFortyArticles(category.category)
+                }
+            }
         }
     }
 }

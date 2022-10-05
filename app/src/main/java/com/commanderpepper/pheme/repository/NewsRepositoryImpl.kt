@@ -102,6 +102,6 @@ class NewsRepositoryImpl @Inject constructor(
     }
 
     override suspend fun deleteArticles() {
-        newsLocalDataSource.deleteAllArticles()
+        newsLocalDataSource.deleteArticles()
     }
 }

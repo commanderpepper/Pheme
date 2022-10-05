@@ -66,16 +66,14 @@ class NewsLocalDataSourceTest {
 
     @Test
     fun insertArticlesAndDeleteArticle() = runTest {
-        newsLocalDataSource.insertArticles(listOf(articleEntityOne, articleEntityTwo))
-        newsLocalDataSource.deleteAllArticles()
+        val list = mutableListOf<ArticleEntity>()
+        repeat(100){
+            list.add(articleEntityOne)
+        }
+        newsLocalDataSource.insertArticles(list)
+        newsLocalDataSource.deleteArticles()
         val returnedArticleEntities = newsLocalDataSource.getArticles(Category.NEWS)
-        Assert.assertTrue(returnedArticleEntities.isEmpty())
+        Assert.assertTrue(returnedArticleEntities.isEmpty().not())
+        Assert.assertTrue(returnedArticleEntities.size == 60)
     }
-
-
-
-
-
-
-
 }
