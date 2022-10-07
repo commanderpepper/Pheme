@@ -48,7 +48,7 @@ fun NewsItem(modifier: Modifier = Modifier, newsItemUIState: NewsItemUIState){
 @Composable
 fun NewsItemExpanded(modifier: Modifier = Modifier, newsItemUIState: NewsItemUIState){
     Column(modifier = modifier.fillMaxSize()) {
-        Row() {
+        Row(modifier = modifier.weight(4 / 10f).padding(4.dp)) {
             if(newsItemUIState.thumbnail.isNotBlank()){
                 SubcomposeAsyncImage(
                     modifier = Modifier,
@@ -64,6 +64,6 @@ fun NewsItemExpanded(modifier: Modifier = Modifier, newsItemUIState: NewsItemUIS
                 Text(modifier = Modifier.fillMaxWidth(), style = MaterialTheme.typography.subtitle2, text = newsItemUIState.date)
             }
         }
-        Text(modifier = Modifier.fillMaxHeight(), text = newsItemUIState.content)
+        Text(modifier = Modifier.weight(6 / 10f).fillMaxHeight(), text = newsItemUIState.content)
     }
 }

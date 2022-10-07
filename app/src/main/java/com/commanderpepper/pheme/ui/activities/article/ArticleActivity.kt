@@ -13,11 +13,13 @@ import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import com.commanderpepper.pheme.ui.activities.article.ui.DisplayArticle
 import com.commanderpepper.pheme.ui.activities.home.HomeActivity.Companion.ARTICLE_INTENT_ID
 import com.commanderpepper.pheme.ui.theme.PhemeTheme
 import com.commanderpepper.pheme.uistate.NewsItem
+import com.commanderpepper.pheme.uistate.NewsItemExpanded
 import com.commanderpepper.pheme.uistate.NewsItemUIState
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -60,6 +62,23 @@ class ArticleActivity : ComponentActivity() {
 fun NewsItemPreview() {
     PhemeTheme {
         NewsItem(
+            newsItemUIState = NewsItemUIState(
+                publisher = "New York Times",
+                author = "You, you wrote this. Congrats.",
+                title = "This is an incredible article",
+                thumbnail = "https://i.imgur.com/olisBgy.png",
+                date = "January 1, 2022",
+                content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+            )
+        )
+    }
+}
+
+@Preview(name = "News Item Expanded", device = Devices.NEXUS_7_2013, showBackground = true)
+@Composable
+fun NewsItemExpandedPreview(){
+    PhemeTheme {
+        NewsItemExpanded(
             newsItemUIState = NewsItemUIState(
                 publisher = "New York Times",
                 author = "You, you wrote this. Congrats.",
