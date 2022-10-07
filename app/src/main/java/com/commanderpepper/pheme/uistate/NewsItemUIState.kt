@@ -19,12 +19,16 @@ data class NewsItemUIState(
 )
 
 @Composable
-fun NewsItem(newsItemUIState: NewsItemUIState){
-    Box(modifier = Modifier.fillMaxSize().padding(4.dp)) {
+fun NewsItem(modifier: Modifier = Modifier, newsItemUIState: NewsItemUIState){
+    Box(modifier = modifier
+        .fillMaxSize()
+        .padding(4.dp)) {
         Column {
             if (newsItemUIState.thumbnail.isNotBlank()) {
                 SubcomposeAsyncImage(
-                    modifier = Modifier.weight(3 / 10f).fillMaxWidth(),
+                    modifier = Modifier
+                        .weight(3 / 10f)
+                        .fillMaxWidth(),
                     model = newsItemUIState.thumbnail,
                     loading = { Loading() },
                     contentDescription = null
@@ -34,7 +38,32 @@ fun NewsItem(newsItemUIState: NewsItemUIState){
             Text(modifier = Modifier.fillMaxWidth(), style = MaterialTheme.typography.subtitle2, text = newsItemUIState.author)
             Text(modifier = Modifier.fillMaxWidth(), style = MaterialTheme.typography.subtitle2, text = newsItemUIState.publisher)
             Text(modifier = Modifier.fillMaxWidth(), style = MaterialTheme.typography.subtitle2, text = newsItemUIState.date)
-            Text(modifier = Modifier.weight(7 / 10f).fillMaxWidth(), text = newsItemUIState.content)
+            Text(modifier = Modifier
+                .weight(7 / 10f)
+                .fillMaxWidth(), text = newsItemUIState.content)
         }
+    }
+}
+
+@Composable
+fun NewsItemExpanded(modifier: Modifier = Modifier, newsItemUIState: NewsItemUIState){
+    Column(modifier = modifier.fillMaxSize()) {
+        Row() {
+            if(newsItemUIState.thumbnail.isNotBlank()){
+                SubcomposeAsyncImage(
+                    modifier = Modifier,
+                    model = newsItemUIState.thumbnail,
+                    loading = { Loading() },
+                    contentDescription = null
+                )
+            }
+            Column() {
+                Text(modifier = Modifier.fillMaxWidth(), style = MaterialTheme.typography.h5, text = newsItemUIState.title)
+                Text(modifier = Modifier.fillMaxWidth(), style = MaterialTheme.typography.subtitle2, text = newsItemUIState.author)
+                Text(modifier = Modifier.fillMaxWidth(), style = MaterialTheme.typography.subtitle2, text = newsItemUIState.publisher)
+                Text(modifier = Modifier.fillMaxWidth(), style = MaterialTheme.typography.subtitle2, text = newsItemUIState.date)
+            }
+        }
+        Text(modifier = Modifier.fillMaxHeight(), text = newsItemUIState.content)
     }
 }

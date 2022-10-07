@@ -8,6 +8,9 @@ import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
+import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
+import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -18,6 +21,7 @@ import com.commanderpepper.pheme.uistate.NewsItem
 import com.commanderpepper.pheme.uistate.NewsItemUIState
 import dagger.hilt.android.AndroidEntryPoint
 
+@OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @AndroidEntryPoint
 class ArticleActivity : ComponentActivity() {
 
@@ -29,14 +33,20 @@ class ArticleActivity : ComponentActivity() {
         val id = intent.getLongExtra(ARTICLE_INTENT_ID, 0L)
         vm.retrieveArticle(id)
         setContent {
+
+            // If the phone is in landscape mode then the isExpandedScreen boolean is most likely true
+            val widthSizeClass = calculateWindowSizeClass(this).widthSizeClass
+            val isExpandedScreen = widthSizeClass == WindowWidthSizeClass.Expanded
+
             PhemeTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    val onBackPressedDispatcher = LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher
-                    DisplayArticle(articleViewModel = vm){
+                    val onBackPressedDispatcher =
+                        LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher
+                    DisplayArticle(isExpandedScreen = isExpandedScreen, articleViewModel = vm) {
                         onBackPressedDispatcher?.onBackPressed()
                     }
                 }
@@ -50,7 +60,7 @@ class ArticleActivity : ComponentActivity() {
 fun NewsItemPreview() {
     PhemeTheme {
         NewsItem(
-            NewsItemUIState(
+            newsItemUIState = NewsItemUIState(
                 publisher = "New York Times",
                 author = "You, you wrote this. Congrats.",
                 title = "This is an incredible article",

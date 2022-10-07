@@ -13,9 +13,10 @@ import com.commanderpepper.pheme.ui.activities.article.ArticleUIState
 import com.commanderpepper.pheme.ui.activities.article.ArticleViewModel
 import com.commanderpepper.pheme.ui.util.Loading
 import com.commanderpepper.pheme.uistate.NewsItem
+import com.commanderpepper.pheme.uistate.NewsItemExpanded
 
 @Composable
-fun DisplayArticle(modifier: Modifier = Modifier, articleViewModel: ArticleViewModel, onBackClicked: () -> Unit) {
+fun DisplayArticle(modifier: Modifier = Modifier, isExpandedScreen: Boolean, articleViewModel: ArticleViewModel, onBackClicked: () -> Unit) {
     val articleUIState: ArticleUIState by articleViewModel.articleUIState.collectAsState()
     Scaffold(modifier = modifier, topBar = {
         val color = MaterialTheme.colors.primaryVariant
@@ -30,7 +31,12 @@ fun DisplayArticle(modifier: Modifier = Modifier, articleViewModel: ArticleViewM
         } else if (articleUIState.isLoading) {
             LoadingArticle()
         } else if (articleUIState.newsItemUIState != null) {
-            NewsItem(articleUIState.newsItemUIState!!)
+            if(isExpandedScreen){
+                NewsItemExpanded(newsItemUIState = articleUIState.newsItemUIState!!)
+            }
+            else {
+                NewsItem(newsItemUIState = articleUIState.newsItemUIState!!)
+            }
         }
     }
 }
