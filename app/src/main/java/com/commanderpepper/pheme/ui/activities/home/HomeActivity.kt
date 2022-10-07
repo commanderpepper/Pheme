@@ -38,7 +38,7 @@ class HomeActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    DisplayHomeActivity(viewModel = vm, ::onArticleClicked, vm::categoryClicked)
+                    DisplayHomeActivity(viewModel = vm, onArticleClicked = ::onArticleClicked, onCategoryClicked = vm::categoryClicked)
                 }
             }
         }

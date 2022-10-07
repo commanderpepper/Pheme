@@ -6,6 +6,7 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.commanderpepper.pheme.R
 import com.commanderpepper.pheme.ui.activities.article.ArticleUIState
@@ -14,9 +15,9 @@ import com.commanderpepper.pheme.ui.util.Loading
 import com.commanderpepper.pheme.uistate.NewsItem
 
 @Composable
-fun DisplayArticle(articleViewModel: ArticleViewModel, onBackClicked: () -> Unit) {
+fun DisplayArticle(modifier: Modifier = Modifier, articleViewModel: ArticleViewModel, onBackClicked: () -> Unit) {
     val articleUIState: ArticleUIState by articleViewModel.articleUIState.collectAsState()
-    Scaffold(topBar = {
+    Scaffold(modifier = modifier, topBar = {
         val color = MaterialTheme.colors.primaryVariant
         TopAppBar(backgroundColor = color) {
             IconButton(onClick = { onBackClicked() }) {
@@ -35,11 +36,11 @@ fun DisplayArticle(articleViewModel: ArticleViewModel, onBackClicked: () -> Unit
 }
 
 @Composable
-fun LoadingArticle(){
+fun LoadingArticle(modifier: Modifier = Modifier){
     Loading()
 }
 
 @Composable
-fun ArticleTopBar(onBackClicked: () -> Unit){
+fun ArticleTopBar(modifier: Modifier = Modifier, onBackClicked: () -> Unit){
 
 }

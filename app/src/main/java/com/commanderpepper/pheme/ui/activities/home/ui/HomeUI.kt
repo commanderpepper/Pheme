@@ -85,8 +85,9 @@ fun HomeBottomBar(backgroundColor : Color, onCategoryClicked: (Category) -> Unit
 }
 
 @Composable
-fun DisplayHomeActivity(viewModel: HomeViewModel, onArticleClicked: (Long) -> Unit, onCategoryClicked: (Category) -> Unit){
+fun DisplayHomeActivity(modifier: Modifier = Modifier, viewModel: HomeViewModel, onArticleClicked: (Long) -> Unit, onCategoryClicked: (Category) -> Unit){
     Scaffold(
+        modifier = modifier,
         bottomBar = { val color = MaterialTheme.colors.primaryVariant
             HomeBottomBar(backgroundColor = color, onCategoryClicked) }
     ) { paddingValues ->
@@ -108,13 +109,13 @@ fun DisplayHomeActivity(viewModel: HomeViewModel, onArticleClicked: (Long) -> Un
 }
 
 @Composable
-fun LoadingArticles(){
+fun LoadingArticles(modifier: Modifier = Modifier){
     Loading()
 }
 
 @Composable
-fun DisplayError(){
-    Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
+fun DisplayError(modifier: Modifier = Modifier){
+    Column(modifier = modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
         val image = painterResource(id = R.drawable.pheme_portrait_)
         Image(modifier = Modifier.clip(CircleShape), painter = image, contentDescription = "Error Image")
         Text(text = stringResource(id = R.string.error_message))

@@ -36,7 +36,7 @@ class ArticleActivity : ComponentActivity() {
                     color = MaterialTheme.colors.background
                 ) {
                     val onBackPressedDispatcher = LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher
-                    DisplayArticle(vm){
+                    DisplayArticle(articleViewModel = vm){
                         onBackPressedDispatcher?.onBackPressed()
                     }
                 }
