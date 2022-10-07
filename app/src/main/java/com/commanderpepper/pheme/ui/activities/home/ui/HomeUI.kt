@@ -22,18 +22,19 @@ import com.commanderpepper.pheme.ui.util.Loading
 import com.commanderpepper.pheme.uistate.NewsPreviewItem
 
 @Composable
-private fun RowScope.CategoryButton(category: Category, resourceId: Int, contentDescription: String, isSelected: Boolean, buttonClick: (Category) -> Unit) {
+private fun RowScope.CategoryButton(categoryButtonUIState: CategoryButtonUIState, buttonClick: (Category) -> Unit) {
+    val contentDescription = stringResource(id = categoryButtonUIState.contentDescriptionId)
     BottomNavigationItem(
         icon = {
-            val image = painterResource(id = resourceId)
+            val image = painterResource(id = categoryButtonUIState.resourceId)
             Icon(image, contentDescription)
         },
         selectedContentColor = Color.White,
         unselectedContentColor = Color.White.copy(alpha = 0.2f),
         onClick = {
-            buttonClick(category)
+            buttonClick(categoryButtonUIState.category)
         },
-        selected = isSelected
+        selected = categoryButtonUIState.isSelected
     )
 }
 
@@ -41,41 +42,45 @@ private fun RowScope.CategoryButton(category: Category, resourceId: Int, content
 fun HomeBottomBar(backgroundColor : Color, onCategoryClicked: (Category) -> Unit){
     var category : Category by rememberSaveable { mutableStateOf(Category.NEWS) }
     BottomAppBar(backgroundColor = backgroundColor) {
-        CategoryButton(
+        CategoryButton(CategoryButtonUIState(
             category = Category.NEWS,
             resourceId = R.drawable.ic_news,
-            contentDescription = "News",
-            isSelected = category == Category.NEWS,
+            contentDescriptionId = R.string.home_activity_bottom_bar_news_content_description,
+            isSelected = category == Category.NEWS
+        ),
             buttonClick = {
                 category = Category.NEWS
                 onCategoryClicked(category)
             }
         )
-        CategoryButton(
+        CategoryButton(CategoryButtonUIState(
             category = Category.TECH,
             resourceId = R.drawable.ic_technology,
-            contentDescription = "Technology",
-            isSelected = category == Category.TECH,
+            contentDescriptionId = R.string.home_activity_bottom_bar_technology_content_description,
+            isSelected = category == Category.TECH
+        ),
             buttonClick = {
                 category = Category.TECH
                 onCategoryClicked(category)
             }
         )
-        CategoryButton(
+        CategoryButton(CategoryButtonUIState(
             category = Category.ENTERTAINMENT,
             resourceId = R.drawable.ic_entertainment,
-            contentDescription = "Entertainment",
-            isSelected = category == Category.ENTERTAINMENT,
+            contentDescriptionId = R.string.home_activity_bottom_bar_entertainment_content_description,
+            isSelected = category == Category.ENTERTAINMENT
+        ),
             buttonClick = {
                 category = Category.ENTERTAINMENT
                 onCategoryClicked(category)
             }
         )
-        CategoryButton(
+        CategoryButton(CategoryButtonUIState(
             category = Category.SPORTS,
             resourceId = R.drawable.ic_sports,
-            contentDescription = "Sports",
-            isSelected = category == Category.SPORTS,
+            contentDescriptionId = R.string.home_activity_bottom_bar_sports_content_description,
+            isSelected = category == Category.SPORTS
+        ),
             buttonClick = {
                 category = Category.SPORTS
                 onCategoryClicked(category)
