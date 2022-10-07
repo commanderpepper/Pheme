@@ -1,6 +1,8 @@
 package com.commanderpepper.pheme.uistate
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -20,6 +22,7 @@ data class NewsItemUIState(
 
 @Composable
 fun NewsItem(modifier: Modifier = Modifier, newsItemUIState: NewsItemUIState){
+    val scrollState = rememberScrollState(0)
     Box(modifier = modifier
         .fillMaxSize()
         .padding(4.dp)) {
@@ -40,15 +43,19 @@ fun NewsItem(modifier: Modifier = Modifier, newsItemUIState: NewsItemUIState){
             Text(modifier = Modifier.fillMaxWidth(), style = MaterialTheme.typography.subtitle2, text = newsItemUIState.date)
             Text(modifier = Modifier
                 .weight(7 / 10f)
-                .fillMaxWidth(), text = newsItemUIState.content)
+                .fillMaxWidth()
+                .verticalScroll(scrollState), text = newsItemUIState.content)
         }
     }
 }
 
 @Composable
 fun NewsItemExpanded(modifier: Modifier = Modifier, newsItemUIState: NewsItemUIState){
+    val scrollState = rememberScrollState(0)
     Column(modifier = modifier.fillMaxSize()) {
-        Row(modifier = modifier.weight(4 / 10f).padding(4.dp)) {
+        Row(modifier = modifier
+            .weight(4 / 10f)
+            .padding(4.dp)) {
             if(newsItemUIState.thumbnail.isNotBlank()){
                 SubcomposeAsyncImage(
                     modifier = Modifier,
@@ -64,6 +71,9 @@ fun NewsItemExpanded(modifier: Modifier = Modifier, newsItemUIState: NewsItemUIS
                 Text(modifier = Modifier.fillMaxWidth(), style = MaterialTheme.typography.subtitle2, text = newsItemUIState.date)
             }
         }
-        Text(modifier = Modifier.weight(6 / 10f).fillMaxHeight(), text = newsItemUIState.content)
+        Text(modifier = Modifier
+            .weight(6 / 10f)
+            .fillMaxHeight()
+            .verticalScroll(scrollState), text = newsItemUIState.content)
     }
 }
