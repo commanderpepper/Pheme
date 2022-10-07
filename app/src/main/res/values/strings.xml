@@ -3,4 +3,8 @@
     <string name="title_activity_article">ArticleActivity</string>
 
     <string name="error_message">Something went wrong</string>
+
+    <string name="news_repository_error_message">@string/error_message</string>
+    <string name="news_repository_unable_to_fetch_article">Unable to fetch article</string>
+    <string name="news_repository_article_not_found">Article not found</string>
 </resources>

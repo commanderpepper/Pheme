@@ -1,12 +1,14 @@
 package com.commanderpepper.pheme.repository
 
 import android.util.Log
+import com.commanderpepper.pheme.R
 import com.commanderpepper.pheme.repository.local.Category
 import com.commanderpepper.pheme.repository.local.NewsLocalDataSource
 import com.commanderpepper.pheme.repository.remote.NewsRemoteDataSource
 import com.commanderpepper.pheme.usecase.ConvertArticleEntityToArticleInBetweenUseCase
 import com.commanderpepper.pheme.usecase.CreateArticleEntityUseCase
 import com.commanderpepper.pheme.usecase.model.ArticleInBetween
+import com.commanderpepper.pheme.util.StringProvider
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
@@ -16,7 +18,8 @@ class NewsRepositoryImpl @Inject constructor(
     private val newsLocalDataSource: NewsLocalDataSource,
     private val newsRemoteDataSource: NewsRemoteDataSource,
     private val createArticleEntityUseCase: CreateArticleEntityUseCase,
-    private val convertArticleEntityToArticleInBetweenUseCase: ConvertArticleEntityToArticleInBetweenUseCase
+    private val convertArticleEntityToArticleInBetweenUseCase: ConvertArticleEntityToArticleInBetweenUseCase,
+    private val stringProvider: StringProvider
 ) : NewsRepository {
 
     override fun fetchNewsWithCategory(category: Category): Flow<Status<out List<ArticleInBetween>>> {
@@ -47,7 +50,7 @@ class NewsRepositoryImpl @Inject constructor(
             }
         }.catch {
             Log.e(NewsRepository::class.toString(), it.toString())
-            emit(Status.Failure("Something is bad"))
+            emit(Status.Failure(stringProvider.getString(R.string.news_repository_error_message)))
         }
     }
 
@@ -75,12 +78,12 @@ class NewsRepositoryImpl @Inject constructor(
                     )
                 }.take(50)))
             } else {
-                emit(Status.Failure("Something is bad"))
+                emit(Status.Failure(stringProvider.getString(R.string.news_repository_error_message)))
             }
 
         }.catch {
             Log.e(NewsRepository::class.toString(), it.toString())
-            emit(Status.Failure("Something is bad"))
+            emit(Status.Failure(stringProvider.getString(R.string.news_repository_error_message)))
         }
     }
 
@@ -92,12 +95,12 @@ class NewsRepositoryImpl @Inject constructor(
             if (articleEntity != null) {
                 emit(Status.Success(convertArticleEntityToArticleInBetweenUseCase(articleEntity)))
             } else {
-                emit(Status.Failure("Article not found"))
+                emit(Status.Failure(stringProvider.getString(R.string.news_repository_article_not_found)))
             }
         }.catch {
-            Log.e(NewsRepository::class.toString(), "Unable to get single article")
+            Log.e(NewsRepository::class.toString(), stringProvider.getString(R.string.news_repository_unable_to_fetch_article))
             Log.e(NewsRepository::class.toString(), it.toString())
-            emit(Status.Failure("Something went wrong"))
+            emit(Status.Failure(stringProvider.getString(R.string.error_message)))
         }
     }
 
