@@ -73,6 +73,13 @@ class RoomTest {
     }
 
     @Test
+    fun writeTheSameArticleTwiceAndRetrieveListOfOne() = runTest {
+        articleDao.insertArticles(listOf(articleOne, articleOne))
+        val returnedArticles = articleDao.getArticles(articleCategory)
+        Assert.assertTrue(returnedArticles.size == 1)
+    }
+
+    @Test
     fun writeTwoArticlesThenDeleteDatabase() = runTest {
         articleDao.insertArticles(listOf(articleOne, articleTwo))
         val returnedArticles = mutableListOf<ArticleEntity>()
