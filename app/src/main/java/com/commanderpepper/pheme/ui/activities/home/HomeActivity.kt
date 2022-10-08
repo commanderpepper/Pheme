@@ -44,11 +44,6 @@ class HomeActivity : ComponentActivity() {
         }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        vm.deleteArticles()
-    }
-
     private fun onArticleClicked(id: Long){
         val intent = Intent(this, ArticleActivity::class.java)
         intent.putExtra(ARTICLE_INTENT_ID, id)

@@ -31,7 +31,7 @@ class NewsLocalDataSourceImpl @Inject constructor(
             Category.values().forEach { category ->
                 val count = articleDAO.countArticles(category.category)
                 if(count > 60){
-                    articleDAO.deleteFortyArticles(category.category)
+                    articleDAO.deleteFortyArticles(category.category, count - 40)
                 }
             }
         }

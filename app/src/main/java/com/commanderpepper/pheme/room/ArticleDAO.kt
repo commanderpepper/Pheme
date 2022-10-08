@@ -21,8 +21,8 @@ interface ArticleDAO {
     @Query("DELETE FROM articleentity")
     suspend fun deleteArticles()
 
-    @Query("DELETE FROM articleentity WHERE id IN (SELECT id FROM articleentity WHERE category = :category limit 40)")
-    suspend fun deleteFortyArticles(category: String)
+    @Query("DELETE FROM articleentity WHERE id IN (SELECT id FROM articleentity WHERE category = :category limit :amount)")
+    suspend fun deleteFortyArticles(category: String, amount: Int)
 
     @Query("SELECT COUNT(*) FROM articleentity WHERE category = :category")
     suspend fun countArticles(category: String): Int
