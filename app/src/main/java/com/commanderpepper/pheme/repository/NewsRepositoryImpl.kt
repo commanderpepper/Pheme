@@ -2,6 +2,7 @@ package com.commanderpepper.pheme.repository
 
 import android.util.Log
 import com.commanderpepper.pheme.R
+import com.commanderpepper.pheme.data.Article
 import com.commanderpepper.pheme.repository.local.Category
 import com.commanderpepper.pheme.repository.local.NewsLocalDataSource
 import com.commanderpepper.pheme.repository.remote.NewsRemoteDataSource
@@ -22,44 +23,19 @@ class NewsRepositoryImpl @Inject constructor(
     private val stringProvider: StringProvider
 ) : NewsRepository {
 
-    override fun fetchNewsWithCategory(category: Category): Flow<Status<out List<ArticleInBetween>>> {
-        return flow {
-            emit(Status.InProgress)
-
-            try {
-                val remoteArticles = newsRemoteDataSource.retrieveCategoryArticles(category.category)
-                newsLocalDataSource.insertArticles(remoteArticles.map {
-                    createArticleEntityUseCase(
-                        category,
-                        it
-                    )
-                })
-            }catch (exception: Exception){
-                Log.e(NewsRepository::class.toString(), exception.toString())
-            }
-
-            val localArticles = newsLocalDataSource.getArticles(category)
-            if (localArticles.isNotEmpty()) {
-                emit(Status.Success(localArticles.map {
-                    convertArticleEntityToArticleInBetweenUseCase(
-                        it
-                    )
-                }.take(50)))
-            } else {
-                emit(Status.Failure("Something is bad"))
-            }
-        }.catch {
-            Log.e(NewsRepository::class.toString(), it.toString())
-            emit(Status.Failure(stringProvider.getString(R.string.news_repository_error_message)))
+    private suspend fun getArticles(category: Category): List<Article> {
+        return when(category){
+            Category.NEWS -> newsRemoteDataSource.retrieveCountryArticles(category.category)
+            else -> newsRemoteDataSource.retrieveCategoryArticles(category.category)
         }
     }
 
-    override fun fetchNewsWithCountry(category: Category): Flow<Status<out List<ArticleInBetween>>> {
+    override fun fetchArticles(category: Category): Flow<Status<out List<ArticleInBetween>>> {
         return flow {
             emit(Status.InProgress)
 
             try {
-                val remoteArticles = newsRemoteDataSource.retrieveCountryArticles(category.category)
+                val remoteArticles = getArticles(category)
                 newsLocalDataSource.insertArticles(remoteArticles.map {
                     createArticleEntityUseCase(
                         category,
@@ -80,7 +56,6 @@ class NewsRepositoryImpl @Inject constructor(
             } else {
                 emit(Status.Failure(stringProvider.getString(R.string.news_repository_error_message)))
             }
-
         }.catch {
             Log.e(NewsRepository::class.toString(), it.toString())
             emit(Status.Failure(stringProvider.getString(R.string.news_repository_error_message)))

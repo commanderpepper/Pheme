@@ -60,9 +60,7 @@ class HomeViewModel @Inject constructor(
 
         // Select the appropriate method to create the flow with
         val returnFlow: (Category) -> Flow<Status<out List<ArticleInBetween>>> =
-            if (category == Category.NEWS) {
-                newsRepository::fetchNewsWithCountry
-            } else newsRepository::fetchNewsWithCategory
+            newsRepository::fetchArticles
 
         // Create a Job and assign it to the ViewModel Job. This Job will make a call to the Repository to gather the articles.
         viewModelJob = viewModelScope.launch {
