@@ -61,7 +61,7 @@ class MainActivity : ComponentActivity() {
                                 isExpandedScreen = isExpandedScreen,
                                 articleId = articleId
                             ){
-//                                navController.popBackStack()
+                                navController.popBackStack()
                             }
                         }
                     }
