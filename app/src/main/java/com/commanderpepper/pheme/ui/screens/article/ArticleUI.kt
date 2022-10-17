@@ -1,0 +1,90 @@
+package com.commanderpepper.pheme.ui.screens.article
+
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.commanderpepper.pheme.R
+import com.commanderpepper.pheme.ui.util.Loading
+import com.commanderpepper.pheme.uistate.NewsItem
+import com.commanderpepper.pheme.uistate.NewsItemExpanded
+import com.commanderpepper.pheme.uistate.NewsItemUIState
+import kotlinx.coroutines.flow.StateFlow
+
+@Composable
+fun ArticleScreen(
+    modifier: Modifier = Modifier,
+    isExpandedScreen: Boolean,
+    articleListViewModel: ArticleViewModel = hiltViewModel(),
+    articleId: Long = -1L,
+    onBackClicked: () -> Unit
+) {
+    Article(modifier = modifier, isExpandedScreen = isExpandedScreen, articleUIStateFlow = articleListViewModel.articleUIState, onBackClicked = onBackClicked)
+    articleListViewModel.retrieveArticle(articleId)
+}
+
+@Composable
+fun Article(
+    modifier: Modifier = Modifier,
+    isExpandedScreen: Boolean,
+    articleUIStateFlow: StateFlow<ArticleUIState>,
+    onBackClicked: () -> Unit
+) {
+    val articleUIState: ArticleUIState by articleUIStateFlow.collectAsState()
+    Scaffold(modifier = modifier,
+        topBar = {
+            val color = MaterialTheme.colors.primaryVariant
+            TopAppBar(backgroundColor = color) {
+                IconButton(onClick = { onBackClicked() }) {
+                    Icon(
+                        imageVector = Icons.Filled.ArrowBack,
+                        contentDescription = "Go back to article list"
+                    )
+                }
+            }
+        }) { _ ->
+        if (articleUIState.isError) {
+            ArticleError()
+        } else if (articleUIState.isLoading) {
+            ArticleLoading()
+        } else if (articleUIState.newsItemUIState != null) {
+            if (isExpandedScreen) {
+                ArticleExpanded(
+                    modifier = modifier,
+                    newsItemUIState = articleUIState.newsItemUIState!!
+                )
+            } else {
+                ArticleNormal(
+                    modifier = modifier,
+                    newsItemUIState = articleUIState.newsItemUIState!!
+                )
+            }
+        }
+    }
+
+}
+
+@Composable
+fun ArticleNormal(modifier: Modifier = Modifier, newsItemUIState: NewsItemUIState) {
+    NewsItem(modifier = modifier, newsItemUIState = newsItemUIState)
+}
+
+@Composable
+fun ArticleExpanded(modifier: Modifier = Modifier, newsItemUIState: NewsItemUIState) {
+    NewsItemExpanded(modifier = modifier, newsItemUIState = newsItemUIState)
+}
+
+@Composable
+fun ArticleError(modifier: Modifier = Modifier) {
+    Text(modifier = modifier, text = stringResource(id = R.string.error_message))
+}
+
+@Composable
+fun ArticleLoading(modifier: Modifier = Modifier) {
+    Loading()
+}

@@ -1,16 +1,16 @@
-package com.commanderpepper.pheme.ui.activities.article
+package com.commanderpepper.pheme.ui.screens.article
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.commanderpepper.pheme.repository.NewsRepository
 import com.commanderpepper.pheme.repository.Status
+import com.commanderpepper.pheme.ui.screens.article.ArticleUIState
 import com.commanderpepper.pheme.usecase.ConvertArticleEntityToNewsItemUIState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

@@ -1,4 +1,4 @@
-package com.commanderpepper.pheme.ui.activities.article
+package com.commanderpepper.pheme.ui.screens.article
 
 import com.commanderpepper.pheme.uistate.NewsItemUIState
 

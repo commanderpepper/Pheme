@@ -1,4 +1,4 @@
-package com.commanderpepper.pheme.ui.activities.home.ui
+package com.commanderpepper.pheme.ui.homebottombar
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes

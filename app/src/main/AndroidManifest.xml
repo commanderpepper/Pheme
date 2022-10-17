@@ -17,12 +17,7 @@
         android:theme="@style/Theme.Pheme"
         tools:targetApi="31">
         <activity
-            android:name=".ui.activities.article.ArticleActivity"
-            android:exported="false"
-            android:label="@string/title_activity_article"
-            android:theme="@style/Theme.Pheme" />
-        <activity
-            android:name=".ui.activities.home.HomeActivity"
+            android:name=".ui.activities.main.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.Pheme">
             <intent-filter>
