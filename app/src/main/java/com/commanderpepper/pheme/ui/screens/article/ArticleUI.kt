@@ -1,5 +1,7 @@
 package com.commanderpepper.pheme.ui.screens.article
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -16,6 +18,7 @@ import com.commanderpepper.pheme.uistate.NewsItemExpanded
 import com.commanderpepper.pheme.uistate.NewsItemUIState
 import kotlinx.coroutines.flow.StateFlow
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun ArticleScreen(
     modifier: Modifier = Modifier,
@@ -48,21 +51,25 @@ fun Article(
                 }
             }
         }) { _ ->
-        if (articleUIState.isError) {
-            ArticleError()
-        } else if (articleUIState.isLoading) {
-            ArticleLoading()
-        } else if (articleUIState.newsItemUIState != null) {
-            if (isExpandedScreen) {
-                ArticleExpanded(
-                    modifier = modifier,
-                    newsItemUIState = articleUIState.newsItemUIState!!
-                )
-            } else {
-                ArticleNormal(
-                    modifier = modifier,
-                    newsItemUIState = articleUIState.newsItemUIState!!
-                )
+        when {
+            articleUIState.isError -> {
+                ArticleError()
+            }
+            articleUIState.isLoading -> {
+                ArticleLoading()
+            }
+            articleUIState.isSuccess -> {
+                if (isExpandedScreen) {
+                    ArticleExpanded(
+                        modifier = modifier,
+                        newsItemUIState = articleUIState.newsItemUIState!!
+                    )
+                } else {
+                    ArticleNormal(
+                        modifier = modifier,
+                        newsItemUIState = articleUIState.newsItemUIState!!
+                    )
+                }
             }
         }
     }

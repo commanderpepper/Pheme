@@ -1,16 +1,15 @@
 package com.commanderpepper.pheme.ui.screens.article
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.commanderpepper.pheme.repository.NewsRepository
 import com.commanderpepper.pheme.repository.Status
-import com.commanderpepper.pheme.ui.screens.article.ArticleUIState
 import com.commanderpepper.pheme.usecase.ConvertArticleEntityToNewsItemUIState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -21,10 +20,11 @@ class ArticleViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _articleUIState = MutableStateFlow(ArticleUIState())
-    val articleUIState: StateFlow<ArticleUIState> = _articleUIState
+    val articleUIState: StateFlow<ArticleUIState> = _articleUIState.asStateFlow()
 
     private var viewModelJob: Job? = null
 
+    @RequiresApi(Build.VERSION_CODES.O)
     fun retrieveArticle(id: Long) {
         viewModelJob?.cancel()
 
@@ -33,16 +33,27 @@ class ArticleViewModel @Inject constructor(
                 _articleUIState.emit(_articleUIState.value.copy(isError = true))
             }.collect { status ->
                 when (status) {
-                    is Status.Failure -> _articleUIState.emit(_articleUIState.value.copy(isError = true))
+                    is Status.Failure -> _articleUIState.emit(
+                        ArticleUIState(
+                            isLoading = false,
+                            isError = true,
+                            isSuccess = false,
+                            newsItemUIState = null
+                        )
+                    )
                     is Status.InProgress -> _articleUIState.emit(
-                        _articleUIState.value.copy(
-                            isLoading = true
+                        ArticleUIState(
+                            isLoading = true,
+                            isError = false,
+                            isSuccess = false,
+                            newsItemUIState = null
                         )
                     )
                     is Status.Success -> _articleUIState.emit(
                         ArticleUIState(
                             isLoading = false,
                             isError = false,
+                            isSuccess = true,
                             newsItemUIState = convertArticleEntityToNewsItemUIState(status.data)
                         )
                     )
