@@ -5,9 +5,8 @@ import androidx.annotation.RequiresApi
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -27,8 +26,23 @@ fun ArticleScreen(
     articleId: Long = -1L,
     onBackClicked: () -> Unit
 ) {
-    Article(modifier = modifier, isExpandedScreen = isExpandedScreen, articleUIStateFlow = articleListViewModel.articleUIState, onBackClicked = onBackClicked)
-    articleListViewModel.retrieveArticle(articleId)
+    /**
+     * This boolean is used to check if the article was retrieved
+     * Using rememberSaveable to persist the value across recompositions and configuration changes
+     */
+    val articleRetrieved = rememberSaveable {
+        mutableStateOf(false)
+    }
+    if (articleRetrieved.value.not()) {
+        articleListViewModel.retrieveArticle(articleId)
+        articleRetrieved.value = true
+    }
+    Article(
+        modifier = modifier,
+        isExpandedScreen = isExpandedScreen,
+        articleUIStateFlow = articleListViewModel.articleUIState,
+        onBackClicked = onBackClicked
+    )
 }
 
 @Composable
