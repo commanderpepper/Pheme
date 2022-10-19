@@ -31,8 +31,17 @@ class NewsLocalDataSourceImpl @Inject constructor(
             Category.values().forEach { category ->
                 val count = articleDAO.countArticles(category.category)
                 if(count > 60){
-                    articleDAO.deleteFortyArticles(category.category, count - 40)
+                    articleDAO.deleteArticlesFromCategory(category.category)
                 }
+            }
+        }
+    }
+
+    override suspend fun deleteArticles(category: String, amountToDelete: Int) {
+        withContext(ioDispatcher){
+            val count = articleDAO.countArticles(category)
+            if(count > 60){
+                articleDAO.deleteArticlesFromCategory(category, amountToDelete)
             }
         }
     }

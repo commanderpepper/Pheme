@@ -1,8 +1,6 @@
 package com.commanderpepper.pheme.repository.local
 
-import com.commanderpepper.pheme.data.Article
 import com.commanderpepper.pheme.room.model.ArticleEntity
-import kotlinx.coroutines.flow.Flow
 
 interface NewsLocalDataSource  {
 
@@ -13,6 +11,8 @@ interface NewsLocalDataSource  {
     suspend fun getArticle(id: Long): ArticleEntity
 
     suspend fun deleteArticles()
+
+    suspend fun deleteArticles(category: String, amountToDelete: Int)
 }
 
 enum class Category(val category: String){

@@ -50,14 +50,14 @@ class NewsLocalDataSourceTest {
     }
 
     @Test
-    fun insertArticlesAndGetArticles() = runTest {
+    fun GIVEN_empty_database_WHEN_insert_two_articles_THEN_retrieve_two_articles() = runTest {
         newsLocalDataSource.insertArticles(listOf(articleEntityOne, articleEntityTwo))
         val returnedArticleEntities = newsLocalDataSource.getArticles(Category.NEWS)
         Assert.assertTrue(returnedArticleEntities.size == 2)
     }
 
     @Test
-    fun insertArticlesAndGetArticle() = runTest {
+    fun GIVEN_empty_database_WHEN_insert_two_articles_THEN_retrieve_one_article() = runTest {
         val id = 1L
         newsLocalDataSource.insertArticles(listOf(articleEntityOne, articleEntityTwo))
         val articleEntity = newsLocalDataSource.getArticle(id)
@@ -65,15 +65,25 @@ class NewsLocalDataSourceTest {
     }
 
     @Test
-    fun insertArticlesAndDeleteArticle() = runTest {
-        val list = mutableListOf<ArticleEntity>()
-        repeat(100){
-            list.add(articleEntityOne)
+    fun GIVEN_empty_database_WHEN_insert_one_hundred_articles_and_delete_articles_THEN_retrieve_sixty_articles() = runTest {
+            val list = mutableListOf<ArticleEntity>()
+            repeat(100) {
+                list.add(
+                    articleEntityOne.copy(
+                        title = articleEntityOne.title + "$it",
+                        author = articleEntityOne.author + "$it"
+                    )
+                )
+            }
+
+            newsLocalDataSource.insertArticles(list)
+            val articleEntitiesBeforeDeletion = newsLocalDataSource.getArticles(Category.NEWS)
+            Assert.assertTrue(articleEntitiesBeforeDeletion.size == 100)
+            Assert.assertTrue(articleEntitiesBeforeDeletion.isEmpty().not())
+
+            newsLocalDataSource.deleteArticles(category = articleCategory, amountToDelete = 40)
+
+            val articleEntitiesAfterDeletion = newsLocalDataSource.getArticles(Category.NEWS)
+            Assert.assertTrue(articleEntitiesAfterDeletion.size == 60)
         }
-        newsLocalDataSource.insertArticles(list)
-        newsLocalDataSource.deleteArticles()
-        val returnedArticleEntities = newsLocalDataSource.getArticles(Category.NEWS)
-        Assert.assertTrue(returnedArticleEntities.isEmpty().not())
-        Assert.assertTrue(returnedArticleEntities.size == 60)
-    }
 }
