@@ -1,6 +1,5 @@
 package com.commanderpepper.pheme.usecase
 
-import com.commanderpepper.pheme.data.Article
 import com.commanderpepper.pheme.uistate.NewsPreviewItemUIState
 import com.commanderpepper.pheme.usecase.model.ArticleInBetween
 import javax.inject.Inject

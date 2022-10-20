@@ -27,6 +27,7 @@ class MainActivity : ComponentActivity() {
 
     @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
+        // Installs a splash screen to be displayed during a cold start
         val splashScreen = installSplashScreen()
 
         super.onCreate(savedInstanceState)

@@ -19,10 +19,18 @@ fun PhemeAppUI(
     mainViewModel.loadArticles()
 
     Scaffold(modifier = modifier,
-    bottomBar = {
-        val color = MaterialTheme.colors.primaryVariant
-        HomeBottomBar(categoryUIStateFlow = mainViewModel.categoryUIState, backgroundColor = color, onCategoryClicked = onCategoryClicked)
-    }) { paddingValues ->
-        Articles(modifier = Modifier.padding(paddingValues), mainViewModel.articleUIListStateFlow, onArticleClicked = onArticleClicked)
+        bottomBar = {
+            val color = MaterialTheme.colors.primaryVariant
+            HomeBottomBar(
+                categoryUIStateFlow = mainViewModel.categoryUIState,
+                backgroundColor = color,
+                onCategoryClicked = onCategoryClicked
+            )
+        }) { paddingValues ->
+        Articles(
+            modifier = Modifier.padding(paddingValues),
+            mainViewModel.articleUIListStateFlow,
+            onArticleClicked = onArticleClicked
+        )
     }
 }

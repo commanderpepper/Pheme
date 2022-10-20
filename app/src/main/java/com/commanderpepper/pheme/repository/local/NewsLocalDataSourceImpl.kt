@@ -37,11 +37,11 @@ class NewsLocalDataSourceImpl @Inject constructor(
         }
     }
 
-    override suspend fun deleteArticles(category: String, amountToDelete: Int) {
+    override suspend fun deleteArticles(category: Category, amountToDelete: Int) {
         withContext(ioDispatcher){
-            val count = articleDAO.countArticles(category)
+            val count = articleDAO.countArticles(category.category)
             if(count > 60){
-                articleDAO.deleteArticlesFromCategory(category, amountToDelete)
+                articleDAO.deleteArticlesFromCategory(category.category, amountToDelete)
             }
         }
     }

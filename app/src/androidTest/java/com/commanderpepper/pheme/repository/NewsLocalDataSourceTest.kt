@@ -81,7 +81,7 @@ class NewsLocalDataSourceTest {
             Assert.assertTrue(articleEntitiesBeforeDeletion.size == 100)
             Assert.assertTrue(articleEntitiesBeforeDeletion.isEmpty().not())
 
-            newsLocalDataSource.deleteArticles(category = articleCategory, amountToDelete = 40)
+            newsLocalDataSource.deleteArticles(category = Category.NEWS, amountToDelete = 40)
 
             val articleEntitiesAfterDeletion = newsLocalDataSource.getArticles(Category.NEWS)
             Assert.assertTrue(articleEntitiesAfterDeletion.size == 60)

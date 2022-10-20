@@ -21,6 +21,9 @@ class PhemeApplication : Application() {
         super.onCreate()
         applicationScope.launch {
             try {
+                /**
+                 * When the application is first created delete articles to prevent too many articles from being stored in the local database
+                 */
                 newsLocalDataSource.deleteArticles()
             }
             catch (exception: Exception){

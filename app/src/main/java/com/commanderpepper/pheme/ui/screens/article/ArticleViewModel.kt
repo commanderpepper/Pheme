@@ -24,6 +24,10 @@ class ArticleViewModel @Inject constructor(
 
     private var viewModelJob: Job? = null
 
+    /**
+     * Retrieve an article
+     * @param id ID to be used to retrieve article from
+     */
     @RequiresApi(Build.VERSION_CODES.O)
     fun retrieveArticle(id: Long) {
         viewModelJob?.cancel()

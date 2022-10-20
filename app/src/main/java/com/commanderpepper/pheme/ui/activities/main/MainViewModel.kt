@@ -32,6 +32,10 @@ class MainViewModel @Inject constructor(
 
     private var viewModelJob: Job? = null
 
+    /**
+     * User event for the view model to handle
+     * @param category Category that was clicked on
+     */
     fun categoryClicked(category: Category){
         viewModelScope.launch {
             val currentCategoryValue = _categoryUIStateFlow.value.currentCategory
@@ -48,6 +52,9 @@ class MainViewModel @Inject constructor(
         }
     }
 
+    /**
+     * Load articles from a repo
+     */
     fun loadArticles(){
         val category = _categoryUIStateFlow.value.currentCategory
         fetchArticles(category)
