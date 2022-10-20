@@ -1,4 +1,4 @@
-package com.commanderpepper.pheme.ui.activities.main
+package com.commanderpepper.pheme.ui.main
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

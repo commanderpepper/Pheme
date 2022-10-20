@@ -1,4 +1,4 @@
-package com.commanderpepper.pheme.ui.activities.main
+package com.commanderpepper.pheme.ui.main
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
