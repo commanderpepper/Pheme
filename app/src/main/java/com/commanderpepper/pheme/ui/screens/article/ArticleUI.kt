@@ -1,5 +1,6 @@
 package com.commanderpepper.pheme.ui.screens.article
 
+import android.annotation.SuppressLint
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.material.*
@@ -12,6 +13,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.commanderpepper.pheme.R
 import com.commanderpepper.pheme.ui.util.Loading
+import com.commanderpepper.pheme.ui.util.LoadingArticle
+import com.commanderpepper.pheme.ui.util.LoadingArticleExpanded
 import com.commanderpepper.pheme.uistate.NewsItem
 import com.commanderpepper.pheme.uistate.NewsItemExpanded
 import com.commanderpepper.pheme.uistate.NewsItemUIState
@@ -45,6 +48,7 @@ fun ArticleScreen(
     )
 }
 
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun Article(
     modifier: Modifier = Modifier,
@@ -70,7 +74,11 @@ fun Article(
                 ArticleError()
             }
             articleUIState.isLoading -> {
-                ArticleLoading()
+                if(isExpandedScreen){
+                    LoadingArticle()
+                }else {
+                    LoadingArticleExpanded()
+                }
             }
             articleUIState.isSuccess -> {
                 if (isExpandedScreen) {

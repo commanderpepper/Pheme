@@ -17,7 +17,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import com.commanderpepper.pheme.R
-import com.commanderpepper.pheme.ui.util.Loading
+import com.commanderpepper.pheme.ui.util.LoadingArticles
 import com.commanderpepper.pheme.uistate.NewsPreviewItem
 import com.commanderpepper.pheme.uistate.NewsPreviewItemUIState
 import kotlinx.coroutines.flow.StateFlow
@@ -57,7 +57,7 @@ fun ArticleList(
 
 @Composable
 fun ArticleListLoading(modifier: Modifier = Modifier) {
-    Loading()
+    LoadingArticles()
 }
 
 @Composable
