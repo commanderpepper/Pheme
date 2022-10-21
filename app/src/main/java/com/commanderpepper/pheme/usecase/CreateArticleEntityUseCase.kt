@@ -1,7 +1,7 @@
 package com.commanderpepper.pheme.usecase
 
 import com.commanderpepper.pheme.data.Article
-import com.commanderpepper.pheme.repository.local.Category
+import com.commanderpepper.pheme.data.Category
 import com.commanderpepper.pheme.room.model.ArticleEntity
 import javax.inject.Inject
 

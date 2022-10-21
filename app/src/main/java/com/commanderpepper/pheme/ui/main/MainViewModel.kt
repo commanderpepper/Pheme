@@ -2,9 +2,9 @@ package com.commanderpepper.pheme.ui.main
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.commanderpepper.pheme.data.Category
 import com.commanderpepper.pheme.repository.NewsRepository
 import com.commanderpepper.pheme.repository.Status
-import com.commanderpepper.pheme.repository.local.Category
 import com.commanderpepper.pheme.ui.homebottombar.CategoryUIState
 import com.commanderpepper.pheme.ui.screens.articlelist.ArticleListUIState
 import com.commanderpepper.pheme.usecase.CreateNewsPreviewItemUseCase

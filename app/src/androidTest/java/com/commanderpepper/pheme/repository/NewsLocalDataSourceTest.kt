@@ -5,7 +5,7 @@ import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.commanderpepper.pheme.TestDispatcherRule
-import com.commanderpepper.pheme.repository.local.Category
+import com.commanderpepper.pheme.data.Category
 import com.commanderpepper.pheme.repository.local.NewsLocalDataSource
 import com.commanderpepper.pheme.repository.local.NewsLocalDataSourceImpl
 import com.commanderpepper.pheme.room.ArticleDatabase

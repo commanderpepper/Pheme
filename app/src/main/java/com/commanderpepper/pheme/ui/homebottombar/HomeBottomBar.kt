@@ -10,7 +10,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import com.commanderpepper.pheme.R
-import com.commanderpepper.pheme.repository.local.Category
+import com.commanderpepper.pheme.data.Category
 import kotlinx.coroutines.flow.StateFlow
 
 @Composable

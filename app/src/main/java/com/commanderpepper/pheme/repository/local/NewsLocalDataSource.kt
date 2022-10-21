@@ -1,5 +1,6 @@
 package com.commanderpepper.pheme.repository.local
 
+import com.commanderpepper.pheme.data.Category
 import com.commanderpepper.pheme.room.model.ArticleEntity
 
 interface NewsLocalDataSource  {
@@ -35,11 +36,4 @@ interface NewsLocalDataSource  {
      * @param amountToDelete number of articles to delete
      */
     suspend fun deleteArticles(category: Category, amountToDelete: Int)
-}
-
-enum class Category(val category: String){
-    NEWS("news"),
-    SPORTS("sports"),
-    TECH("technology"),
-    ENTERTAINMENT("entertainment")
 }

@@ -3,7 +3,7 @@ package com.commanderpepper.pheme.repository
 import android.util.Log
 import com.commanderpepper.pheme.R
 import com.commanderpepper.pheme.data.Article
-import com.commanderpepper.pheme.repository.local.Category
+import com.commanderpepper.pheme.data.Category
 import com.commanderpepper.pheme.repository.local.NewsLocalDataSource
 import com.commanderpepper.pheme.repository.remote.NewsRemoteDataSource
 import com.commanderpepper.pheme.usecase.ConvertArticleEntityToArticleInBetweenUseCase

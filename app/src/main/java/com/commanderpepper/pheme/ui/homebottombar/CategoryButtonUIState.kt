@@ -2,7 +2,7 @@ package com.commanderpepper.pheme.ui.homebottombar
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import com.commanderpepper.pheme.repository.local.Category
+import com.commanderpepper.pheme.data.Category
 
 data class CategoryButtonUIState(
     val category: Category,

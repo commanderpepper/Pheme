@@ -1,6 +1,7 @@
 package com.commanderpepper.pheme.repository.local
 
 import com.commanderpepper.pheme.CoroutinesScopesModule
+import com.commanderpepper.pheme.data.Category
 import com.commanderpepper.pheme.room.ArticleDAO
 import com.commanderpepper.pheme.room.model.ArticleEntity
 import kotlinx.coroutines.CoroutineDispatcher

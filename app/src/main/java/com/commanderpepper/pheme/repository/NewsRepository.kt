@@ -1,6 +1,6 @@
 package com.commanderpepper.pheme.repository
 
-import com.commanderpepper.pheme.repository.local.Category
+import com.commanderpepper.pheme.data.Category
 import com.commanderpepper.pheme.usecase.model.ArticleInBetween
 import kotlinx.coroutines.flow.Flow
 
