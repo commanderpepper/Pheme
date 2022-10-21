@@ -3,13 +3,22 @@ package com.commanderpepper.pheme.ui.screens.article
 import android.annotation.SuppressLint
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.commanderpepper.pheme.R
 import com.commanderpepper.pheme.ui.util.Loading
@@ -110,10 +119,28 @@ fun ArticleExpanded(modifier: Modifier = Modifier, newsItemUIState: NewsItemUISt
 
 @Composable
 fun ArticleError(modifier: Modifier = Modifier) {
-    Text(modifier = modifier, text = stringResource(id = R.string.error_message))
+        Column(
+        modifier = modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        val image = painterResource(id = R.drawable.pheme_portrait_)
+        Image(
+            modifier = Modifier.clip(CircleShape),
+            painter = image,
+            contentDescription = "Error Image"
+        )
+        Text(text = stringResource(id = R.string.error_message))
+    }
 }
 
 @Composable
 fun ArticleLoading(modifier: Modifier = Modifier) {
     Loading()
+}
+
+@Preview
+@Composable
+fun ArticleUIPreview(){
+    ArticleError()
 }
