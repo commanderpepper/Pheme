@@ -4,6 +4,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
@@ -38,6 +40,9 @@ class MainActivity : ComponentActivity() {
             val widthSizeClass = calculateWindowSizeClass(this).widthSizeClass
             val isExpandedScreen = widthSizeClass == WindowWidthSizeClass.Expanded
 
+            // Scroll state passed to the article list
+            val lazyListScrollState = LazyListState()
+
             PhemeTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
@@ -47,7 +52,7 @@ class MainActivity : ComponentActivity() {
 
                     NavHost(navController = navController, startDestination = "articleList") {
                         composable("articleList") {
-                            PhemeAppUI { id ->
+                            PhemeAppUI(lazyListState = lazyListScrollState) { id ->
                                 navController.navigate(
                                     "article/{articleId}".replace(
                                         oldValue = "{articleId}",

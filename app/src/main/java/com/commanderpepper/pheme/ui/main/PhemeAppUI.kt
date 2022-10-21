@@ -1,19 +1,20 @@
 package com.commanderpepper.pheme.ui.main
 
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.commanderpepper.pheme.ui.homebottombar.HomeBottomBar
-import com.commanderpepper.pheme.ui.main.MainViewModel
 import com.commanderpepper.pheme.ui.screens.articlelist.Articles
 
 @Composable
 fun PhemeAppUI(
     modifier: Modifier = Modifier,
     mainViewModel: MainViewModel = hiltViewModel(),
+    lazyListState: LazyListState,
     onArticleClicked: (Long) -> Unit
 ) {
     val onCategoryClicked = mainViewModel::categoryClicked
@@ -31,6 +32,7 @@ fun PhemeAppUI(
         Articles(
             modifier = Modifier.padding(paddingValues),
             mainViewModel.articleUIListStateFlow,
+            lazyListState = lazyListState,
             onArticleClicked = onArticleClicked
         )
     }
