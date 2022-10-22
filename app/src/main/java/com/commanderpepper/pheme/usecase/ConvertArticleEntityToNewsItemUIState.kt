@@ -6,7 +6,7 @@ import com.commanderpepper.pheme.uistate.NewsItemUIState
 import com.commanderpepper.pheme.usecase.model.ArticleInBetween
 import javax.inject.Inject
 
-class ConvertArticleEntityToNewsItemUIState @Inject constructor(val createDateUseCase: CreateDateUseCase) {
+class ConvertArticleEntityToNewsItemUIState @Inject constructor(val convertISODateToStringUseCase: ConvertISODateToStringUseCase) {
     @RequiresApi(Build.VERSION_CODES.O)
     operator fun invoke(articleInBetween: ArticleInBetween): NewsItemUIState {
         return NewsItemUIState(
@@ -14,7 +14,7 @@ class ConvertArticleEntityToNewsItemUIState @Inject constructor(val createDateUs
             author = articleInBetween.author,
             title = articleInBetween.title,
             thumbnail = articleInBetween.thumbnail,
-            date = createDateUseCase(articleInBetween.date),
+            date = convertISODateToStringUseCase(articleInBetween.date),
             content = articleInBetween.content
         )
     }

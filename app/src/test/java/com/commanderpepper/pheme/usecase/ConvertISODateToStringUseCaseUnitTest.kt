@@ -1,42 +1,42 @@
-package com.commanderpepper.pheme
+package com.commanderpepper.pheme.usecase
 
-import com.commanderpepper.pheme.usecase.CreateDateUseCase
+import com.commanderpepper.pheme.usecase.ConvertISODateToStringUseCase
 import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.junit.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner::class)
-class CreateDateUseCaseUnitTest {
+class ConvertISODateToStringUseCaseUnitTest {
 
     // Represents a October 3rd, a Monday
     private val validTimeStamp = "2022-10-03T19:10:00Z"
     private val formattedTime = "October 3, 2022"
     private val invalidTimeStamp = "2022-10-03"
-    private val createDateUseCase = CreateDateUseCase()
+    private val convertISODateToStringUseCase = ConvertISODateToStringUseCase()
 
 
     @Test
     fun obtain_day_of_week(){
-        val timeOfPublication = createDateUseCase(validTimeStamp)
+        val timeOfPublication = convertISODateToStringUseCase(validTimeStamp)
         Assert.assertTrue(timeOfPublication == formattedTime)
     }
 
     @Test
     fun use_null_to_obtain_day_of_week(){
-        val dayOfWeek = createDateUseCase(null)
+        val dayOfWeek = convertISODateToStringUseCase(null)
         Assert.assertTrue(dayOfWeek == "")
     }
 
     @Test
     fun use_empty_string_to_obtain_day_of_week(){
-        val dayOfWeek = createDateUseCase("")
+        val dayOfWeek = convertISODateToStringUseCase("")
         Assert.assertTrue(dayOfWeek == "")
     }
 
     @Test
     fun use_invalid_time_stamp_to_obtain_day_of_week(){
-        val dayOfWeek = createDateUseCase(invalidTimeStamp)
+        val dayOfWeek = convertISODateToStringUseCase(invalidTimeStamp)
         Assert.assertTrue(dayOfWeek == "")
     }
 }
