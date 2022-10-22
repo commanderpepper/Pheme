@@ -35,7 +35,7 @@ class ConvertArticleEntityToArticleInBetweenUseCaseTest {
         ConvertArticleEntityToArticleInBetweenUseCase()
 
     @Test
-    operator fun invoke() {
+    fun `CREATE ARTICLEINBETWEEN USING USE CASE`() {
         val articleInBetweenFromUseCase =
             convertArticleEntityToArticleInBetweenUseCase(articleEntity = articleEntity)
         Assert.assertTrue(articleInBetweenFromUseCase == articleInBetween)

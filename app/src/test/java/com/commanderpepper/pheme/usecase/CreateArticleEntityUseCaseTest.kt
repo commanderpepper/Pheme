@@ -39,7 +39,7 @@ class CreateArticleEntityUseCaseTest {
     val createArticleEntityUseCase = CreateArticleEntityUseCase()
 
     @Test
-    operator fun invoke() {
+    fun `CREATE ARTICLEENTITY AND CHECK OBJECT`() {
         val articleEntityCreated = createArticleEntityUseCase(category, article)
         assertTrue(articleEntityCreated == articleEntity)
     }

@@ -32,7 +32,7 @@ class ConvertArticleEntityToNewsItemUIStateTest {
     val convertArticleEntityToNewsItemUIState = ConvertArticleEntityToNewsItemUIState(convertISODateToStringUseCase)
 
     @Test
-    operator fun invoke() {
+    fun `CREATE NEWSITEMUISTATE AND CHECK OBJECT`() {
         val createdConvertNewsItemUIState = convertArticleEntityToNewsItemUIState(articleInBetween)
         assertTrue(createdConvertNewsItemUIState == newsItemUIState)
     }

@@ -30,7 +30,7 @@ class CreateNewsPreviewItemUseCaseTest {
     val createNewsPreviewItemUseCase = CreateNewsPreviewItemUseCase()
 
     @Test
-    operator fun invoke(){
+    fun `CREATE NEWSPREVIEWITEMUISTATE AND CHECK OBJECT`(){
         val createdNewsPreviewItemUIState = createNewsPreviewItemUseCase(articleInBetween)
         Assert.assertTrue(newsPreviewItemUIState == createdNewsPreviewItemUIState)
     }
