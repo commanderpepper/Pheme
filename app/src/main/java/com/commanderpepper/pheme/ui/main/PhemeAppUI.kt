@@ -1,5 +1,6 @@
 package com.commanderpepper.pheme.ui.main
 
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.material.MaterialTheme
@@ -8,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.commanderpepper.pheme.ui.homebottombar.HomeBottomBar
+import com.commanderpepper.pheme.ui.hometopbar.HomeTopBar
 import com.commanderpepper.pheme.ui.screens.articlelist.Articles
 
 @Composable
@@ -17,16 +19,29 @@ fun PhemeAppUI(
     lazyListState: LazyListState,
     onArticleClicked: (Long) -> Unit
 ) {
-    val onCategoryClicked = mainViewModel::categoryClicked
-    mainViewModel.loadArticles()
+    mainViewModel.loadData()
 
     Scaffold(modifier = modifier,
+        topBar = {
+            val color = MaterialTheme.colors.primaryVariant
+            HomeTopBar(
+                modifier = Modifier.fillMaxWidth(),
+                color = color,
+                onClearSearch = {
+                    mainViewModel.clearSearch()
+                },
+                onTextChange = {
+                    mainViewModel.searchArticles(it)
+                },
+                textFlow = mainViewModel.searchQueryFlow
+            )
+        },
         bottomBar = {
             val color = MaterialTheme.colors.primaryVariant
             HomeBottomBar(
                 categoryUIStateFlow = mainViewModel.categoryUIState,
                 backgroundColor = color,
-                onCategoryClicked = onCategoryClicked
+                onCategoryClicked = mainViewModel::categoryClicked
             )
         }) { paddingValues ->
         Articles(

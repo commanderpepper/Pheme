@@ -1,5 +1,6 @@
 package com.commanderpepper.pheme.ui.screens.articlelist
 
+import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.gestures.Orientation
@@ -34,17 +35,45 @@ fun Articles(
     onArticleClicked: (Long) -> Unit
 ) {
     val articleListUIState: ArticleListUIState by articleListUIStateFlow.collectAsState()
-    if (articleListUIState.isError) {
-        ArticleListError(modifier)
-    } else if (articleListUIState.isLoading) {
-        ArticleListLoading(modifier)
-    } else {
-        ArticleList(
-            modifier = modifier,
-            articleList = articleListUIState.newsPreviewList,
-            lazyListState = lazyListState,
-            onArticleClicked = onArticleClicked
-        )
+    when (articleListUIState) {
+        is ArticleListUIState.Articles -> {
+            when {
+                (articleListUIState as ArticleListUIState.Articles).isError -> ArticleListError(
+                    modifier,
+                    R.string.articles_fetched_error_message
+                )
+                (articleListUIState as ArticleListUIState.Articles).isLoading -> ArticleListLoading(
+                    modifier
+                )
+                (articleListUIState as ArticleListUIState.Articles).isSuccessful -> {
+                    ArticleList(
+                        modifier = modifier,
+                        articleList = (articleListUIState as ArticleListUIState.Articles).newsPreviewList,
+                        lazyListState = lazyListState,
+                        onArticleClicked = onArticleClicked
+                    )
+                }
+            }
+        }
+        is ArticleListUIState.Searching -> {
+            when {
+                (articleListUIState as ArticleListUIState.Searching).isEmpty -> ArticleListError(
+                    modifier,
+                    R.string.articles_searched_error_message
+                )
+                (articleListUIState as ArticleListUIState.Searching).isLoading -> ArticleListLoading(
+                    modifier
+                )
+                (articleListUIState as ArticleListUIState.Searching).isSuccessful -> {
+                    ArticleList(
+                        modifier = modifier,
+                        articleList = (articleListUIState as ArticleListUIState.Searching).newsPreviewSearchList,
+                        lazyListState = lazyListState,
+                        onArticleClicked = onArticleClicked
+                    )
+                }
+            }
+        }
     }
 }
 
@@ -68,7 +97,7 @@ fun ArticleListLoading(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun ArticleListError(modifier: Modifier = Modifier) {
+fun ArticleListError(modifier: Modifier = Modifier, @StringRes errorMessage: Int) {
     Column(
         modifier = modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -80,6 +109,6 @@ fun ArticleListError(modifier: Modifier = Modifier) {
             painter = image,
             contentDescription = "Error Image"
         )
-        Text(text = stringResource(id = R.string.error_message))
+        Text(text = stringResource(id = errorMessage))
     }
 }

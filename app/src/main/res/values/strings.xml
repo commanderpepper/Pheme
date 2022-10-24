@@ -4,7 +4,10 @@
 
     <string name="error_message">Something went wrong</string>
 
-    <string name="news_repository_error_message">@string/error_message</string>
+    <string name="articles_fetched_error_message">Something went wrong</string>
+    <string name="articles_searched_error_message">No articles found</string>
+
+    <string name="news_repository_error_message">@string/articles_fetched_error_message</string>
     <string name="news_repository_unable_to_fetch_article">Unable to fetch article</string>
     <string name="news_repository_article_not_found">Article not found</string>
 
@@ -12,5 +15,7 @@
     <string name="home_activity_bottom_bar_technology_content_description">Technology</string>
     <string name="home_activity_bottom_bar_entertainment_content_description">Entertainment</string>
     <string name="home_activity_bottom_bar_sports_content_description">Sports</string>
+
+    <string name="home_activity_top_bar_search_placeholder_text">Search</string>
 
 </resources>

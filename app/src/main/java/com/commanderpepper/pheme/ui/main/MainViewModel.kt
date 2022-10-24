@@ -7,14 +7,12 @@ import com.commanderpepper.pheme.repository.NewsRepository
 import com.commanderpepper.pheme.repository.Status
 import com.commanderpepper.pheme.ui.homebottombar.CategoryUIState
 import com.commanderpepper.pheme.ui.screens.articlelist.ArticleListUIState
+import com.commanderpepper.pheme.uistate.NewsPreviewItemUIState
 import com.commanderpepper.pheme.usecase.CreateNewsPreviewItemUseCase
 import com.commanderpepper.pheme.usecase.model.ArticleInBetween
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -22,13 +20,20 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(
     private val newsRepository: NewsRepository,
     private val createNewsPreviewItemUseCase: CreateNewsPreviewItemUseCase
-) : ViewModel(){
-    
-    private val _articleUIListStateFlow = MutableStateFlow(ArticleListUIState())
+) : ViewModel() {
+
+    private val _articleUIListStateFlow =
+        MutableStateFlow<ArticleListUIState>(ArticleListUIState.Articles())
     val articleUIListStateFlow: StateFlow<ArticleListUIState> = _articleUIListStateFlow
 
     private val _categoryUIStateFlow = MutableStateFlow(CategoryUIState())
     val categoryUIState: StateFlow<CategoryUIState> = _categoryUIStateFlow
+
+    private val _searchQueryFlow = MutableStateFlow("")
+    val searchQueryFlow: StateFlow<String> = _searchQueryFlow.asStateFlow()
+
+    // This is the articles to search against, this list allows the user to search without affecting the list of data to display
+    private val fetchedArticlesToSearchAgainst = mutableListOf<NewsPreviewItemUIState>()
 
     private var viewModelJob: Job? = null
 
@@ -36,11 +41,13 @@ class MainViewModel @Inject constructor(
      * User event for the view model to handle
      * @param category Category that was clicked on
      */
-    fun categoryClicked(category: Category){
+    fun categoryClicked(category: Category) {
         viewModelScope.launch {
+            clearSearch()
+
             val currentCategoryValue = _categoryUIStateFlow.value.currentCategory
             // If the category clicked is not the same as the current category then retrieve articles
-            if(currentCategoryValue != category){
+            if (currentCategoryValue != category) {
                 _categoryUIStateFlow.emit(
                     _categoryUIStateFlow.value.copy(
                         currentCategory = category
@@ -55,11 +62,84 @@ class MainViewModel @Inject constructor(
     /**
      * Load articles from a repo
      */
-    fun loadArticles(){
+    private fun loadArticles() {
         val category = _categoryUIStateFlow.value.currentCategory
         fetchArticles(category)
     }
 
+    /**
+     * Load the data according to the current UI state, either fetching articles or searching for articles
+     */
+    fun loadData() {
+        if (_articleUIListStateFlow.value is ArticleListUIState.Articles) {
+            loadArticles()
+        } else {
+            searchArticles(_searchQueryFlow.value)
+        }
+    }
+
+    /**
+     * Clear the search
+     */
+    fun clearSearch() {
+        viewModelScope.launch {
+            _searchQueryFlow.emit("")
+            if (_articleUIListStateFlow.value is ArticleListUIState.Searching) {
+                fetchArticles(_categoryUIStateFlow.value.currentCategory)
+            }
+        }
+    }
+
+    /**
+     * Search articles using the query
+     * @param query - query to use to filter articles
+     */
+    fun searchArticles(query: String) {
+        viewModelScope.launch {
+            _searchQueryFlow.emit(query)
+            val searchQuery = _searchQueryFlow.value
+
+            _articleUIListStateFlow.emit(
+                ArticleListUIState.Searching(
+                    isSuccessful = false,
+                    isLoading = true,
+                    isEmpty = false,
+                    newsPreviewSearchList = emptyList()
+                )
+            )
+
+            if (searchQuery.isBlank().not()) {
+                val articles = fetchedArticlesToSearchAgainst
+                val filteredArticles = articles.filter {
+                    it.title.contains(searchQuery) || it.author.contains(searchQuery)
+                }
+                if (filteredArticles.isNotEmpty()) {
+                    _articleUIListStateFlow.emit(
+                        ArticleListUIState.Searching(
+                            isSuccessful = true,
+                            isEmpty = false,
+                            isLoading = false,
+                            newsPreviewSearchList = filteredArticles
+                        )
+                    )
+                } else {
+                    _articleUIListStateFlow.emit(
+                        ArticleListUIState.Searching(
+                            isSuccessful = false,
+                            isEmpty = true,
+                            isLoading = false,
+                            newsPreviewSearchList = emptyList()
+                        )
+                    )
+                }
+            }
+        }
+    }
+
+    /**
+     * Fetch articles from the repository
+     * @param category - category to be used to fetch articles from
+     */
     private fun fetchArticles(category: Category = Category.NEWS) {
         // Cancel the current job if one exists
         viewModelJob?.cancel()
@@ -72,25 +152,47 @@ class MainViewModel @Inject constructor(
         viewModelJob = viewModelScope.launch {
             returnFlow(category).catch {
                 _articleUIListStateFlow.emit(
-                    _articleUIListStateFlow.value.copy(isLoading = false, isError = true)
+                    ArticleListUIState.Articles(
+                        isLoading = false,
+                        isError = true,
+                        isSuccessful = false,
+                        newsPreviewList = listOf()
+                    )
                 )
             }.collect { status ->
                 when (status) {
-                    is Status.InProgress ->
+                    is Status.InProgress -> _articleUIListStateFlow.emit(
+                        ArticleListUIState.Articles(
+                            isLoading = true,
+                            isError = false,
+                            isSuccessful = false,
+                            newsPreviewList = listOf()
+                        )
+                    )
+                    is Status.Success -> {
+                        fetchedArticlesToSearchAgainst.clear()
+                        fetchedArticlesToSearchAgainst.addAll(status.data.map {
+                            createNewsPreviewItemUseCase(
+                                it
+                            )
+                        })
+
                         _articleUIListStateFlow.emit(
-                            _articleUIListStateFlow.value.copy(
-                                isLoading = true,
-                                isError = false
+                            ArticleListUIState.Articles(
+                                isLoading = false,
+                                isError = false,
+                                isSuccessful = true,
+                                newsPreviewList = fetchedArticlesToSearchAgainst
                             )
                         )
-                    is Status.Success -> _articleUIListStateFlow.emit(
-                        _articleUIListStateFlow.value.copy(
-                            isLoading = false,
-                            isError = false,
-                            newsPreviewList = status.data.map { createNewsPreviewItemUseCase(it) }),
-                    )
+                    }
                     is Status.Failure -> _articleUIListStateFlow.emit(
-                        _articleUIListStateFlow.value.copy(isLoading = false, isError = true)
+                        ArticleListUIState.Articles(
+                            isLoading = false,
+                            isError = true,
+                            isSuccessful = false,
+                            newsPreviewList = emptyList()
+                        )
                     )
                 }
             }
