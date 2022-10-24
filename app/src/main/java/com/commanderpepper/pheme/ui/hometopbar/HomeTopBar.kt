@@ -1,6 +1,7 @@
 package com.commanderpepper.pheme.ui.hometopbar
 
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -13,6 +14,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.unit.dp
 import com.commanderpepper.pheme.R
 import kotlinx.coroutines.flow.StateFlow
 
@@ -30,6 +32,7 @@ fun HomeTopBar(
         val focusManager = LocalFocusManager.current
 
         TextField(
+            modifier = modifier.padding(2.dp),
             value = text.value,
             placeholder = {
                 Text(text = stringResource(id = R.string.home_activity_top_bar_search_placeholder_text))
