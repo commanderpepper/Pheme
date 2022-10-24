@@ -108,10 +108,10 @@ class MainViewModel @Inject constructor(
                 )
             )
 
-            if (searchQuery.isBlank().not()) {
+            if (searchQuery.isNotBlank()) {
                 val articles = fetchedArticlesToSearchAgainst
                 val filteredArticles = articles.filter {
-                    it.title.contains(searchQuery) || it.author.contains(searchQuery)
+                    it.checkArticle(searchQuery)
                 }
                 if (filteredArticles.isNotEmpty()) {
                     _articleUIListStateFlow.emit(
@@ -197,5 +197,15 @@ class MainViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    /**
+     * Check article for title, author and publisher
+     * @param searchQuery - text to query the NewsPreviewItemUIState against
+     */
+    private fun NewsPreviewItemUIState.checkArticle(searchQuery: String): Boolean {
+        return this.title.contains(searchQuery, ignoreCase = true) ||
+                this.author.contains(searchQuery, ignoreCase = true) ||
+                this.publisher.contains(searchQuery, ignoreCase = true)
     }
 }
