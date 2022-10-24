@@ -44,6 +44,7 @@ class NewsRepositoryImpl @Inject constructor(
                 })
             }catch (exception: Exception){
                 Log.e(NewsRepository::class.toString(), exception.toString())
+                emit(Status.Failure("Something went wrong"))
             }
 
             val localArticles = newsLocalDataSource.getArticles(category)
