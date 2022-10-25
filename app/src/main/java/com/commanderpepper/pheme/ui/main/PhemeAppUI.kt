@@ -1,16 +1,25 @@
 package com.commanderpepper.pheme.ui.main
 
+import androidx.compose.animation.*
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.runtime.Composable
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.KeyboardArrowUp
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.unit.IntSize
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.commanderpepper.pheme.ui.homebottombar.HomeBottomBar
 import com.commanderpepper.pheme.ui.hometopbar.HomeTopBar
 import com.commanderpepper.pheme.ui.screens.articlelist.Articles
+import kotlinx.coroutines.launch
 
 @Composable
 fun PhemeAppUI(
@@ -21,7 +30,8 @@ fun PhemeAppUI(
 ) {
     mainViewModel.loadData()
 
-    Scaffold(modifier = modifier,
+    Scaffold(
+        modifier = modifier,
         topBar = {
             val color = MaterialTheme.colors.primaryVariant
             HomeTopBar(
@@ -43,12 +53,43 @@ fun PhemeAppUI(
                 backgroundColor = color,
                 onCategoryClicked = mainViewModel::categoryClicked
             )
-        }) { paddingValues ->
+        },
+        floatingActionButton = { HomeFloatingActionButton(lazyListState) },
+        floatingActionButtonPosition = FabPosition.Center
+    ) { paddingValues ->
         Articles(
             modifier = Modifier.padding(paddingValues),
             mainViewModel.articleUIListStateFlow,
             lazyListState = lazyListState,
             onArticleClicked = onArticleClicked
         )
+    }
+}
+
+@Composable
+fun HomeFloatingActionButton(lazyListState: LazyListState) {
+    val isVisible by remember { derivedStateOf { lazyListState.firstVisibleItemIndex > 0 } }
+    val job = rememberCoroutineScope()
+
+    AnimatedVisibility(
+        visible = isVisible,
+        enter = fadeIn() + expandIn { IntSize(width = 1, height = 1) },
+        exit = fadeOut() + shrinkOut { IntSize(width = 1, height = 1) }
+    ) {
+        Button(modifier = Modifier.clip(CircleShape), onClick = {
+            job.launch {
+                lazyListState.scrollToItem(0)
+            }
+        }) {
+            Icon(
+                modifier = Modifier
+                    .size(28.dp)
+                    .align(Alignment.CenterVertically),
+                imageVector = Icons.Rounded.KeyboardArrowUp,
+                tint = MaterialTheme.colors.onBackground,
+                contentDescription = "Scroll to top of list"
+            )
+            Text( modifier = Modifier.align(Alignment.CenterVertically), text = "Scroll to top")
+        }
     }
 }
