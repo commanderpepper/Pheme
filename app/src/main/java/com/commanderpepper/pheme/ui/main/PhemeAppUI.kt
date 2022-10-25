@@ -50,11 +50,17 @@ fun PhemeAppUI(
         },
         bottomBar = {
             val color = MaterialTheme.colors.primaryVariant
+            val job = rememberCoroutineScope()
+
             HomeBottomBar(
                 categoryUIStateFlow = mainViewModel.categoryUIState,
                 backgroundColor = color,
-                onCategoryClicked = mainViewModel::categoryClicked
-            )
+                onCategoryClicked = { category ->
+                    mainViewModel.categoryClicked(category)
+                    job.launch {
+                        lazyListState.scrollToItem(0)
+                    }
+                })
         },
         floatingActionButton = { HomeFloatingActionButton(lazyListState) },
         floatingActionButtonPosition = FabPosition.Center
