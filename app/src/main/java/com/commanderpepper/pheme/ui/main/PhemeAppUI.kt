@@ -13,9 +13,11 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.commanderpepper.pheme.R
 import com.commanderpepper.pheme.ui.homebottombar.HomeBottomBar
 import com.commanderpepper.pheme.ui.hometopbar.HomeTopBar
 import com.commanderpepper.pheme.ui.screens.articlelist.Articles
@@ -89,7 +91,7 @@ fun HomeFloatingActionButton(lazyListState: LazyListState) {
                 tint = MaterialTheme.colors.onBackground,
                 contentDescription = "Scroll to top of list"
             )
-            Text( modifier = Modifier.align(Alignment.CenterVertically), text = "Scroll to top")
+            Text( modifier = Modifier.align(Alignment.CenterVertically), text = stringResource(R.string.home_floating_action_button_action_text))
         }
     }
 }

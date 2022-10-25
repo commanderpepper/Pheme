@@ -17,5 +17,6 @@
     <string name="home_activity_bottom_bar_sports_content_description">Sports</string>
 
     <string name="home_activity_top_bar_search_placeholder_text">Search</string>
+    <string name="home_floating_action_button_action_text">Scroll to top</string>
 
 </resources>
