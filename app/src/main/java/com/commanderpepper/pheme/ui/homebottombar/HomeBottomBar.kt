@@ -1,16 +1,14 @@
 package com.commanderpepper.pheme.ui.homebottombar
 
-import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material.BottomAppBar
-import androidx.compose.material.BottomNavigationItem
-import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import com.commanderpepper.pheme.R
 import com.commanderpepper.pheme.data.Category
+import com.commanderpepper.pheme.uistate.CategoryButton
+import com.commanderpepper.pheme.uistate.CategoryButtonUIState
+import com.commanderpepper.pheme.uistate.CategoryUIState
 import kotlinx.coroutines.flow.StateFlow
 
 @Composable
@@ -62,21 +60,4 @@ fun HomeBottomBar(categoryUIStateFlow: StateFlow<CategoryUIState>, backgroundCol
             }
         )
     }
-}
-
-@Composable
-private fun RowScope.CategoryButton(categoryButtonUIState: CategoryButtonUIState, buttonClick: (Category) -> Unit) {
-    val contentDescription = stringResource(id = categoryButtonUIState.contentDescriptionId)
-    BottomNavigationItem(
-        icon = {
-            val image = painterResource(id = categoryButtonUIState.resourceId)
-            Icon(image, contentDescription)
-        },
-        selectedContentColor = Color.White,
-        unselectedContentColor = Color.White.copy(alpha = 0.2f),
-        onClick = {
-            buttonClick(categoryButtonUIState.category)
-        },
-        selected = categoryButtonUIState.isSelected
-    )
 }

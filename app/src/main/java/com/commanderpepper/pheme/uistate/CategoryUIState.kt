@@ -1,4 +1,4 @@
-package com.commanderpepper.pheme.ui.homebottombar
+package com.commanderpepper.pheme.uistate
 
 import com.commanderpepper.pheme.data.Category
 
