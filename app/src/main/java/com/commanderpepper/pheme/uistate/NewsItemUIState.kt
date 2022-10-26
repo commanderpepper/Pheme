@@ -7,6 +7,9 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import coil.compose.SubcomposeAsyncImage
 import com.commanderpepper.pheme.ui.util.Loading
@@ -20,6 +23,8 @@ data class NewsItemUIState(
     val content: String
 )
 
+const val NEWS_ITEM_IMAGE_CONTENT_DESCRIPTION = "Article Thumbnail"
+
 @Composable
 fun NewsItem(modifier: Modifier = Modifier, newsItemUIState: NewsItemUIState){
     val scrollState = rememberScrollState(0)
@@ -30,6 +35,7 @@ fun NewsItem(modifier: Modifier = Modifier, newsItemUIState: NewsItemUIState){
             if (newsItemUIState.thumbnail.isNotBlank()) {
                 SubcomposeAsyncImage(
                     modifier = Modifier
+                        .semantics { contentDescription = NEWS_ITEM_IMAGE_CONTENT_DESCRIPTION }
                         .weight(3 / 10f)
                         .fillMaxWidth(),
                     model = newsItemUIState.thumbnail,
@@ -54,11 +60,12 @@ fun NewsItemExpanded(modifier: Modifier = Modifier, newsItemUIState: NewsItemUIS
     val scrollState = rememberScrollState(0)
     Column(modifier = modifier.fillMaxSize()) {
         Row(modifier = modifier
-            .weight(4 / 10f)
+//            .weight(4 / 10f)
+            .fillMaxHeight(4/10f)
             .padding(4.dp)) {
             if(newsItemUIState.thumbnail.isNotBlank()){
                 SubcomposeAsyncImage(
-                    modifier = Modifier,
+                    modifier = Modifier.semantics { contentDescription = NEWS_ITEM_IMAGE_CONTENT_DESCRIPTION },
                     model = newsItemUIState.thumbnail,
                     loading = { Loading() },
                     contentDescription = null
@@ -72,7 +79,7 @@ fun NewsItemExpanded(modifier: Modifier = Modifier, newsItemUIState: NewsItemUIS
             }
         }
         Text(modifier = Modifier
-            .weight(6 / 10f)
+//            .weight(6 / 10f)
             .fillMaxHeight()
             .verticalScroll(scrollState), text = newsItemUIState.content)
     }
