@@ -15,8 +15,9 @@ interface NewsLocalDataSource  {
     /**
      * Insert a list of ArticleEntity
      * @param articles List of ArticleEntity
+     * @return List of ArticleEntity objects inserted from this function
      */
-    suspend fun insertArticles(articles: List<ArticleEntity>)
+    suspend fun insertArticles(articles: List<ArticleEntity>): List<ArticleEntity>
 
     /**
      * Get an ArticleEntity using an ID

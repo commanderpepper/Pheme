@@ -5,6 +5,8 @@ import com.commanderpepper.pheme.data.Category
 import com.commanderpepper.pheme.room.ArticleDAO
 import com.commanderpepper.pheme.room.model.ArticleEntity
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -17,9 +19,12 @@ class NewsLocalDataSourceImpl @Inject constructor(
         articleDAO.getArticles(category.category)
     }
 
-    override suspend fun insertArticles(articles: List<ArticleEntity>) {
-        withContext(ioDispatcher){
-            articleDAO.insertArticles(articles)
+    override suspend fun insertArticles(articles: List<ArticleEntity>): List<ArticleEntity> {
+        return withContext(ioDispatcher) {
+            val ids = articleDAO.insertArticles(articles)
+            ids.map {
+                getArticle(it)
+            }
         }
     }
 

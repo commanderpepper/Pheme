@@ -21,7 +21,7 @@ interface ArticleDAO {
      * @param articles a list of Articles to insert
      */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertArticles(articles: List<ArticleEntity>)
+    suspend fun insertArticles(articles: List<ArticleEntity>): List<Long>
 
     /**
      * Get a single article using an ID
