@@ -81,8 +81,8 @@ fun LoadingNewsPreviewItem(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun LoadingArticles() {
-    Column(modifier = Modifier.fillMaxHeight()) {
+fun LoadingArticles(modifier: Modifier = Modifier) {
+    Column(modifier = modifier.fillMaxHeight()) {
         repeat(10) {
             LoadingNewsPreviewItem()
         }

@@ -18,11 +18,10 @@ class CreateNewsPreviewItemUseCaseTest {
         content = "This is the content"
     )
 
-    val newsPreviewItemUIState = NewsPreviewItemUIState(
+    private val newsPreviewItemUIState = NewsPreviewItemUIState(
         publisher = "Penguin",
         author = "John Doe",
         title = "This is a title alright",
-        preview = "Preview",
         thumbnail = "A picture",
         id = 0L
     )

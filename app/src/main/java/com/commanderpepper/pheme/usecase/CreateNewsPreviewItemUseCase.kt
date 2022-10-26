@@ -10,7 +10,6 @@ class CreateNewsPreviewItemUseCase @Inject constructor() {
             publisher = articleInBetween.publisher,
             author = articleInBetween.author,
             title = articleInBetween.title,
-            preview = articleInBetween.preview,
             thumbnail = articleInBetween.thumbnail,
             id = articleInBetween.id
         )

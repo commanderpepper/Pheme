@@ -89,7 +89,6 @@ fun DefaultPreview() {
                 "New York Times",
                 "John Doe",
                 "The Weather",
-                "Its sunny",
                 "https://i.imgur.com/olisBgy.png",
                 0L
             )
