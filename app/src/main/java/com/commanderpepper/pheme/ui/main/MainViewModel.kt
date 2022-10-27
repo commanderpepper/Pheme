@@ -71,10 +71,13 @@ class MainViewModel @Inject constructor(
      * Load the data according to the current UI state, either fetching articles or searching for articles
      */
     fun loadData() {
-        if (_articleUIListStateFlow.value is ArticleListUIState.Articles) {
-            loadArticles()
-        } else {
-            searchArticles(_searchQueryFlow.value)
+        when (_articleUIListStateFlow.value) {
+            is ArticleListUIState.Articles -> {
+                loadArticles()
+            }
+            is ArticleListUIState.Searching -> {
+                searchArticles(_searchQueryFlow.value)
+            }
         }
     }
 
@@ -148,7 +151,7 @@ class MainViewModel @Inject constructor(
         val returnFlow: (Category) -> Flow<Status<out List<ArticleInBetween>>> =
             newsRepository::fetchArticles
 
-        // Create a Job and assign it to the ViewModel Job. This Job will make a call to the Repository to gather the articles.
+        // Create a Job and assign it to the ViewModel Job. This Job will contain a call to the Repository to gather the articles.
         viewModelJob = viewModelScope.launch {
             returnFlow(category).catch {
                 _articleUIListStateFlow.emit(

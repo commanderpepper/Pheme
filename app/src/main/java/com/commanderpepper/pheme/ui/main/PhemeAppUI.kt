@@ -63,7 +63,7 @@ fun PhemeAppUI(
                 })
         },
         floatingActionButton = { HomeFloatingActionButton(lazyListState) },
-        floatingActionButtonPosition = FabPosition.Center
+        floatingActionButtonPosition = FabPosition.End
     ) { paddingValues ->
         Articles(
             modifier = Modifier.padding(paddingValues),
