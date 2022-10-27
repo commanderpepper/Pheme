@@ -20,7 +20,7 @@ interface ArticleDAO {
      * Insert a list of articles
      * @param articles a list of Articles to insert
      */
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertArticles(articles: List<ArticleEntity>): List<Long>
 
     /**
