@@ -34,6 +34,16 @@ class NewsRepositoryImpl @Inject constructor(
         return flow {
             emit(Status.InProgress)
 
+            // Try to retrieve articles from the local source
+            val articlesFromDatabase = newsLocalDataSource.getArticles(category)
+            if(articlesFromDatabase.isNotEmpty()){
+                emit(Status.Success(articlesFromDatabase.map {
+                    convertArticleEntityToArticleInBetweenUseCase(
+                        it
+                    )
+                }.take(50)))
+            }
+
             try {
                 val remoteArticles = getArticles(category)
                 val insertedArticles = newsLocalDataSource.insertArticles(remoteArticles.map {
@@ -54,7 +64,9 @@ class NewsRepositoryImpl @Inject constructor(
                 }
             }catch (exception: Exception){
                 Log.e(NewsRepository::class.toString(), exception.toString())
-                emit(Status.Failure(stringProvider.getString(R.string.error_message)))
+                if(articlesFromDatabase.isEmpty()){
+                    emit(Status.Failure(stringProvider.getString(R.string.error_message)))
+                }
             }
         }.catch {
             Log.e(NewsRepository::class.toString(), it.toString())
