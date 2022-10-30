@@ -37,12 +37,14 @@ class NewsRepositoryImpl @Inject constructor(
 
             // Try to retrieve articles from the local source
             val articlesFromDatabase = newsLocalDataSource.getArticles(category)
+            val convertedArticlesFromDatabase = articlesFromDatabase.map {
+                convertArticleEntityToArticleInBetweenUseCase(
+                    it
+                )
+            }.take(50)
+
             if(articlesFromDatabase.isNotEmpty()){
-                emit(Status.Success(articlesFromDatabase.map {
-                    convertArticleEntityToArticleInBetweenUseCase(
-                        it
-                    )
-                }.take(50)))
+                emit(Status.Success(convertedArticlesFromDatabase))
             }
 
             try {
@@ -52,7 +54,7 @@ class NewsRepositoryImpl @Inject constructor(
                         category,
                         it
                     )
-                })
+                }).filterNotNull()
 
                 if (insertedArticles.isNotEmpty()) {
                     emit(Status.Success(insertedArticles.map {
@@ -61,7 +63,12 @@ class NewsRepositoryImpl @Inject constructor(
                         )
                     }.take(50)))
                 } else {
-                    emit(Status.Failure(stringProvider.getString(R.string.news_repository_error_message)))
+                    if(articlesFromDatabase.isNotEmpty()) {
+                        emit(Status.Success(convertedArticlesFromDatabase))
+                    }
+                    else {
+                        emit(Status.Failure(stringProvider.getString(R.string.news_repository_error_message)))
+                    }
                 }
             }catch (exception: Exception){
                 Log.e(NewsRepository::class.toString(), exception.toString())
