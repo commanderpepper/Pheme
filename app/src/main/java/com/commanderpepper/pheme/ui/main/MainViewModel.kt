@@ -9,6 +9,7 @@ import com.commanderpepper.pheme.repository.Status
 import com.commanderpepper.pheme.uistate.CategoryUIState
 import com.commanderpepper.pheme.ui.screens.articlelist.ArticleListUIState
 import com.commanderpepper.pheme.uistate.NewsPreviewItemUIState
+import com.commanderpepper.pheme.uistate.checkArticle
 import com.commanderpepper.pheme.usecase.CreateNewsPreviewItemUseCase
 import com.commanderpepper.pheme.util.StringProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -101,15 +102,5 @@ class MainViewModel @Inject constructor(
         viewModelScope.launch {
             _searchQueryFlow.emit(query)
         }
-    }
-
-    /**
-     * Check article for title, author and publisher
-     * @param searchQuery - text to query the NewsPreviewItemUIState against
-     */
-    private fun NewsPreviewItemUIState.checkArticle(searchQuery: String): Boolean {
-        return this.title.contains(searchQuery, ignoreCase = true) ||
-                this.author.contains(searchQuery, ignoreCase = true) ||
-                this.publisher.contains(searchQuery, ignoreCase = true)
     }
 }

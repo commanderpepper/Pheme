@@ -21,6 +21,16 @@ data class NewsPreviewItemUIState(
     val id: Long
 )
 
+/**
+ * Check article for title, author and publisher
+ * @param searchQuery - text to query the NewsPreviewItemUIState against
+ */
+fun NewsPreviewItemUIState.checkArticle(searchQuery: String): Boolean {
+    return this.title.contains(searchQuery, ignoreCase = true) ||
+            this.author.contains(searchQuery, ignoreCase = true) ||
+            this.publisher.contains(searchQuery, ignoreCase = true)
+}
+
 const val NEWS_PREVIEW_IMAGE_CONTENT_DESCRIPTION = "Article Thumbnail"
 
 @Composable
