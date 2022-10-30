@@ -30,8 +30,6 @@ fun PhemeAppUI(
     lazyListState: LazyListState,
     onArticleClicked: (Long) -> Unit
 ) {
-    mainViewModel.loadData()
-
     Scaffold(
         modifier = modifier,
         topBar = {

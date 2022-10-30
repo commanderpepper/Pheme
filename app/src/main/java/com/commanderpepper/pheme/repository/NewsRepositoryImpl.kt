@@ -13,6 +13,7 @@ import com.commanderpepper.pheme.util.StringProvider
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.retry
 import javax.inject.Inject
 
 class NewsRepositoryImpl @Inject constructor(
@@ -71,7 +72,7 @@ class NewsRepositoryImpl @Inject constructor(
         }.catch {
             Log.e(NewsRepository::class.toString(), it.toString())
             emit(Status.Failure(stringProvider.getString(R.string.news_repository_error_message)))
-        }
+        }.retry(2)
     }
 
     override fun fetchSingleArticle(articleId: Long): Flow<Status<out ArticleInBetween>> {
