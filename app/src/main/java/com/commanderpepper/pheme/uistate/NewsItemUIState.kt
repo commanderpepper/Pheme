@@ -7,9 +7,9 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.SubcomposeAsyncImage
 import com.commanderpepper.pheme.ui.util.Loading
@@ -83,4 +83,30 @@ fun NewsItemExpanded(modifier: Modifier = Modifier, newsItemUIState: NewsItemUIS
             .fillMaxHeight()
             .verticalScroll(scrollState), text = newsItemUIState.content)
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun NewsItemPreview(){
+    NewsItem(newsItemUIState = NewsItemUIState(
+        publisher = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ",
+        author = "Etiam vitae arcu ut metus iaculis interdum",
+        title = "Sed nec enim at nunc tempor placerat.",
+        thumbnail = "https://i.imgur.com/olisBgy.png",
+        date = "Jan 01, 2000",
+        content = "Cras elementum urna leo, eget vestibulum augue porta vitae. Morbi dui nunc, venenatis a risus suscipit, ullamcorper mattis erat. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Pellentesque convallis fringilla finibus. Integer quis condimentum elit, tempus faucibus nulla. In iaculis pharetra tincidunt. Maecenas aliquam ex sagittis rhoncus blandit. Fusce egestas nisl eget libero aliquet, vel ornare enim congue. Donec sed porttitor est, a pretium mi. Cras varius mi sed purus venenatis efficitur. Sed luctus eleifend odio a malesuada. Etiam feugiat libero et maximus fermentum."
+    ))
+}
+
+@Preview(showBackground = true, widthDp = 900, heightDp = 600)
+@Composable
+fun NewsItemExpandedPreview(){
+    NewsItemExpanded(newsItemUIState = NewsItemUIState(
+        publisher = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ",
+        author = "Etiam vitae arcu ut metus iaculis interdum",
+        title = "Sed nec enim at nunc tempor placerat.",
+        thumbnail = "https://i.imgur.com/olisBgy.png",
+        date = "Jan 01, 2000",
+        content = "Cras elementum urna leo, eget vestibulum augue porta vitae. Morbi dui nunc, venenatis a risus suscipit, ullamcorper mattis erat. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Pellentesque convallis fringilla finibus. Integer quis condimentum elit, tempus faucibus nulla. In iaculis pharetra tincidunt. Maecenas aliquam ex sagittis rhoncus blandit. Fusce egestas nisl eget libero aliquet, vel ornare enim congue. Donec sed porttitor est, a pretium mi. Cras varius mi sed purus venenatis efficitur. Sed luctus eleifend odio a malesuada. Etiam feugiat libero et maximus fermentum."
+    ))
 }
