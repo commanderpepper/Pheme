@@ -7,9 +7,9 @@ import kotlinx.coroutines.flow.Flow
 interface NewsRepository {
 
     /**
-     * Fetch a List of Articles wrapped in a Status sealed class
+     * Fetches a List of Articles wrapped in a Status sealed class
      * @param category Condition to determine which articles are returned
-     * @return A List of Articles wrapped in a Status sealed class
+     * @return A Status class that might represent Loading, Error or Success
      */
     fun fetchArticles(category: Category): Flow<Status<out List<ArticleInBetween>>>
 
