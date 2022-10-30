@@ -4,8 +4,16 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
-import androidx.core.graphics.rotationMatrix
-import com.commanderpepper.pheme.uistate.*
+import com.commanderpepper.pheme.uistate.NEWS_ITEM_IMAGE_CONTENT_DESCRIPTION
+import com.commanderpepper.pheme.uistate.NewsItem
+import com.commanderpepper.pheme.uistate.NewsItemExpanded
+import com.commanderpepper.pheme.uistate.NewsItemUIState
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
+import org.junit.After
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
@@ -15,7 +23,7 @@ class NewsItemUIStateTest {
         publisher = "New York Times",
         author = "John Doe",
         title = "Title",
-        thumbnail = "image.png",
+        thumbnail = "https://i.imgur.com/olisBgy.png",
         date = "Jan 1, 2000",
         content = "content"
     )
@@ -29,8 +37,20 @@ class NewsItemUIStateTest {
         content = "content"
     )
 
+    private lateinit var coroutineScope : CoroutineScope
+
     @get:Rule
     val composeTestRule = createComposeRule()
+
+    @Before
+    fun setUpCoroutineScope(){
+        coroutineScope = CoroutineScope(SupervisorJob())
+    }
+
+    @After
+    fun cleanUp(){
+        coroutineScope.cancel()
+    }
 
     @Test
     fun create_newsitem_ui_with_image_ui_check_content(){
@@ -38,16 +58,19 @@ class NewsItemUIStateTest {
 
         composeTestRule.setContent {
             NewsItem(newsItemUIState = newsItemUIState)
-            rotationMatrix(90F)
         }
 
-        composeTestRule.onNodeWithText(newsItemUIState.publisher).assertExists().assertIsDisplayed()
-        composeTestRule.onNodeWithText(newsItemUIState.author).assertExists().assertIsDisplayed()
-        composeTestRule.onNodeWithText(newsItemUIState.title).assertExists().assertIsDisplayed()
-        composeTestRule.onNodeWithText(newsItemUIState.date).assertExists().assertIsDisplayed()
-        composeTestRule.onNodeWithText(newsItemUIState.content).assertExists().assertIsDisplayed()
+        coroutineScope.launch {
+            composeTestRule.awaitIdle()
 
-        composeTestRule.onNodeWithContentDescription(NEWS_ITEM_IMAGE_CONTENT_DESCRIPTION).assertExists().assertIsDisplayed()
+            composeTestRule.onNodeWithText(newsItemUIState.publisher).assertExists().assertIsDisplayed()
+            composeTestRule.onNodeWithText(newsItemUIState.author).assertExists().assertIsDisplayed()
+            composeTestRule.onNodeWithText(newsItemUIState.title).assertExists().assertIsDisplayed()
+            composeTestRule.onNodeWithText(newsItemUIState.date).assertExists().assertIsDisplayed()
+            composeTestRule.onNodeWithText(newsItemUIState.content).assertExists().assertIsDisplayed()
+
+            composeTestRule.onNodeWithContentDescription(NEWS_ITEM_IMAGE_CONTENT_DESCRIPTION).assertExists().assertIsDisplayed()
+        }
     }
 
     @Test
@@ -58,13 +81,17 @@ class NewsItemUIStateTest {
             NewsItem(newsItemUIState = newsItemUIState)
         }
 
-        composeTestRule.onNodeWithText(newsItemUIState.publisher).assertExists().assertIsDisplayed()
-        composeTestRule.onNodeWithText(newsItemUIState.author).assertExists().assertIsDisplayed()
-        composeTestRule.onNodeWithText(newsItemUIState.title).assertExists().assertIsDisplayed()
-        composeTestRule.onNodeWithText(newsItemUIState.date).assertExists().assertIsDisplayed()
-        composeTestRule.onNodeWithText(newsItemUIState.content).assertExists().assertIsDisplayed()
+        coroutineScope.launch {
+            composeTestRule.awaitIdle()
 
-        composeTestRule.onNodeWithContentDescription(NEWS_ITEM_IMAGE_CONTENT_DESCRIPTION).assertDoesNotExist()
+            composeTestRule.onNodeWithText(newsItemUIState.publisher).assertExists().assertIsDisplayed()
+            composeTestRule.onNodeWithText(newsItemUIState.author).assertExists().assertIsDisplayed()
+            composeTestRule.onNodeWithText(newsItemUIState.title).assertExists().assertIsDisplayed()
+            composeTestRule.onNodeWithText(newsItemUIState.date).assertExists().assertIsDisplayed()
+            composeTestRule.onNodeWithText(newsItemUIState.content).assertExists().assertIsDisplayed()
+
+            composeTestRule.onNodeWithContentDescription(NEWS_ITEM_IMAGE_CONTENT_DESCRIPTION).assertDoesNotExist()
+        }
     }
 
     @Test
@@ -75,13 +102,17 @@ class NewsItemUIStateTest {
             NewsItemExpanded(newsItemUIState = newsItemUIState)
         }
 
-        composeTestRule.onNodeWithText(newsItemUIState.publisher).assertExists().assertIsDisplayed()
-        composeTestRule.onNodeWithText(newsItemUIState.author).assertExists().assertIsDisplayed()
-        composeTestRule.onNodeWithText(newsItemUIState.title).assertExists().assertIsDisplayed()
-        composeTestRule.onNodeWithText(newsItemUIState.date).assertExists().assertIsDisplayed()
-        composeTestRule.onNodeWithText(newsItemUIState.content).assertExists().assertIsDisplayed()
+        coroutineScope.launch {
+            composeTestRule.awaitIdle()
 
-        composeTestRule.onNodeWithContentDescription(NEWS_ITEM_IMAGE_CONTENT_DESCRIPTION).assertExists().assertIsDisplayed()
+            composeTestRule.onNodeWithText(newsItemUIState.publisher).assertExists().assertIsDisplayed()
+            composeTestRule.onNodeWithText(newsItemUIState.author).assertExists().assertIsDisplayed()
+            composeTestRule.onNodeWithText(newsItemUIState.title).assertExists().assertIsDisplayed()
+            composeTestRule.onNodeWithText(newsItemUIState.date).assertExists().assertIsDisplayed()
+            composeTestRule.onNodeWithText(newsItemUIState.content).assertExists().assertIsDisplayed()
+
+            composeTestRule.onNodeWithContentDescription(NEWS_ITEM_IMAGE_CONTENT_DESCRIPTION).assertExists().assertIsDisplayed()
+        }
     }
 
     @Test
@@ -92,12 +123,16 @@ class NewsItemUIStateTest {
             NewsItemExpanded(newsItemUIState = newsItemUIState)
         }
 
-        composeTestRule.onNodeWithText(newsItemUIState.publisher).assertExists().assertIsDisplayed()
-        composeTestRule.onNodeWithText(newsItemUIState.author).assertExists().assertIsDisplayed()
-        composeTestRule.onNodeWithText(newsItemUIState.title).assertExists().assertIsDisplayed()
-        composeTestRule.onNodeWithText(newsItemUIState.date).assertExists().assertIsDisplayed()
-        composeTestRule.onNodeWithText(newsItemUIState.content).assertExists().assertIsDisplayed()
+        coroutineScope.launch {
+            composeTestRule.awaitIdle()
 
-        composeTestRule.onNodeWithContentDescription(NEWS_ITEM_IMAGE_CONTENT_DESCRIPTION).assertDoesNotExist()
+            composeTestRule.onNodeWithText(newsItemUIState.publisher).assertExists().assertIsDisplayed()
+            composeTestRule.onNodeWithText(newsItemUIState.author).assertExists().assertIsDisplayed()
+            composeTestRule.onNodeWithText(newsItemUIState.title).assertExists().assertIsDisplayed()
+            composeTestRule.onNodeWithText(newsItemUIState.date).assertExists().assertIsDisplayed()
+            composeTestRule.onNodeWithText(newsItemUIState.content).assertExists().assertIsDisplayed()
+
+            composeTestRule.onNodeWithContentDescription(NEWS_ITEM_IMAGE_CONTENT_DESCRIPTION).assertDoesNotExist()
+        }
     }
 }
