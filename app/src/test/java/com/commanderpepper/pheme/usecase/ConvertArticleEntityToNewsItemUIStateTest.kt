@@ -1,7 +1,9 @@
 package com.commanderpepper.pheme.usecase
 
-import com.commanderpepper.pheme.uistate.NewsItemUIState
-import com.commanderpepper.pheme.usecase.model.ArticleInBetween
+import com.commanderpepper.pheme.domain.usecase.ConvertArticleEntityToNewsItemUIState
+import com.commanderpepper.pheme.domain.usecase.ConvertISODateToStringUseCase
+import com.commanderpepper.pheme.ui.uistate.NewsItemUIState
+import com.commanderpepper.pheme.domain.usecase.model.ArticleInBetween
 import org.junit.Assert.*
 
 import org.junit.Test

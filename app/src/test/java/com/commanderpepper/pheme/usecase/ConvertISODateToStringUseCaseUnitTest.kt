@@ -1,6 +1,6 @@
 package com.commanderpepper.pheme.usecase
 
-import com.commanderpepper.pheme.usecase.ConvertISODateToStringUseCase
+import com.commanderpepper.pheme.domain.usecase.ConvertISODateToStringUseCase
 import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith

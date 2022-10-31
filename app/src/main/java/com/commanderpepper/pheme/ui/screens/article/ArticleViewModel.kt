@@ -4,9 +4,9 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.commanderpepper.pheme.repository.NewsRepository
-import com.commanderpepper.pheme.repository.Status
-import com.commanderpepper.pheme.usecase.ConvertArticleEntityToNewsItemUIState
+import com.commanderpepper.pheme.data.repository.repos.NewsRepository
+import com.commanderpepper.pheme.data.repository.Status
+import com.commanderpepper.pheme.domain.usecase.ConvertArticleEntityToNewsItemUIState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.*

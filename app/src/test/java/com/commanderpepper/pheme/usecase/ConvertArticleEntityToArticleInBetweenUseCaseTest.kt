@@ -1,8 +1,9 @@
 package com.commanderpepper.pheme.usecase
 
-import com.commanderpepper.pheme.data.Category
-import com.commanderpepper.pheme.room.model.ArticleEntity
-import com.commanderpepper.pheme.usecase.model.ArticleInBetween
+import com.commanderpepper.pheme.data.retrofit.model.Category
+import com.commanderpepper.pheme.data.room.model.ArticleEntity
+import com.commanderpepper.pheme.domain.usecase.ConvertArticleEntityToArticleInBetweenUseCase
+import com.commanderpepper.pheme.domain.usecase.model.ArticleInBetween
 import org.junit.Assert
 import org.junit.Test
 

@@ -2,7 +2,7 @@ package com.commanderpepper.pheme.application
 
 import android.app.Application
 import android.util.Log
-import com.commanderpepper.pheme.repository.local.NewsLocalDataSource
+import com.commanderpepper.pheme.data.repository.local.NewsLocalDataSource
 import dagger.hilt.android.HiltAndroidApp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

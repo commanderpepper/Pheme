@@ -4,9 +4,9 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
-import com.commanderpepper.pheme.uistate.NEWS_PREVIEW_IMAGE_CONTENT_DESCRIPTION
-import com.commanderpepper.pheme.uistate.NewsPreviewItem
-import com.commanderpepper.pheme.uistate.NewsPreviewItemUIState
+import com.commanderpepper.pheme.ui.uistate.NEWS_PREVIEW_IMAGE_CONTENT_DESCRIPTION
+import com.commanderpepper.pheme.ui.uistate.NewsPreviewItem
+import com.commanderpepper.pheme.ui.uistate.NewsPreviewItemUIState
 import org.junit.Rule
 import org.junit.Test
 

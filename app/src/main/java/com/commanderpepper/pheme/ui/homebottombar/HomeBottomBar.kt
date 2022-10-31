@@ -5,10 +5,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.graphics.Color
 import com.commanderpepper.pheme.R
-import com.commanderpepper.pheme.data.Category
-import com.commanderpepper.pheme.uistate.CategoryButton
-import com.commanderpepper.pheme.uistate.CategoryButtonUIState
-import com.commanderpepper.pheme.uistate.CategoryUIState
+import com.commanderpepper.pheme.data.retrofit.model.Category
+import com.commanderpepper.pheme.ui.uistate.CategoryButton
+import com.commanderpepper.pheme.ui.uistate.CategoryButtonUIState
+import com.commanderpepper.pheme.ui.uistate.CategoryUIState
 import kotlinx.coroutines.flow.StateFlow
 
 @Composable

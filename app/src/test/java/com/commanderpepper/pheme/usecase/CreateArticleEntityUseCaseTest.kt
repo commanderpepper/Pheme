@@ -1,9 +1,10 @@
 package com.commanderpepper.pheme.usecase
 
-import com.commanderpepper.pheme.data.Article
-import com.commanderpepper.pheme.data.Category
-import com.commanderpepper.pheme.data.Source
-import com.commanderpepper.pheme.room.model.ArticleEntity
+import com.commanderpepper.pheme.data.retrofit.model.Article
+import com.commanderpepper.pheme.data.retrofit.model.Category
+import com.commanderpepper.pheme.data.retrofit.model.Source
+import com.commanderpepper.pheme.data.room.model.ArticleEntity
+import com.commanderpepper.pheme.domain.usecase.CreateArticleEntityUseCase
 import org.junit.Assert.*
 
 import org.junit.Test

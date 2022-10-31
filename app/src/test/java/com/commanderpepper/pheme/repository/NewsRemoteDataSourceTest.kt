@@ -1,16 +1,14 @@
 package com.commanderpepper.pheme.repository
 
-import com.commanderpepper.pheme.data.Article
-import com.commanderpepper.pheme.data.Response
-import com.commanderpepper.pheme.data.Source
-import com.commanderpepper.pheme.repository.remote.NewsRemoteDataSourceImpl
-import com.commanderpepper.pheme.retrofit.NewsAPIService
+import com.commanderpepper.pheme.data.retrofit.model.Article
+import com.commanderpepper.pheme.data.retrofit.model.Response
+import com.commanderpepper.pheme.data.retrofit.model.Source
+import com.commanderpepper.pheme.data.repository.remote.NewsRemoteDataSourceImpl
+import com.commanderpepper.pheme.data.retrofit.NewsAPIService
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert
 import org.junit.Before
-import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock

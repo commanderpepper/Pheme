@@ -18,8 +18,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import com.commanderpepper.pheme.R
 import com.commanderpepper.pheme.ui.util.LoadingArticles
-import com.commanderpepper.pheme.uistate.NewsPreviewItem
-import com.commanderpepper.pheme.uistate.NewsPreviewItemUIState
+import com.commanderpepper.pheme.ui.uistate.NewsPreviewItem
+import com.commanderpepper.pheme.ui.uistate.NewsPreviewItemUIState
 import kotlinx.coroutines.flow.StateFlow
 
 @Composable

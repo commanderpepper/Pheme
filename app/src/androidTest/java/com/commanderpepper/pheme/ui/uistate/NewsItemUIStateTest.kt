@@ -4,10 +4,10 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
-import com.commanderpepper.pheme.uistate.NEWS_ITEM_IMAGE_CONTENT_DESCRIPTION
-import com.commanderpepper.pheme.uistate.NewsItem
-import com.commanderpepper.pheme.uistate.NewsItemExpanded
-import com.commanderpepper.pheme.uistate.NewsItemUIState
+import com.commanderpepper.pheme.ui.uistate.NEWS_ITEM_IMAGE_CONTENT_DESCRIPTION
+import com.commanderpepper.pheme.ui.uistate.NewsItem
+import com.commanderpepper.pheme.ui.uistate.NewsItemExpanded
+import com.commanderpepper.pheme.ui.uistate.NewsItemUIState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel

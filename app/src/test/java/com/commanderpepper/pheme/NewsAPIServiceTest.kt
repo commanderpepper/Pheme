@@ -1,6 +1,6 @@
 package com.commanderpepper.pheme
 
-import com.commanderpepper.pheme.retrofit.NewsAPIService
+import com.commanderpepper.pheme.data.retrofit.NewsAPIService
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Assert

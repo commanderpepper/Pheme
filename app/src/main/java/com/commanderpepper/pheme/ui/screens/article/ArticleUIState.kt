@@ -1,6 +1,6 @@
 package com.commanderpepper.pheme.ui.screens.article
 
-import com.commanderpepper.pheme.uistate.NewsItemUIState
+import com.commanderpepper.pheme.ui.uistate.NewsItemUIState
 
 data class ArticleUIState (
     val isLoading: Boolean = true,

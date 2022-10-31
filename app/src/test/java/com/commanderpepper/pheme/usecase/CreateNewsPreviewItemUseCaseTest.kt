@@ -1,7 +1,8 @@
 package com.commanderpepper.pheme.usecase
 
-import com.commanderpepper.pheme.uistate.NewsPreviewItemUIState
-import com.commanderpepper.pheme.usecase.model.ArticleInBetween
+import com.commanderpepper.pheme.domain.usecase.CreateNewsPreviewItemUseCase
+import com.commanderpepper.pheme.ui.uistate.NewsPreviewItemUIState
+import com.commanderpepper.pheme.domain.usecase.model.ArticleInBetween
 import org.junit.Assert
 import org.junit.Test
 

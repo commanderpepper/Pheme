@@ -24,9 +24,9 @@ import com.commanderpepper.pheme.R
 import com.commanderpepper.pheme.ui.util.Loading
 import com.commanderpepper.pheme.ui.util.LoadingArticle
 import com.commanderpepper.pheme.ui.util.LoadingArticleExpanded
-import com.commanderpepper.pheme.uistate.NewsItem
-import com.commanderpepper.pheme.uistate.NewsItemExpanded
-import com.commanderpepper.pheme.uistate.NewsItemUIState
+import com.commanderpepper.pheme.ui.uistate.NewsItem
+import com.commanderpepper.pheme.ui.uistate.NewsItemExpanded
+import com.commanderpepper.pheme.ui.uistate.NewsItemUIState
 import kotlinx.coroutines.flow.StateFlow
 
 @RequiresApi(Build.VERSION_CODES.O)

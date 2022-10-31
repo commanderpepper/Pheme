@@ -1,16 +1,18 @@
 package com.commanderpepper.pheme.repository
 
 import app.cash.turbine.test
-import com.commanderpepper.pheme.data.Category
-import com.commanderpepper.pheme.repository.local.NewsLocalDataSource
-import com.commanderpepper.pheme.repository.remote.NewsRemoteDataSource
-import com.commanderpepper.pheme.usecase.ConvertArticleEntityToArticleInBetweenUseCase
-import com.commanderpepper.pheme.usecase.CreateArticleEntityUseCase
+import com.commanderpepper.pheme.data.repository.Status
+import com.commanderpepper.pheme.data.retrofit.model.Category
+import com.commanderpepper.pheme.data.repository.local.NewsLocalDataSource
+import com.commanderpepper.pheme.data.repository.remote.NewsRemoteDataSource
+import com.commanderpepper.pheme.data.repository.repos.NewsRepository
+import com.commanderpepper.pheme.data.repository.repos.NewsRepositoryImpl
+import com.commanderpepper.pheme.domain.usecase.ConvertArticleEntityToArticleInBetweenUseCase
+import com.commanderpepper.pheme.domain.usecase.CreateArticleEntityUseCase
 import com.commanderpepper.pheme.util.StringProvider
 import junit.framework.Assert.assertEquals
 import junit.framework.Assert.assertTrue
 import kotlinx.coroutines.runBlocking
-import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith

@@ -1,6 +1,6 @@
 package com.commanderpepper.pheme.ui.screens.articlelist
 
-import com.commanderpepper.pheme.uistate.NewsPreviewItemUIState
+import com.commanderpepper.pheme.ui.uistate.NewsPreviewItemUIState
 
 sealed interface ArticleListUIState {
     object Loading: ArticleListUIState

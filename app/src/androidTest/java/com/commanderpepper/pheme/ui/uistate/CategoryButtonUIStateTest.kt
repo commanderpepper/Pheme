@@ -4,9 +4,7 @@ import android.R
 import androidx.compose.foundation.layout.Row
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createComposeRule
-import com.commanderpepper.pheme.data.Category
-import com.commanderpepper.pheme.uistate.CategoryButton
-import com.commanderpepper.pheme.uistate.CategoryButtonUIState
+import com.commanderpepper.pheme.data.retrofit.model.Category
 import org.junit.Rule
 import org.junit.Test
 

@@ -20,8 +20,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.commanderpepper.pheme.ui.screens.article.ArticleScreen
 import com.commanderpepper.pheme.ui.theme.PhemeTheme
-import com.commanderpepper.pheme.uistate.NewsPreviewItem
-import com.commanderpepper.pheme.uistate.NewsPreviewItemUIState
+import com.commanderpepper.pheme.ui.uistate.NewsPreviewItem
+import com.commanderpepper.pheme.ui.uistate.NewsPreviewItemUIState
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
