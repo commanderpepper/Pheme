@@ -44,9 +44,9 @@ class NewsRepositoryImpl @Inject constructor(
                 )
             }.take(50)
 
-            if(articlesFromDatabase.isNotEmpty()){
-                emit(Status.Success(convertedArticlesFromDatabase))
-            }
+//            if(articlesFromDatabase.isNotEmpty()){
+//                emit(Status.Success(convertedArticlesFromDatabase))
+//            }
 
             try {
                 val remoteArticles = getArticles(category)
