@@ -3,11 +3,13 @@ package com.commanderpepper.pheme.ui.uistate
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Card
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
@@ -54,22 +56,24 @@ fun NewsPreviewItem(newsPreviewItemUIState: NewsPreviewItemUIState, onClick: (Lo
                             contentDescription = NEWS_PREVIEW_IMAGE_CONTENT_DESCRIPTION
                         }
                         .weight(3 / 10f)
-                        .padding(4.dp),
+                        .padding(horizontal = 4.dp)
+                        .clip(MaterialTheme.shapes.medium),
                     model = newsPreviewItemUIState.thumbnail,
                     loading = { Loading() },
                     contentDescription = null
                 )
             }
             Column(modifier = Modifier.weight(7 / 10f)) {
-                Text(modifier = Modifier.fillMaxWidth(), text = newsPreviewItemUIState.title)
+                Text(modifier = Modifier.fillMaxWidth(), text = newsPreviewItemUIState.title, style = MaterialTheme.typography.titleMedium)
                 if (newsPreviewItemUIState.author.isNotBlank()) {
                     Text(
                         modifier = Modifier.fillMaxWidth(),
                         maxLines = 2,
-                        text = newsPreviewItemUIState.author
+                        text = newsPreviewItemUIState.author,
+                        style = MaterialTheme.typography.titleSmall
                     )
                 }
-                Text(modifier = Modifier.fillMaxWidth(), text = newsPreviewItemUIState.publisher)
+                Text(modifier = Modifier.fillMaxWidth(), text = newsPreviewItemUIState.publisher, style = MaterialTheme.typography.titleSmall)
             }
         }
     }
