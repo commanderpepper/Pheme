@@ -64,7 +64,11 @@ fun NewsPreviewItem(newsPreviewItemUIState: NewsPreviewItemUIState, onClick: (Lo
                 )
             }
             Column(modifier = Modifier.weight(7 / 10f)) {
-                Text(modifier = Modifier.fillMaxWidth(), text = newsPreviewItemUIState.title, style = MaterialTheme.typography.titleMedium)
+                Text(
+                    modifier = Modifier.fillMaxWidth(),
+                    text = newsPreviewItemUIState.title,
+                    style = MaterialTheme.typography.titleMedium
+                )
                 if (newsPreviewItemUIState.author.isNotBlank()) {
                     Text(
                         modifier = Modifier.fillMaxWidth(),
@@ -73,7 +77,11 @@ fun NewsPreviewItem(newsPreviewItemUIState: NewsPreviewItemUIState, onClick: (Lo
                         style = MaterialTheme.typography.titleSmall
                     )
                 }
-                Text(modifier = Modifier.fillMaxWidth(), text = newsPreviewItemUIState.publisher, style = MaterialTheme.typography.titleSmall)
+                Text(
+                    modifier = Modifier.fillMaxWidth(),
+                    text = newsPreviewItemUIState.publisher,
+                    style = MaterialTheme.typography.titleSmall
+                )
             }
         }
     }
