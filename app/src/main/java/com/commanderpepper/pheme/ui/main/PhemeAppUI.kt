@@ -1,14 +1,15 @@
 package com.commanderpepper.pheme.ui.main
 
 import androidx.compose.animation.*
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Clear
 import androidx.compose.material.icons.rounded.KeyboardArrowUp
+import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -35,17 +36,15 @@ fun PhemeAppUI(
     Scaffold(
         modifier = Modifier,
         topBar = {
-            val color = MaterialTheme.colorScheme.primary
             HomeTopBar(
-                modifier = Modifier.fillMaxWidth(),
-                color = color,
-                onClearSearch = {
-                    mainViewModel.clearSearch()
-                },
-                onTextChange = {
-                    mainViewModel.searchArticles(it)
-                },
-                textFlow = mainViewModel.searchQueryFlow
+                navigationIcon = Icons.Rounded.Search,
+                navigationIconContentDescription = null,
+                actionIcon = Icons.Rounded.Clear,
+                actionIconContentDescription = null,
+                navigationText = mainViewModel.searchQueryFlow,
+                categoryText = mainViewModel.homeTopAppBarCategoryTextFlow,
+                onTextChange = mainViewModel::searchArticles,
+                onAction = mainViewModel::clearSearch
             )
         },
         bottomBar = {

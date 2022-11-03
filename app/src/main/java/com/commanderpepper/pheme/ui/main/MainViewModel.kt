@@ -1,5 +1,6 @@
 package com.commanderpepper.pheme.ui.main
 
+import androidx.compose.ui.text.capitalize
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.commanderpepper.pheme.R
@@ -29,6 +30,14 @@ class MainViewModel @Inject constructor(
 
     private val _searchQueryFlow = MutableStateFlow("")
     val searchQueryFlow: StateFlow<String> = _searchQueryFlow.asStateFlow()
+
+    val homeTopAppBarCategoryTextFlow = _categoryUIStateFlow.map {
+        it.currentCategory.category.capitalize()
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(stopTimeoutMillis = 5000L),
+        initialValue = Category.NEWS.category
+    )
 
     // This is the articles to search against, this list allows the user to search without affecting the list of data to display
     private val fetchedArticlesToSearchAgainst = mutableListOf<NewsPreviewItemUIState>()

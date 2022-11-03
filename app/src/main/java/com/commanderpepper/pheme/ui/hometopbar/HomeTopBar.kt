@@ -1,61 +1,79 @@
 package com.commanderpepper.pheme.ui.hometopbar
 
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Clear
-import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.graphics.vector.ImageVector
 import kotlinx.coroutines.flow.StateFlow
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeTopBar(
-    modifier: Modifier = Modifier.fillMaxWidth(),
-    color: Color,
-    textFlow: StateFlow<String>,
+    modifier: Modifier = Modifier,
+    navigationIcon: ImageVector,
+    navigationIconContentDescription: String?,
+    actionIcon: ImageVector,
+    actionIconContentDescription: String?,
+    colors: TopAppBarColors = TopAppBarDefaults.centerAlignedTopAppBarColors(),
+    navigationText: StateFlow<String>,
+    categoryText: StateFlow<String>,
     onTextChange: (String) -> Unit,
-    onClearSearch: () -> Unit
-) {
-    val text = textFlow.collectAsState()
-    // Focus Manager is used to dismiss the keyboard when the user clicks on the clear icon
-    val focusManager = LocalFocusManager.current
+    onAction: () -> Unit
+){
+    val searchText = navigationText.collectAsState()
+    val category = categoryText.collectAsState()
+
+    var isSearchTextVisible by remember {
+        mutableStateOf(false)
+    }
+    val isCategoryTextVisible by remember {
+        mutableStateOf(isSearchTextVisible.not())
+    }
 
     CenterAlignedTopAppBar(
-        modifier = Modifier.fillMaxWidth(),
-        title = { TextField(
-            value = text.value,
-            placeholder = {
-              Text(text = "Search")
-            },
-            onValueChange = {onTextChange(it)},
-            maxLines = 1,
-            leadingIcon = {
-                Icon(
-                    imageVector = Icons.Rounded.Search,
-                    tint = MaterialTheme.colorScheme.surfaceTint,
-                    contentDescription = "Search Icon"
+        title = {
+            if(isCategoryTextVisible){
+                Text(text = category.value)
+            }
+            AnimatedVisibility(visible = isSearchTextVisible){
+                TextField(
+                    value = searchText.value,
+                    onValueChange = onTextChange,
+                    textStyle = MaterialTheme.typography.titleMedium,
+                    placeholder = {
+                        Text(text = "Search")
+                    }
                 )
-            },
-            trailingIcon = {
-                IconButton(onClick = {
-                    onClearSearch()
-                    focusManager.clearFocus()
-                }) {
+            }
+        },
+        navigationIcon = {
+            IconButton(onClick = {
+                if(isSearchTextVisible){
+                    onAction()
+                }
+                isSearchTextVisible = isSearchTextVisible.not()
+            }) {
+                Icon(
+                    imageVector = navigationIcon,
+                    contentDescription = navigationIconContentDescription,
+                    tint = MaterialTheme.colorScheme.onSurface
+                )
+            }
+        },
+        actions = {
+            AnimatedVisibility(visible = isSearchTextVisible) {
+                IconButton(onClick = { onAction() }) {
                     Icon(
-                        imageVector = Icons.Rounded.Clear,
-                        tint = MaterialTheme.colorScheme.surfaceTint,
-                        contentDescription = "Clear Search Icon"
+                        imageVector = actionIcon,
+                        contentDescription = actionIconContentDescription,
+                        tint = MaterialTheme.colorScheme.onSurface
                     )
                 }
             }
-        )
-    })
+        },
+        colors = colors,
+        modifier = modifier
+    )
 }
