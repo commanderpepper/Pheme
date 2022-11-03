@@ -9,6 +9,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.KeyboardArrowUp
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -23,6 +24,7 @@ import com.commanderpepper.pheme.ui.hometopbar.HomeTopBar
 import com.commanderpepper.pheme.ui.screens.articlelist.Articles
 import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PhemeAppUI(
     modifier: Modifier = Modifier,
@@ -31,9 +33,9 @@ fun PhemeAppUI(
     onArticleClicked: (Long) -> Unit
 ) {
     Scaffold(
-        modifier = modifier,
+        modifier = Modifier,
         topBar = {
-            val color = MaterialTheme.colors.primaryVariant
+            val color = MaterialTheme.colorScheme.primary
             HomeTopBar(
                 modifier = Modifier.fillMaxWidth(),
                 color = color,
@@ -47,7 +49,7 @@ fun PhemeAppUI(
             )
         },
         bottomBar = {
-            val color = MaterialTheme.colors.primaryVariant
+            val color = MaterialTheme.colorScheme.primary
             val job = rememberCoroutineScope()
 
             HomeBottomBar(
@@ -92,7 +94,7 @@ fun HomeFloatingActionButton(lazyListState: LazyListState) {
                     .size(28.dp)
                     .align(Alignment.CenterVertically),
                 imageVector = Icons.Rounded.KeyboardArrowUp,
-                tint = MaterialTheme.colors.onBackground,
+                tint = MaterialTheme.colorScheme.surfaceTint,
                 contentDescription = "Scroll to top of list"
             )
             Text( modifier = Modifier.align(Alignment.CenterVertically), text = stringResource(R.string.home_floating_action_button_action_text))

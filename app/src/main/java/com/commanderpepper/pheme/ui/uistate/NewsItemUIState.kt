@@ -3,8 +3,8 @@ package com.commanderpepper.pheme.ui.uistate
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.contentDescription
@@ -43,10 +43,10 @@ fun NewsItem(modifier: Modifier = Modifier, newsItemUIState: NewsItemUIState){
                     contentDescription = null
                 )
             }
-            Text(modifier = Modifier.fillMaxWidth(), style = MaterialTheme.typography.h5, text = newsItemUIState.title)
-            Text(modifier = Modifier.fillMaxWidth(), style = MaterialTheme.typography.subtitle2, text = newsItemUIState.author)
-            Text(modifier = Modifier.fillMaxWidth(), style = MaterialTheme.typography.subtitle2, text = newsItemUIState.publisher)
-            Text(modifier = Modifier.fillMaxWidth(), style = MaterialTheme.typography.subtitle2, text = newsItemUIState.date)
+            Text(modifier = Modifier.fillMaxWidth(), style = MaterialTheme.typography.titleLarge, text = newsItemUIState.title)
+            Text(modifier = Modifier.fillMaxWidth(), style = MaterialTheme.typography.bodyLarge, text = newsItemUIState.author)
+            Text(modifier = Modifier.fillMaxWidth(), style = MaterialTheme.typography.bodyLarge, text = newsItemUIState.publisher)
+            Text(modifier = Modifier.fillMaxWidth(), style = MaterialTheme.typography.bodyLarge, text = newsItemUIState.date)
             Text(modifier = Modifier
                 .weight(7 / 10f)
                 .fillMaxWidth()
@@ -72,10 +72,10 @@ fun NewsItemExpanded(modifier: Modifier = Modifier, newsItemUIState: NewsItemUIS
                 )
             }
             Column() {
-                Text(modifier = Modifier.fillMaxWidth(), style = MaterialTheme.typography.h5, text = newsItemUIState.title)
-                Text(modifier = Modifier.fillMaxWidth(), style = MaterialTheme.typography.subtitle2, text = newsItemUIState.author)
-                Text(modifier = Modifier.fillMaxWidth(), style = MaterialTheme.typography.subtitle2, text = newsItemUIState.publisher)
-                Text(modifier = Modifier.fillMaxWidth(), style = MaterialTheme.typography.subtitle2, text = newsItemUIState.date)
+                Text(modifier = Modifier.fillMaxWidth(), style = MaterialTheme.typography.titleLarge, text = newsItemUIState.title)
+                Text(modifier = Modifier.fillMaxWidth(), style = MaterialTheme.typography.bodyLarge, text = newsItemUIState.author)
+                Text(modifier = Modifier.fillMaxWidth(), style = MaterialTheme.typography.bodyLarge, text = newsItemUIState.publisher)
+                Text(modifier = Modifier.fillMaxWidth(), style = MaterialTheme.typography.bodyLarge, text = newsItemUIState.date)
             }
         }
         Text(modifier = Modifier

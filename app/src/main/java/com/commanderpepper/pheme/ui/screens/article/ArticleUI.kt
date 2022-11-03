@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,6 +12,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
@@ -57,6 +59,7 @@ fun ArticleScreen(
     )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun Article(
@@ -68,15 +71,15 @@ fun Article(
     val articleUIState: ArticleUIState by articleUIStateFlow.collectAsState()
     Scaffold(modifier = modifier,
         topBar = {
-            val color = MaterialTheme.colors.primaryVariant
-            TopAppBar(backgroundColor = color) {
+            val color = MaterialTheme.colorScheme.primary
+            TopAppBar(modifier = modifier.background(color), title = {
                 IconButton(onClick = { onBackClicked() }) {
                     Icon(
                         imageVector = Icons.Filled.ArrowBack,
                         contentDescription = "Go back to article list"
                     )
                 }
-            }
+            })
         }) { _ ->
         when {
             articleUIState.isError -> {

@@ -1,8 +1,11 @@
 package com.commanderpepper.pheme.ui.homebottombar
 
-import androidx.compose.material.BottomAppBar
+import androidx.compose.foundation.background
+import androidx.compose.material3.BottomAppBar
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import com.commanderpepper.pheme.R
 import com.commanderpepper.pheme.data.retrofit.model.Category
@@ -14,7 +17,7 @@ import kotlinx.coroutines.flow.StateFlow
 @Composable
 fun HomeBottomBar(categoryUIStateFlow: StateFlow<CategoryUIState>, backgroundColor : Color, onCategoryClicked: (Category) -> Unit){
     val category = categoryUIStateFlow.collectAsState()
-    BottomAppBar(backgroundColor = backgroundColor) {
+    BottomAppBar(modifier = Modifier.background(MaterialTheme.colorScheme.surface)) {
         CategoryButton(
             CategoryButtonUIState(
             category = Category.NEWS,
