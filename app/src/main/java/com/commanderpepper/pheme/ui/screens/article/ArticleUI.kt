@@ -8,6 +8,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -80,7 +81,7 @@ fun Article(
                     )
                 }
             })
-        }) { _ ->
+        }) { paddingValues ->
         when {
             articleUIState.isError -> {
                 ArticleError()
@@ -95,12 +96,12 @@ fun Article(
             articleUIState.isSuccess -> {
                 if (isExpandedScreen) {
                     ArticleExpanded(
-                        modifier = modifier,
+                        modifier = modifier.padding(paddingValues),
                         newsItemUIState = articleUIState.newsItemUIState!!
                     )
                 } else {
                     ArticleNormal(
-                        modifier = modifier,
+                        modifier = modifier.padding(paddingValues),
                         newsItemUIState = articleUIState.newsItemUIState!!
                     )
                 }

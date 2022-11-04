@@ -28,30 +28,30 @@ const val NEWS_ITEM_IMAGE_CONTENT_DESCRIPTION = "Article Thumbnail"
 @Composable
 fun NewsItem(modifier: Modifier = Modifier, newsItemUIState: NewsItemUIState){
     val scrollState = rememberScrollState(0)
-    Box(modifier = modifier
+    Column(modifier = modifier
         .fillMaxSize()
         .padding(4.dp)) {
-        Column {
-            if (newsItemUIState.thumbnail.isNotBlank()) {
-                SubcomposeAsyncImage(
-                    modifier = Modifier
-                        .semantics { contentDescription = NEWS_ITEM_IMAGE_CONTENT_DESCRIPTION }
-                        .weight(3 / 10f)
-                        .fillMaxWidth(),
-                    model = newsItemUIState.thumbnail,
-                    loading = { Loading() },
-                    contentDescription = null
-                )
-            }
-            Text(modifier = Modifier.fillMaxWidth(), style = MaterialTheme.typography.titleLarge, text = newsItemUIState.title)
-            Text(modifier = Modifier.fillMaxWidth(), style = MaterialTheme.typography.bodyLarge, text = newsItemUIState.author)
-            Text(modifier = Modifier.fillMaxWidth(), style = MaterialTheme.typography.bodyLarge, text = newsItemUIState.publisher)
-            Text(modifier = Modifier.fillMaxWidth(), style = MaterialTheme.typography.bodyLarge, text = newsItemUIState.date)
-            Text(modifier = Modifier
-                .weight(7 / 10f)
-                .fillMaxWidth()
-                .verticalScroll(scrollState), text = newsItemUIState.content)
+        if (newsItemUIState.thumbnail.isNotBlank()) {
+            SubcomposeAsyncImage(
+                modifier = Modifier
+                    .semantics { contentDescription = NEWS_ITEM_IMAGE_CONTENT_DESCRIPTION }
+                    .weight(3 / 10f)
+                    .fillMaxWidth(),
+                model = newsItemUIState.thumbnail,
+                loading = { Loading() },
+                contentDescription = null
+            )
         }
+        Text(modifier = Modifier.fillMaxWidth(), style = MaterialTheme.typography.titleLarge, text = newsItemUIState.title)
+        Text(modifier = Modifier.fillMaxWidth(), style = MaterialTheme.typography.bodyMedium, text = newsItemUIState.author)
+        Text(modifier = Modifier.fillMaxWidth(), style = MaterialTheme.typography.bodyMedium, text = newsItemUIState.publisher)
+        Text(modifier = Modifier.fillMaxWidth(), style = MaterialTheme.typography.bodyMedium, text = newsItemUIState.date)
+        Text(modifier = Modifier
+            .weight(7 / 10f)
+            .fillMaxWidth()
+            .verticalScroll(scrollState),
+            text = newsItemUIState.content,
+            style = MaterialTheme.typography.bodyMedium)
     }
 }
 
@@ -60,12 +60,13 @@ fun NewsItemExpanded(modifier: Modifier = Modifier, newsItemUIState: NewsItemUIS
     val scrollState = rememberScrollState(0)
     Column(modifier = modifier.fillMaxSize()) {
         Row(modifier = modifier
-//            .weight(4 / 10f)
+            .weight(4 / 10f)
             .fillMaxHeight(4/10f)
             .padding(4.dp)) {
             if(newsItemUIState.thumbnail.isNotBlank()){
                 SubcomposeAsyncImage(
-                    modifier = Modifier.semantics { contentDescription = NEWS_ITEM_IMAGE_CONTENT_DESCRIPTION },
+                    modifier = Modifier
+                        .semantics { contentDescription = NEWS_ITEM_IMAGE_CONTENT_DESCRIPTION },
                     model = newsItemUIState.thumbnail,
                     loading = { Loading() },
                     contentDescription = null
@@ -73,15 +74,17 @@ fun NewsItemExpanded(modifier: Modifier = Modifier, newsItemUIState: NewsItemUIS
             }
             Column() {
                 Text(modifier = Modifier.fillMaxWidth(), style = MaterialTheme.typography.titleLarge, text = newsItemUIState.title)
-                Text(modifier = Modifier.fillMaxWidth(), style = MaterialTheme.typography.bodyLarge, text = newsItemUIState.author)
-                Text(modifier = Modifier.fillMaxWidth(), style = MaterialTheme.typography.bodyLarge, text = newsItemUIState.publisher)
-                Text(modifier = Modifier.fillMaxWidth(), style = MaterialTheme.typography.bodyLarge, text = newsItemUIState.date)
+                Text(modifier = Modifier.fillMaxWidth(), style = MaterialTheme.typography.bodyMedium, text = newsItemUIState.author)
+                Text(modifier = Modifier.fillMaxWidth(), style = MaterialTheme.typography.bodyMedium, text = newsItemUIState.publisher)
+                Text(modifier = Modifier.fillMaxWidth(), style = MaterialTheme.typography.bodyMedium, text = newsItemUIState.date)
             }
         }
         Text(modifier = Modifier
-//            .weight(6 / 10f)
+            .weight(6 / 10f)
             .fillMaxHeight()
-            .verticalScroll(scrollState), text = newsItemUIState.content)
+            .verticalScroll(scrollState),
+            text = newsItemUIState.content,
+            style = MaterialTheme.typography.bodyMedium)
     }
 }
 

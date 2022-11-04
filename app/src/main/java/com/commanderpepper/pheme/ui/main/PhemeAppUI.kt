@@ -83,7 +83,7 @@ fun HomeFloatingActionButton(lazyListState: LazyListState) {
         enter = fadeIn() + expandIn { IntSize(width = 1, height = 1) },
         exit = fadeOut() + shrinkOut { IntSize(width = 1, height = 1) }
     ) {
-        Button(modifier = Modifier.clip(CircleShape), onClick = {
+        Button(modifier = Modifier, onClick = {
             job.launch {
                 lazyListState.scrollToItem(0)
             }
@@ -93,10 +93,9 @@ fun HomeFloatingActionButton(lazyListState: LazyListState) {
                     .size(28.dp)
                     .align(Alignment.CenterVertically),
                 imageVector = Icons.Rounded.KeyboardArrowUp,
-                tint = MaterialTheme.colorScheme.surfaceTint,
                 contentDescription = "Scroll to top of list"
             )
-            Text( modifier = Modifier.align(Alignment.CenterVertically), text = stringResource(R.string.home_floating_action_button_action_text))
+            Text(modifier = Modifier.align(Alignment.CenterVertically), text = stringResource(R.string.home_floating_action_button_action_text))
         }
     }
 }
