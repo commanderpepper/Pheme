@@ -61,7 +61,7 @@ fun ArticleList(
 
 @Composable
 fun ArticleListLoading(modifier: Modifier = Modifier) {
-    LoadingArticles()
+    LoadingArticles(modifier)
 }
 
 @Composable

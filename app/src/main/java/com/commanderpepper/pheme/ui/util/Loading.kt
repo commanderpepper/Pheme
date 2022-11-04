@@ -3,11 +3,14 @@ package com.commanderpepper.pheme.ui.util
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.material3.Card
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.*
 import androidx.compose.ui.tooling.preview.Preview
@@ -24,8 +27,8 @@ fun Modifier.shimmerBackground(shape: Shape = RectangleShape): Modifier = compos
         ),
     )
     val shimmerColors = listOf(
-        Color.LightGray.copy(alpha = 0.9f),
-        Color.LightGray.copy(alpha = 0.4f),
+        MaterialTheme.colorScheme.outline,
+        MaterialTheme.colorScheme.outlineVariant
     )
     val brush = Brush.linearGradient(
         colors = shimmerColors,
@@ -38,46 +41,51 @@ fun Modifier.shimmerBackground(shape: Shape = RectangleShape): Modifier = compos
 
 @Composable
 fun LoadingNewsPreviewItem(modifier: Modifier = Modifier) {
-    Row(
-        modifier = Modifier
-            .padding(2.dp)
-            .fillMaxWidth()
-            .height(72.dp),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.Start
-    ) {
-        Box(
-            modifier = modifier
-                .weight(3 / 10f)
-                .height(64.dp)
-                .padding(8.dp)
-                .shimmerBackground()
-        )
-        Column(modifier = Modifier.weight(7 / 10f)) {
+    Card(modifier = Modifier.padding(vertical = 4.dp)) {
+        Row(
+            modifier = Modifier
+                .padding(2.dp)
+                .fillMaxWidth()
+                .height(96.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Start
+        ) {
             Box(
-                modifier = Modifier
-                    .height(16.dp)
-                    .fillMaxWidth()
-                    .padding(4.dp)
-                    .shimmerBackground()
+                modifier = modifier
+                    .weight(3 / 10f)
+                    .fillMaxHeight()
+                    .padding(8.dp)
+                    .shimmerBackground(MaterialTheme.shapes.medium)
             )
-            Box(
+            Column(
                 modifier = Modifier
-                    .height(16.dp)
-                    .fillMaxWidth()
-                    .padding(4.dp)
-                    .shimmerBackground()
-            )
-            Box(
-                modifier = Modifier
-                    .height(16.dp)
-                    .fillMaxWidth()
-                    .padding(4.dp)
-                    .shimmerBackground()
-            )
+                    .weight(7 / 10f)
+                    .fillMaxHeight(), verticalArrangement = Arrangement.SpaceEvenly
+            ) {
+                Box(
+                    modifier = Modifier
+                        .height(20.dp)
+                        .fillMaxWidth()
+                        .padding(vertical = 2.dp)
+                        .shimmerBackground(MaterialTheme.shapes.medium)
+                )
+                Box(
+                    modifier = Modifier
+                        .height(20.dp)
+                        .fillMaxWidth()
+                        .padding(vertical = 2.dp)
+                        .shimmerBackground(MaterialTheme.shapes.medium)
+                )
+                Box(
+                    modifier = Modifier
+                        .height(20.dp)
+                        .fillMaxWidth()
+                        .padding(vertical = 2.dp)
+                        .shimmerBackground(MaterialTheme.shapes.medium)
+                )
+            }
         }
     }
-
 }
 
 @Composable
@@ -136,7 +144,9 @@ fun LoadingArticleExpanded() {
             .padding(8.dp)
             .fillMaxSize()
     ) {
-        Row(modifier = Modifier.weight(4 / 10f).fillMaxWidth()) {
+        Row(modifier = Modifier
+            .weight(4 / 10f)
+            .fillMaxWidth()) {
             Box(modifier = Modifier
                 .padding(8.dp)
                 .weight(7 / 20f)
@@ -161,5 +171,5 @@ fun LoadingArticleExpanded() {
 @Preview
 @Composable
 fun PreviewLoadingArticles() {
-    LoadingArticleExpanded()
+    LoadingNewsPreviewItem()
 }
