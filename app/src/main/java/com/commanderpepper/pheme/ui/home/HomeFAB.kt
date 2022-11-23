@@ -1,4 +1,4 @@
-package com.commanderpepper.pheme.ui.main
+package com.commanderpepper.pheme.ui.home
 
 import androidx.compose.animation.*
 import androidx.compose.foundation.layout.size

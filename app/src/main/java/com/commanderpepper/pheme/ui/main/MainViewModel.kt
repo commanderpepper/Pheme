@@ -30,25 +30,21 @@ class MainViewModel @Inject constructor(
 
     private val category: String? = savedStateHandle["category"]
 
-    private val _categoryUIStateFlow = MutableStateFlow(CategoryUIState())
-    val categoryUIState: StateFlow<CategoryUIState> = _categoryUIStateFlow
-
     private val _searchQueryFlow = MutableStateFlow("")
     val searchQueryFlow: StateFlow<String> = _searchQueryFlow.asStateFlow()
 
-    val homeTopAppBarCategoryTextFlow = _categoryUIStateFlow.map {
-        it.currentCategory.category.capitalize()
-    }.stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(stopTimeoutMillis = 5000L),
-        initialValue = Category.NEWS.category
-    )
+//    val homeTopAppBarCategoryTextFlow = _categoryUIStateFlow.map {
+//        it.currentCategory.category.capitalize()
+//    }.stateIn(
+//        scope = viewModelScope,
+//        started = SharingStarted.WhileSubscribed(stopTimeoutMillis = 5000L),
+//        initialValue = Category.NEWS.category
+//    )
 
     // This is the articles to search against, this list allows the user to search without affecting the list of data to display
     private val fetchedArticlesToSearchAgainst = mutableListOf<NewsPreviewItemUIState>()
 
-    val articleUIListStateFlow =
-        _categoryUIStateFlow.combine(_searchQueryFlow) { categoryUIState, searchQuery ->
+    val articleUIListStateFlow = _searchQueryFlow.map { searchQuery ->
             if (searchQuery.isNotBlank()) {
                 flow {
                     emit(ArticleListUIState.Loading)
@@ -81,24 +77,6 @@ class MainViewModel @Inject constructor(
                 started = SharingStarted.WhileSubscribed(stopTimeoutMillis = 5000L),
                 initialValue = ArticleListUIState.Loading
             )
-
-    /**
-     * User event for the view model to handle
-     * @param category Category that was clicked on
-     */
-    fun categoryClicked(category: Category) {
-        viewModelScope.launch {
-            clearSearch()
-            val currentCategoryValue = _categoryUIStateFlow.value.currentCategory
-            if (currentCategoryValue != category) {
-                _categoryUIStateFlow.emit(
-                    _categoryUIStateFlow.value.copy(
-                        currentCategory = category
-                    )
-                )
-            }
-        }
-    }
 
     /**
      * Clear the search
