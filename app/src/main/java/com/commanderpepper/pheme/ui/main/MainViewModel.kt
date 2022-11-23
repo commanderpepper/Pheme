@@ -1,12 +1,14 @@
 package com.commanderpepper.pheme.ui.main
 
 import androidx.compose.ui.text.capitalize
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.commanderpepper.pheme.R
 import com.commanderpepper.pheme.data.retrofit.model.Category
 import com.commanderpepper.pheme.data.repository.repos.NewsRepository
 import com.commanderpepper.pheme.data.repository.Status
+import com.commanderpepper.pheme.data.retrofit.model.getCategory
 import com.commanderpepper.pheme.ui.uistate.CategoryUIState
 import com.commanderpepper.pheme.ui.screens.articlelist.ArticleListUIState
 import com.commanderpepper.pheme.ui.uistate.NewsPreviewItemUIState
@@ -22,8 +24,11 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(
     private val newsRepository: NewsRepository,
     private val createNewsPreviewItemUseCase: CreateNewsPreviewItemUseCase,
-    private val stringProvider: StringProvider
+    private val stringProvider: StringProvider,
+    private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
+
+    private val category: String? = savedStateHandle["category"]
 
     private val _categoryUIStateFlow = MutableStateFlow(CategoryUIState())
     val categoryUIState: StateFlow<CategoryUIState> = _categoryUIStateFlow
@@ -55,7 +60,8 @@ class MainViewModel @Inject constructor(
                     }
                 }
             } else {
-                newsRepository.fetchArticles(categoryUIState.currentCategory).map { status ->
+                val localCategory = category.getCategory()
+                newsRepository.fetchArticles(localCategory).map { status ->
                     when (status) {
                         is Status.InProgress -> ArticleListUIState.Loading
                         is Status.Failure -> ArticleListUIState.Error(status.message)

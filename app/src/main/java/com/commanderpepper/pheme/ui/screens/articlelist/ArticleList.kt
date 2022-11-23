@@ -5,8 +5,8 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -16,17 +16,27 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.commanderpepper.pheme.R
-import com.commanderpepper.pheme.ui.util.LoadingArticles
+import com.commanderpepper.pheme.ui.main.MainViewModel
 import com.commanderpepper.pheme.ui.uistate.NewsPreviewItem
 import com.commanderpepper.pheme.ui.uistate.NewsPreviewItemUIState
+import com.commanderpepper.pheme.ui.util.LoadingArticles
 import kotlinx.coroutines.flow.StateFlow
 
 @Composable
 fun Articles(
     modifier: Modifier = Modifier,
+    mainViewModel: MainViewModel = hiltViewModel(),
+    onArticleClicked: (Long) -> Unit
+){
+    Articles(modifier = modifier, articleListUIStateFlow = mainViewModel.articleUIListStateFlow, onArticleClicked = onArticleClicked)
+}
+
+@Composable
+fun Articles(
+    modifier: Modifier = Modifier,
     articleListUIStateFlow: StateFlow<ArticleListUIState>,
-    lazyListState: LazyListState,
     onArticleClicked: (Long) -> Unit
 ) {
     val articleListUIState: ArticleListUIState by articleListUIStateFlow.collectAsState()
@@ -39,7 +49,6 @@ fun Articles(
         is ArticleListUIState.Success -> ArticleList(
             modifier = modifier,
             articleList = (articleListUIState as ArticleListUIState.Success).newsPreviewList,
-            lazyListState = lazyListState,
             onArticleClicked = onArticleClicked
         )
     }
@@ -49,9 +58,9 @@ fun Articles(
 fun ArticleList(
     modifier: Modifier = Modifier,
     articleList: List<NewsPreviewItemUIState>,
-    lazyListState: LazyListState,
     onArticleClicked: (Long) -> Unit
 ) {
+    val lazyListState = rememberLazyListState()
     LazyColumn(modifier = modifier, state = lazyListState) {
         items(items = articleList, itemContent = { item ->
             NewsPreviewItem(newsPreviewItemUIState = item, onClick = onArticleClicked)
