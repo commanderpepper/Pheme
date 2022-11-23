@@ -18,6 +18,7 @@ import com.commanderpepper.pheme.util.StringProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -33,13 +34,13 @@ class MainViewModel @Inject constructor(
     private val _searchQueryFlow = MutableStateFlow("")
     val searchQueryFlow: StateFlow<String> = _searchQueryFlow.asStateFlow()
 
-//    val homeTopAppBarCategoryTextFlow = _categoryUIStateFlow.map {
-//        it.currentCategory.category.capitalize()
-//    }.stateIn(
-//        scope = viewModelScope,
-//        started = SharingStarted.WhileSubscribed(stopTimeoutMillis = 5000L),
-//        initialValue = Category.NEWS.category
-//    )
+    val homeTopAppBarCategoryTextFlow = flow<String>{
+        emit((category ?: Category.NEWS.category).capitalize(Locale.US))
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(stopTimeoutMillis = 5000L),
+        initialValue = Category.NEWS.category
+    )
 
     // This is the articles to search against, this list allows the user to search without affecting the list of data to display
     private val fetchedArticlesToSearchAgainst = mutableListOf<NewsPreviewItemUIState>()

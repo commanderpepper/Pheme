@@ -8,6 +8,10 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Clear
+import androidx.compose.material.icons.rounded.Search
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -18,6 +22,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.commanderpepper.pheme.R
+import com.commanderpepper.pheme.ui.hometopbar.HomeTopBar
 import com.commanderpepper.pheme.ui.main.MainViewModel
 import com.commanderpepper.pheme.ui.uistate.NewsPreviewItem
 import com.commanderpepper.pheme.ui.uistate.NewsPreviewItemUIState
@@ -30,27 +35,52 @@ fun Articles(
     mainViewModel: MainViewModel = hiltViewModel(),
     onArticleClicked: (Long) -> Unit
 ){
-    Articles(modifier = modifier, articleListUIStateFlow = mainViewModel.articleUIListStateFlow, onArticleClicked = onArticleClicked)
+    Articles(
+        modifier = modifier,
+        articleListUIStateFlow = mainViewModel.articleUIListStateFlow,
+        onArticleClicked = onArticleClicked,
+        navigationText = mainViewModel.searchQueryFlow,
+        categoryText = mainViewModel.homeTopAppBarCategoryTextFlow,
+        onTextChange = mainViewModel::searchArticles,
+        onAction = mainViewModel::clearSearch
+    )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Articles(
     modifier: Modifier = Modifier,
     articleListUIStateFlow: StateFlow<ArticleListUIState>,
-    onArticleClicked: (Long) -> Unit
+    onArticleClicked: (Long) -> Unit,
+    navigationText: StateFlow<String>,
+    categoryText: StateFlow<String>,
+    onTextChange: (String) -> Unit,
+    onAction: () -> Unit
 ) {
     val articleListUIState: ArticleListUIState by articleListUIStateFlow.collectAsState()
-    when (articleListUIState) {
-        is ArticleListUIState.Error -> ArticleListError(
-            modifier,
-            (articleListUIState as ArticleListUIState.Error).message
+    Column() {
+        HomeTopBar(
+            navigationIcon = Icons.Rounded.Search,
+            navigationIconContentDescription = null,
+            actionIcon = Icons.Rounded.Clear,
+            actionIconContentDescription = null,
+            navigationText = navigationText,
+            categoryText = categoryText,
+            onTextChange = onTextChange,
+            onAction = onAction
         )
-        is ArticleListUIState.Loading -> ArticleListLoading(modifier)
-        is ArticleListUIState.Success -> ArticleList(
-            modifier = modifier,
-            articleList = (articleListUIState as ArticleListUIState.Success).newsPreviewList,
-            onArticleClicked = onArticleClicked
-        )
+        when (articleListUIState) {
+            is ArticleListUIState.Error -> ArticleListError(
+                modifier,
+                (articleListUIState as ArticleListUIState.Error).message
+            )
+            is ArticleListUIState.Loading -> ArticleListLoading(modifier)
+            is ArticleListUIState.Success -> ArticleList(
+                modifier = modifier,
+                articleList = (articleListUIState as ArticleListUIState.Success).newsPreviewList,
+                onArticleClicked = onArticleClicked
+            )
+        }
     }
 }
 
