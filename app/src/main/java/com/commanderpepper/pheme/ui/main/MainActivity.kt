@@ -53,91 +53,12 @@ class MainActivity : ComponentActivity() {
             val widthSizeClass = calculateWindowSizeClass(this).widthSizeClass
             val isExpandedScreen = widthSizeClass == WindowWidthSizeClass.Expanded
 
-            val navController = rememberNavController()
-
-            val bottomNavBarIcons = listOf(
-                R.drawable.ic_news,
-                R.drawable.ic_sports,
-                R.drawable.ic_technology,
-                R.drawable.ic_entertainment,
-            )
-
-            val navContentDescription = listOf(
-                R.string.home_activity_bottom_bar_news_content_description,
-                R.string.home_activity_bottom_bar_sports_content_description,
-                R.string.home_activity_bottom_bar_technology_content_description,
-                R.string.home_activity_bottom_bar_entertainment_content_description
-            )
-
-            val categories = Category.values()
-
-            val barIcons = List(4){ i ->
-                CategoryButtonUIState(
-                    category = categories[i],
-                    resourceId = bottomNavBarIcons[i],
-                    contentDescriptionId = navContentDescription[i]
-                )
-            }
-
-            var category by rememberSaveable{mutableStateOf(Category.NEWS)}
-
             PhemeTheme() {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ){
-                    Scaffold(
-                        bottomBar = {
-                            BottomAppBar() {
-                                barIcons.forEach {
-                                    NavigationBarItem(
-                                        selected = category == it.category,
-                                        onClick = {
-                                            category = it.category
-                                            navController.navigate(
-                                                "articles/{category}".replace(
-                                                    oldValue = "{category}",
-                                                    newValue = category.category
-                                                )
-                                            )
-                                        },
-                                        icon = {
-                                            val image = painterResource(id = it.resourceId)
-                                            val contentDescription = stringResource(id = it.contentDescriptionId)
-                                            Icon(modifier = Modifier.align(Alignment.CenterVertically), painter = image, contentDescription = contentDescription)
-                                        }
-                                    )
-                                }
-                            }
-                        }
-                    ) { paddingValues ->
-                        NavHost(navController = navController, startDestination = "articles/{category}" ){
-                            composable("articles/{category}"){
-                                Articles(
-                                    modifier = Modifier.padding(paddingValues)
-                                ){ id ->
-                                    navController.navigate(
-                                        "article/{articleId}".replace(
-                                            oldValue = "{articleId}",
-                                            newValue = "$id"
-                                        )
-                                    )
-                                }
-                            }
-                            composable(
-                                route = "article/{articleId}",
-                            ) { entry ->
-                                val articleId: Long =
-                                    entry.arguments?.getString("articleId", "-1")!!.toLong()
-                                ArticleScreen(
-                                    isExpandedScreen = isExpandedScreen,
-                                    articleId = articleId
-                                ){
-                                    navController.popBackStack()
-                                }
-                            }
-                        }
-                    }
+                    BottomBarLayout()
                 }
             }
         }

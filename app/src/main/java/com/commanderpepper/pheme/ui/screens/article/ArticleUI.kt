@@ -36,7 +36,6 @@ import kotlinx.coroutines.flow.StateFlow
 @Composable
 fun ArticleScreen(
     modifier: Modifier = Modifier,
-    isExpandedScreen: Boolean,
     articleListViewModel: ArticleViewModel = hiltViewModel(),
     articleId: Long = -1L,
     onBackClicked: () -> Unit
@@ -54,7 +53,6 @@ fun ArticleScreen(
     }
     Article(
         modifier = modifier,
-        isExpandedScreen = isExpandedScreen,
         articleUIStateFlow = articleListViewModel.articleUIState,
         onBackClicked = onBackClicked
     )
@@ -65,7 +63,6 @@ fun ArticleScreen(
 @Composable
 fun Article(
     modifier: Modifier = Modifier,
-    isExpandedScreen: Boolean,
     articleUIStateFlow: StateFlow<ArticleUIState>,
     onBackClicked: () -> Unit
 ) {
@@ -87,28 +84,16 @@ fun Article(
                 ArticleError()
             }
             articleUIState.isLoading -> {
-                if(isExpandedScreen){
                     LoadingArticle()
-                }else {
-                    LoadingArticleExpanded()
-                }
             }
             articleUIState.isSuccess -> {
-                if (isExpandedScreen) {
-                    ArticleExpanded(
-                        modifier = modifier.padding(paddingValues),
-                        newsItemUIState = articleUIState.newsItemUIState!!
-                    )
-                } else {
                     ArticleNormal(
                         modifier = modifier.padding(paddingValues),
                         newsItemUIState = articleUIState.newsItemUIState!!
                     )
-                }
             }
         }
     }
-
 }
 
 @Composable
