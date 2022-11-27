@@ -5,10 +5,7 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -38,6 +35,7 @@ fun ArticleScreen(
     modifier: Modifier = Modifier,
     articleListViewModel: ArticleViewModel = hiltViewModel(),
     articleId: Long = -1L,
+    showTopBar: Boolean = true,
     onBackClicked: () -> Unit
 ) {
     /**
@@ -47,13 +45,14 @@ fun ArticleScreen(
     val articleRetrieved = rememberSaveable {
         mutableStateOf(false)
     }
-    if (articleRetrieved.value.not()) {
+    if (articleId != -1L || articleRetrieved.value.not()) {
         articleListViewModel.retrieveArticle(articleId)
         articleRetrieved.value = true
     }
     Article(
         modifier = modifier,
         articleUIStateFlow = articleListViewModel.articleUIState,
+        showTopBar = showTopBar,
         onBackClicked = onBackClicked
     )
 }
@@ -64,6 +63,7 @@ fun ArticleScreen(
 fun Article(
     modifier: Modifier = Modifier,
     articleUIStateFlow: StateFlow<ArticleUIState>,
+    showTopBar: Boolean = true,
     onBackClicked: () -> Unit
 ) {
     val articleUIState: ArticleUIState by articleUIStateFlow.collectAsState()
@@ -71,11 +71,13 @@ fun Article(
         topBar = {
             val color = MaterialTheme.colorScheme.primary
             TopAppBar(modifier = modifier.background(color), title = {
+                if(showTopBar){
                 IconButton(onClick = { onBackClicked() }) {
                     Icon(
                         imageVector = Icons.Filled.ArrowBack,
                         contentDescription = "Go back to article list"
                     )
+                }
                 }
             })
         }) { paddingValues ->

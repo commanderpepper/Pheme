@@ -20,6 +20,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.commanderpepper.pheme.R
 import com.commanderpepper.pheme.data.retrofit.model.Category
+import com.commanderpepper.pheme.ui.screens.article.ArticleScreen
 import com.commanderpepper.pheme.ui.screens.articlelist.Articles
 import com.commanderpepper.pheme.ui.uistate.CategoryButtonUIState
 
@@ -53,9 +54,10 @@ fun NavRailLayout() {
     }
 
     var category by rememberSaveable{ mutableStateOf(Category.NEWS) }
+    var articleId by rememberSaveable { mutableStateOf(-1L) }
 
     fun articleClicked(id: Long){
-
+        articleId = id
     }
 
     NavHost(navController = navController, startDestination = "articles/{category}"){
@@ -83,8 +85,13 @@ fun NavRailLayout() {
                     }
                     Spacer(Modifier.weight(1f))
                 }
-                Articles(modifier = Modifier.weight(1f)) {
+                Articles(modifier = Modifier.weight(6 / 10f)) {
                     articleClicked(it)
+                }
+                if(articleId != -1L){
+                    ArticleScreen(modifier = Modifier.weight(4 / 10f), articleId = articleId, showTopBar = false) {
+
+                    }
                 }
             }
         }
