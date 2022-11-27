@@ -58,7 +58,7 @@ fun Articles(
     onAction: () -> Unit
 ) {
     val articleListUIState: ArticleListUIState by articleListUIStateFlow.collectAsState()
-    Column() {
+    Column(modifier = modifier) {
         HomeTopBar(
             navigationIcon = Icons.Rounded.Search,
             navigationIconContentDescription = null,

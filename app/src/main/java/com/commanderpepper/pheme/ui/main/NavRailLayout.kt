@@ -83,10 +83,9 @@ fun NavRailLayout() {
                     }
                     Spacer(Modifier.weight(1f))
                 }
-                Articles() {
+                Articles(modifier = Modifier.weight(1f)) {
                     articleClicked(it)
                 }
-
             }
         }
     }
