@@ -58,7 +58,12 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ){
-                    BottomBarLayout()
+                    if(isExpandedScreen){
+                        NavRailLayout()
+                    }
+                    else {
+                        BottomBarLayout()
+                    }
                 }
             }
         }
