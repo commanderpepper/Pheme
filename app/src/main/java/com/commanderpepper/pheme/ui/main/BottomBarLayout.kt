@@ -12,48 +12,22 @@ import androidx.compose.ui.res.stringResource
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.commanderpepper.pheme.R
-import com.commanderpepper.pheme.data.retrofit.model.Category
 import com.commanderpepper.pheme.ui.screens.article.ArticleScreen
 import com.commanderpepper.pheme.ui.screens.articlelist.Articles
-import com.commanderpepper.pheme.ui.uistate.CategoryButtonUIState
+import com.commanderpepper.pheme.ui.util.createCategoryButtonUIStates
 
 @OptIn(ExperimentalMaterial3Api::class)
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun BottomBarLayout(mainViewModel: MainViewModel) {
     val navController = rememberNavController()
-
-    val bottomNavBarIcons = listOf(
-        R.drawable.ic_news,
-        R.drawable.ic_sports,
-        R.drawable.ic_technology,
-        R.drawable.ic_entertainment,
-    )
-
-    val navContentDescription = listOf(
-        R.string.home_activity_bottom_bar_news_content_description,
-        R.string.home_activity_bottom_bar_sports_content_description,
-        R.string.home_activity_bottom_bar_technology_content_description,
-        R.string.home_activity_bottom_bar_entertainment_content_description
-    )
-
-    val categories = Category.values()
-
-    val barIcons = List(4){ i ->
-        CategoryButtonUIState(
-            category = categories[i],
-            resourceId = bottomNavBarIcons[i],
-            contentDescriptionId = navContentDescription[i]
-        )
-    }
-
+    val categoryButtonUIStateList = createCategoryButtonUIStates()
     val category = mainViewModel.categoryFlow.collectAsState()
 
     Scaffold(
         bottomBar = {
             BottomAppBar() {
-                barIcons.forEach {
+                categoryButtonUIStateList.forEach {
                     NavigationBarItem(
                         selected = category.value == it.category,
                         onClick = {
