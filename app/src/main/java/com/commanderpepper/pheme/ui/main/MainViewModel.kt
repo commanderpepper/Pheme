@@ -1,15 +1,11 @@
 package com.commanderpepper.pheme.ui.main
 
-import androidx.compose.ui.text.capitalize
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.commanderpepper.pheme.R
 import com.commanderpepper.pheme.data.retrofit.model.Category
 import com.commanderpepper.pheme.data.repository.repos.NewsRepository
 import com.commanderpepper.pheme.data.repository.Status
-import com.commanderpepper.pheme.data.retrofit.model.getCategory
-import com.commanderpepper.pheme.ui.uistate.CategoryUIState
 import com.commanderpepper.pheme.ui.screens.articlelist.ArticleListUIState
 import com.commanderpepper.pheme.ui.uistate.NewsPreviewItemUIState
 import com.commanderpepper.pheme.ui.uistate.checkArticle
@@ -25,27 +21,22 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(
     private val newsRepository: NewsRepository,
     private val createNewsPreviewItemUseCase: CreateNewsPreviewItemUseCase,
-    private val stringProvider: StringProvider,
-    private val savedStateHandle: SavedStateHandle
+    private val stringProvider: StringProvider
 ) : ViewModel() {
 
-    private val category: String? = savedStateHandle["category"]
+    private val _categoryFlow = MutableStateFlow(Category.NEWS)
+    val categoryFlow : StateFlow<Category> = _categoryFlow
 
     private val _searchQueryFlow = MutableStateFlow("")
     val searchQueryFlow: StateFlow<String> = _searchQueryFlow.asStateFlow()
 
-    val homeTopAppBarCategoryTextFlow = flow<String>{
-        emit((category ?: Category.NEWS.category).capitalize(Locale.US))
-    }.stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(stopTimeoutMillis = 5000L),
-        initialValue = Category.NEWS.category
-    )
+    private val _homeTopAppBarCategoryTextFlow = MutableStateFlow((Category.NEWS.category).capitalize(Locale.US))
+    val homeTopAppBarCategoryTextFlow: StateFlow<String> = _homeTopAppBarCategoryTextFlow
 
     // This is the articles to search against, this list allows the user to search without affecting the list of data to display
     private val fetchedArticlesToSearchAgainst = mutableListOf<NewsPreviewItemUIState>()
 
-    val articleUIListStateFlow = _searchQueryFlow.map { searchQuery ->
+    val articleUIListStateFlow = combine(categoryFlow, _searchQueryFlow) { category, searchQuery ->
             if (searchQuery.isNotBlank()) {
                 flow {
                     emit(ArticleListUIState.Loading)
@@ -57,8 +48,7 @@ class MainViewModel @Inject constructor(
                     }
                 }
             } else {
-                val localCategory = category.getCategory()
-                newsRepository.fetchArticles(localCategory).map { status ->
+                newsRepository.fetchArticles(category).map { status ->
                     when (status) {
                         is Status.InProgress -> ArticleListUIState.Loading
                         is Status.Failure -> ArticleListUIState.Error(status.message)
@@ -95,6 +85,13 @@ class MainViewModel @Inject constructor(
     fun searchArticles(query: String) {
         viewModelScope.launch {
             _searchQueryFlow.emit(query)
+        }
+    }
+
+    fun updateCategory(category: Category){
+        viewModelScope.launch {
+            _homeTopAppBarCategoryTextFlow.emit(category.category.capitalize(Locale.US))
+            _categoryFlow.emit(category)
         }
     }
 }

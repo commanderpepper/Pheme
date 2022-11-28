@@ -5,33 +5,17 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.RequiresApi
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.*
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.*
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.compose.rememberNavController
-import com.commanderpepper.pheme.R
-import com.commanderpepper.pheme.data.retrofit.model.Category
-import com.commanderpepper.pheme.ui.screens.article.ArticleScreen
-import com.commanderpepper.pheme.ui.screens.articlelist.Articles
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.commanderpepper.pheme.ui.theme.PhemeTheme
-import com.commanderpepper.pheme.ui.uistate.CategoryButtonUIState
 import com.commanderpepper.pheme.ui.uistate.NewsPreviewItem
 import com.commanderpepper.pheme.ui.uistate.NewsPreviewItemUIState
 import dagger.hilt.android.AndroidEntryPoint
@@ -58,15 +42,21 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ){
-                    if(isExpandedScreen){
-                        NavRailLayout()
-                    }
-                    else {
-                        BottomBarLayout()
-                    }
+                    MainUI(isExpandedScreen)
                 }
             }
         }
+    }
+}
+
+@RequiresApi(Build.VERSION_CODES.O)
+@Composable
+fun MainUI(isExpandedScreen: Boolean, mainViewModel: MainViewModel = hiltViewModel()){
+    if(isExpandedScreen){
+        NavRailLayout(mainViewModel)
+    }
+    else {
+        BottomBarLayout(mainViewModel)
     }
 }
 

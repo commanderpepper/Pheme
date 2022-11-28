@@ -7,11 +7,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationRail
 import androidx.compose.material3.NavigationRailItem
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -26,7 +22,7 @@ import com.commanderpepper.pheme.ui.uistate.CategoryButtonUIState
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun NavRailLayout() {
+fun NavRailLayout(mainViewModel: MainViewModel) {
     val navController = rememberNavController()
 
     val bottomNavBarIcons = listOf(
@@ -53,8 +49,8 @@ fun NavRailLayout() {
         )
     }
 
-    var category by rememberSaveable{ mutableStateOf(Category.NEWS) }
-    var articleId by rememberSaveable { mutableStateOf(-1L) }
+    val category = mainViewModel.categoryFlow.collectAsState()
+    var articleId by remember { mutableStateOf(-1L) }
 
     fun articleClicked(id: Long){
         articleId = id
@@ -67,13 +63,13 @@ fun NavRailLayout() {
                     Spacer(Modifier.weight(1f))
                     barIcons.forEach { categoryButtonUIState ->
                         NavigationRailItem(
-                            selected = categoryButtonUIState.category == category,
+                            selected = categoryButtonUIState.category == category.value,
                             onClick = {
-                                category = categoryButtonUIState.category
+                                mainViewModel.updateCategory(categoryButtonUIState.category)
                                 navController.navigate(
                                     "articles/{category}".replace(
                                         oldValue = "{category}",
-                                        newValue = category.category
+                                        newValue = category.value.category
                                     )
                                 )
                             },
@@ -85,7 +81,7 @@ fun NavRailLayout() {
                     }
                     Spacer(Modifier.weight(1f))
                 }
-                Articles(modifier = Modifier.weight(6 / 10f)) {
+                Articles(modifier = Modifier.weight(6 / 10f), mainViewModel = mainViewModel) {
                     articleClicked(it)
                 }
                 if(articleId != -1L){

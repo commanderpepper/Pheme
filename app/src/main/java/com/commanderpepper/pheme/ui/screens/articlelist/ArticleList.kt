@@ -3,6 +3,7 @@ package com.commanderpepper.pheme.ui.screens.articlelist
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -32,7 +33,7 @@ import kotlinx.coroutines.flow.StateFlow
 @Composable
 fun Articles(
     modifier: Modifier = Modifier,
-    mainViewModel: MainViewModel = hiltViewModel(),
+    mainViewModel: MainViewModel,
     onArticleClicked: (Long) -> Unit
 ){
     Articles(
@@ -91,7 +92,7 @@ fun ArticleList(
     onArticleClicked: (Long) -> Unit
 ) {
     val lazyListState = rememberLazyListState()
-    LazyColumn(modifier = modifier, state = lazyListState) {
+    LazyColumn(modifier = modifier.fillMaxHeight(), state = lazyListState) {
         items(items = articleList, itemContent = { item ->
             NewsPreviewItem(newsPreviewItemUIState = item, onClick = onArticleClicked)
         })

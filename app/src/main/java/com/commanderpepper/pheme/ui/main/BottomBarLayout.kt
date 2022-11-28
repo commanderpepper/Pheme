@@ -4,11 +4,7 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -25,7 +21,7 @@ import com.commanderpepper.pheme.ui.uistate.CategoryButtonUIState
 @OptIn(ExperimentalMaterial3Api::class)
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun BottomBarLayout() {
+fun BottomBarLayout(mainViewModel: MainViewModel) {
     val navController = rememberNavController()
 
     val bottomNavBarIcons = listOf(
@@ -52,20 +48,20 @@ fun BottomBarLayout() {
         )
     }
 
-    var category by rememberSaveable{ mutableStateOf(Category.NEWS) }
+    val category = mainViewModel.categoryFlow.collectAsState()
 
     Scaffold(
         bottomBar = {
             BottomAppBar() {
                 barIcons.forEach {
                     NavigationBarItem(
-                        selected = category == it.category,
+                        selected = category.value == it.category,
                         onClick = {
-                            category = it.category
+                            mainViewModel.updateCategory(it.category)
                             navController.navigate(
                                 "articles/{category}".replace(
                                     oldValue = "{category}",
-                                    newValue = category.category
+                                    newValue = category.value.category
                                 )
                             )
                         },
@@ -82,7 +78,8 @@ fun BottomBarLayout() {
         NavHost(navController = navController, startDestination = "articles/{category}" ){
             composable("articles/{category}"){
                 Articles(
-                    modifier = Modifier.padding(paddingValues)
+                    modifier = Modifier.padding(bottom = paddingValues.calculateBottomPadding() / 2),
+                    mainViewModel = mainViewModel
                 ){ id ->
                     navController.navigate(
                         "article/{articleId}".replace(
