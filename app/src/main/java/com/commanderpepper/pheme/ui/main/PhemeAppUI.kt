@@ -18,11 +18,12 @@ import com.commanderpepper.pheme.R
 import kotlinx.coroutines.launch
 
 @Composable
-fun HomeFloatingActionButton(lazyListState: LazyListState) {
+fun HomeFloatingActionButton(modifier: Modifier = Modifier, lazyListState: LazyListState) {
     val isVisible by remember { derivedStateOf { lazyListState.firstVisibleItemIndex > 0 } }
     val job = rememberCoroutineScope()
 
     AnimatedVisibility(
+        modifier = modifier,
         visible = isVisible,
         enter = fadeIn() + expandIn { IntSize(width = 1, height = 1) },
         exit = fadeOut() + shrinkOut { IntSize(width = 1, height = 1) }

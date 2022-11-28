@@ -1,10 +1,7 @@
 package com.commanderpepper.pheme.ui.screens.articlelist
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -21,9 +18,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.compose.ui.unit.dp
 import com.commanderpepper.pheme.R
 import com.commanderpepper.pheme.ui.hometopbar.HomeTopBar
+import com.commanderpepper.pheme.ui.main.HomeFloatingActionButton
 import com.commanderpepper.pheme.ui.main.MainViewModel
 import com.commanderpepper.pheme.ui.uistate.NewsPreviewItem
 import com.commanderpepper.pheme.ui.uistate.NewsPreviewItemUIState
@@ -92,11 +90,15 @@ fun ArticleList(
     onArticleClicked: (Long) -> Unit
 ) {
     val lazyListState = rememberLazyListState()
-    LazyColumn(modifier = modifier.fillMaxHeight(), state = lazyListState) {
-        items(items = articleList, itemContent = { item ->
-            NewsPreviewItem(newsPreviewItemUIState = item, onClick = onArticleClicked)
-        })
+    Box(modifier = modifier.fillMaxHeight()) {
+        LazyColumn(modifier = modifier.fillMaxHeight(), state = lazyListState) {
+            items(items = articleList, itemContent = { item ->
+                NewsPreviewItem(newsPreviewItemUIState = item, onClick = onArticleClicked)
+            })
+        }
+        HomeFloatingActionButton(modifier = Modifier.align(Alignment.BottomEnd).padding(24.dp), lazyListState = lazyListState)
     }
+
 }
 
 @Composable
