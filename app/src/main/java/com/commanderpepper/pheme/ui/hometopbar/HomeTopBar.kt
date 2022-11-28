@@ -1,6 +1,9 @@
 package com.commanderpepper.pheme.ui.hometopbar
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -39,6 +42,7 @@ fun HomeTopBar(
             }
             AnimatedVisibility(visible = isSearchTextVisible){
                 TextField(
+                    modifier = Modifier.fillMaxWidth(),
                     value = searchText.value,
                     onValueChange = onTextChange,
                     textStyle = MaterialTheme.typography.titleMedium,
