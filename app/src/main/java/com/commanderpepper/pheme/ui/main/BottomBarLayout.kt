@@ -31,13 +31,15 @@ fun BottomBarLayout(mainViewModel: MainViewModel) {
                     NavigationBarItem(
                         selected = category.value == it.category,
                         onClick = {
-                            mainViewModel.updateCategory(it.category)
-                            navController.navigate(
-                                "articles/{category}".replace(
-                                    oldValue = "{category}",
-                                    newValue = category.value.category
+                            if(it.category != category.value){
+                                mainViewModel.updateCategory(it.category)
+                                navController.navigate(
+                                    "articles/{category}".replace(
+                                        oldValue = "{category}",
+                                        newValue = category.value.category
+                                    )
                                 )
-                            )
+                            }
                         },
                         icon = {
                             val image = painterResource(id = it.resourceId)

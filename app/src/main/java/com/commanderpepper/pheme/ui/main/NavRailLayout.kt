@@ -39,13 +39,15 @@ fun NavRailLayout(mainViewModel: MainViewModel) {
                         NavigationRailItem(
                             selected = categoryButtonUIState.category == category.value,
                             onClick = {
-                                mainViewModel.updateCategory(categoryButtonUIState.category)
-                                navController.navigate(
-                                    "articles/{category}".replace(
-                                        oldValue = "{category}",
-                                        newValue = category.value.category
+                                if(categoryButtonUIState.category != category.value){
+                                    mainViewModel.updateCategory(categoryButtonUIState.category)
+                                    navController.navigate(
+                                        "articles/{category}".replace(
+                                            oldValue = "{category}",
+                                            newValue = category.value.category
+                                        )
                                     )
-                                )
+                                }
                             },
                             icon = {
                                 val image = painterResource(id = categoryButtonUIState.resourceId)

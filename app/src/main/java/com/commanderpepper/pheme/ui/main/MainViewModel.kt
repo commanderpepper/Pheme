@@ -90,9 +90,11 @@ class MainViewModel @Inject constructor(
 
     fun updateCategory(category: Category){
         viewModelScope.launch {
-            _searchQueryFlow.emit("")
-            _homeTopAppBarCategoryTextFlow.emit(category.category.capitalize(Locale.US))
-            _categoryFlow.emit(category)
+            if(category != _categoryFlow.value){
+                _searchQueryFlow.emit("")
+                _homeTopAppBarCategoryTextFlow.emit(category.category.capitalize(Locale.US))
+                _categoryFlow.emit(category)
+            }
         }
     }
 }
