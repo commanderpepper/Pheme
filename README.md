@@ -18,3 +18,4 @@ Pheme is made of two screens, an articles list and an article
 
 <img src="https://user-images.githubusercontent.com/6993397/200054200-94b3781c-8900-4520-b116-094bb4b51fc9.png" alt="drawing" width="200"/>
 <img src="https://user-images.githubusercontent.com/6993397/200054409-814d897e-22d0-4469-ae80-d5bd3c387cb2.png" alt="drawing" width="200"/>
+<img src="https://user-images.githubusercontent.com/6993397/204613982-5a4053a2-6369-4e3a-889e-0ac25fefa245.png" alt="drawing" width="500"/>
