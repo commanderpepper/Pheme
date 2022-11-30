@@ -91,7 +91,7 @@ fun ArticleList(
 ) {
     val lazyListState = rememberLazyListState()
     Box(modifier = modifier.fillMaxHeight()) {
-        LazyColumn(modifier = modifier.fillMaxHeight(), state = lazyListState) {
+        LazyColumn(modifier = Modifier.fillMaxHeight(), state = lazyListState) {
             items(items = articleList, itemContent = { item ->
                 NewsPreviewItem(newsPreviewItemUIState = item, onClick = onArticleClicked)
             })

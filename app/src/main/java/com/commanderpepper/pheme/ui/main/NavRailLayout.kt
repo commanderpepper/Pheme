@@ -57,11 +57,11 @@ fun NavRailLayout(mainViewModel: MainViewModel) {
                     }
                     Spacer(Modifier.weight(1f))
                 }
-                Articles(modifier = Modifier.weight(6 / 10f), mainViewModel = mainViewModel) {
+                Articles(modifier = Modifier.weight(9 / 20f), mainViewModel = mainViewModel) {
                     articleClicked(it)
                 }
                 if(articleId != -1L){
-                    ArticleScreen(modifier = Modifier.weight(4 / 10f), articleId = articleId, showTopBar = false) {
+                    ArticleScreen(modifier = Modifier.weight(11 / 20f), articleId = articleId, showTopBar = false) {
 
                     }
                 }
