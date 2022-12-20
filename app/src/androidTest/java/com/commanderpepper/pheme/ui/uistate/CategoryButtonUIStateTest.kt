@@ -13,14 +13,12 @@ class CategoryButtonUIStateTest {
     private val categoryButtonUIStateSelected: CategoryButtonUIState = CategoryButtonUIState(
         category = Category.NEWS,
         resourceId = R.drawable.ic_input_add,
-        contentDescriptionId = R.string.copy,
-        isSelected = true
+        contentDescriptionId = R.string.copy
     )
     private val categoryButtonUIStateUnselected = CategoryButtonUIState(
         category = Category.NEWS,
         resourceId = R.drawable.ic_input_add,
-        contentDescriptionId = R.string.copy,
-        isSelected = false
+        contentDescriptionId = R.string.copy
     )
 
     @get:Rule
@@ -32,7 +30,7 @@ class CategoryButtonUIStateTest {
 
         composeTestRule.setContent {
             Row {
-                CategoryButton(categoryButtonUIState) {}
+//                CategoryButton(categoryButtonUIState) {}
             }
         }
 
@@ -48,7 +46,7 @@ class CategoryButtonUIStateTest {
 
         composeTestRule.setContent {
             Row {
-                CategoryButton(categoryButtonUIState) {}
+//                CategoryButton(categoryButtonUIState) {}
             }
         }
 

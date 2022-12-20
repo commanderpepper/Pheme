@@ -1,18 +1,23 @@
 package com.commanderpepper.pheme.ui.uistate
 
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.SubcomposeAsyncImage
 import com.commanderpepper.pheme.ui.util.Loading
+import dev.romainguy.text.combobreaker.material3.TextFlow
 
 data class NewsItemUIState(
     val publisher: String,
@@ -56,35 +61,47 @@ fun NewsItem(modifier: Modifier = Modifier, newsItemUIState: NewsItemUIState){
 }
 
 @Composable
-fun NewsItemExpanded(modifier: Modifier = Modifier, newsItemUIState: NewsItemUIState){
-    val scrollState = rememberScrollState(0)
-    Column(modifier = modifier.fillMaxSize()) {
-        Row(modifier = modifier
-            .weight(4 / 10f)
-            .fillMaxHeight(4/10f)
-            .padding(4.dp)) {
-            if(newsItemUIState.thumbnail.isNotBlank()){
+fun NewsItemExpanded(modifier: Modifier = Modifier, newsItemUIState: NewsItemUIState) {
+    val annotatedString = buildAnnotatedString {
+        withStyle(style = MaterialTheme.typography.titleLarge.toSpanStyle()) {
+            append(newsItemUIState.title)
+        }
+    }
+
+    Column(modifier = modifier.verticalScroll(ScrollState(0))) {
+        TextFlow(
+            text = annotatedString,
+            modifier = Modifier.fillMaxSize()
+        ) {
+            if (newsItemUIState.thumbnail.isNotBlank()) {
                 SubcomposeAsyncImage(
                     modifier = Modifier
-                        .semantics { contentDescription = NEWS_ITEM_IMAGE_CONTENT_DESCRIPTION },
+                        .semantics { contentDescription = NEWS_ITEM_IMAGE_CONTENT_DESCRIPTION }
+                        .align(Alignment.TopStart)
+                        .widthIn(160.dp, 320.dp)
+                        .padding(8.dp),
                     model = newsItemUIState.thumbnail,
                     loading = { Loading() },
                     contentDescription = null
                 )
             }
-            Column() {
-                Text(modifier = Modifier.fillMaxWidth(), style = MaterialTheme.typography.titleLarge, text = newsItemUIState.title)
-                Text(modifier = Modifier.fillMaxWidth(), style = MaterialTheme.typography.bodyMedium, text = newsItemUIState.author)
-                Text(modifier = Modifier.fillMaxWidth(), style = MaterialTheme.typography.bodyMedium, text = newsItemUIState.publisher)
-                Text(modifier = Modifier.fillMaxWidth(), style = MaterialTheme.typography.bodyMedium, text = newsItemUIState.date)
-            }
         }
-        Text(modifier = Modifier
-            .weight(6 / 10f)
-            .fillMaxHeight()
-            .verticalScroll(scrollState),
-            text = newsItemUIState.content,
-            style = MaterialTheme.typography.bodyMedium)
+        Text(
+            style = MaterialTheme.typography.bodyMedium,
+            text = newsItemUIState.author
+        )
+        Text(
+            style = MaterialTheme.typography.bodyMedium,
+            text = newsItemUIState.publisher
+        )
+        Text(
+            style = MaterialTheme.typography.bodyMedium,
+            text = newsItemUIState.date
+        )
+        Text(
+            style = MaterialTheme.typography.bodyMedium,
+            text = newsItemUIState.content
+        )
     }
 }
 

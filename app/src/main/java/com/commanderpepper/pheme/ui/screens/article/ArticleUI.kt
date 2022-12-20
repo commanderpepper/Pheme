@@ -36,6 +36,7 @@ fun ArticleScreen(
     articleListViewModel: ArticleViewModel = hiltViewModel(),
     articleId: Long = -1L,
     showTopBar: Boolean = true,
+    isExpandedScreen: Boolean = false,
     onBackClicked: () -> Unit
 ) {
     /**
@@ -53,6 +54,7 @@ fun ArticleScreen(
         modifier = modifier,
         articleUIStateFlow = articleListViewModel.articleUIState,
         showTopBar = showTopBar,
+        isExpandedScreen = isExpandedScreen,
         onBackClicked = onBackClicked
     )
 }
@@ -64,6 +66,7 @@ fun Article(
     modifier: Modifier = Modifier,
     articleUIStateFlow: StateFlow<ArticleUIState>,
     showTopBar: Boolean = true,
+    isExpandedScreen: Boolean,
     onBackClicked: () -> Unit
 ) {
     val articleUIState: ArticleUIState by articleUIStateFlow.collectAsState()
@@ -89,10 +92,17 @@ fun Article(
                     LoadingArticle()
             }
             articleUIState.isSuccess -> {
+                if(isExpandedScreen){
+                    ArticleExpanded(
+                        modifier = modifier.padding(paddingValues),
+                        newsItemUIState = articleUIState.newsItemUIState!!)
+                }
+                else {
                     ArticleNormal(
                         modifier = modifier.padding(paddingValues),
                         newsItemUIState = articleUIState.newsItemUIState!!
                     )
+                }
             }
         }
     }

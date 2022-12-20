@@ -61,7 +61,7 @@ fun NavRailLayout(mainViewModel: MainViewModel) {
                     articleClicked(it)
                 }
                 if(articleId != -1L){
-                    ArticleScreen(modifier = Modifier.weight(11 / 20f), articleId = articleId, showTopBar = false) {
+                    ArticleScreen(modifier = Modifier.weight(11 / 20f), isExpandedScreen = true, articleId = articleId, showTopBar = false) {
 
                     }
                 }
